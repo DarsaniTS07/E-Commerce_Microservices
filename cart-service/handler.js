@@ -1,5 +1,5 @@
-const serverless = require('serverless-http');
-const { createApp } = require('./src/app');
+const serverless = require("serverless-http");
+const { createApp } = require("./src/app");
 
 const app = createApp();
 
