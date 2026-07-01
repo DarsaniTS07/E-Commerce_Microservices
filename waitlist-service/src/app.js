@@ -13,6 +13,7 @@ const { WaitlistService } = require("./services/waitlist.service");
 
 const { InventoryClient } = require("./clients/inventory.client");
 const { NotificationClient } = require("./clients/notification.client");
+const { EventClient } = require("./clients/event.client");
 
 function createApp() {
     const app = express();
@@ -27,16 +28,19 @@ function createApp() {
         process.env.NOTIFICATION_SERVICE_BASE_URL
     );
 
+    const eventClient = new EventClient(
+        process.env.EVENT_SERVICE_BASE_URL
+    );
+
     const waitlistService = new WaitlistService(
         waitlistRepository,
         inventoryClient,
-        notificationClient
+        notificationClient,
+        eventClient
     );
 
     app.use(express.json());
-
     app.use(attachAuthContext);
-
     app.use(requestLogger);
 
     app.get("/health", (req, res) => {
@@ -52,7 +56,6 @@ function createApp() {
     app.use("/waitlist", createWaitlistRoutes(waitlistService));
 
     app.use(notFoundHandler);
-
     app.use(errorHandler);
 
     return app;

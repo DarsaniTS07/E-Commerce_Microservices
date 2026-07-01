@@ -1,4 +1,4 @@
-const { AppError } = require('../src/utils/AppError');
+const { AppError } = require('../utils/AppError');
 
 function attachAuthContext(req, res, next) {
   const userId = req.header('x-user-id');

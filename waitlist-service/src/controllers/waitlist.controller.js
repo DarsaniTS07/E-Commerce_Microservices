@@ -1,5 +1,4 @@
 const { asyncHandler } = require("../utils/asyncHandler");
-const { getActorId } = require('../utils/requestContext');
 
 class WaitlistController {
   constructor(waitlistService) {
@@ -9,7 +8,7 @@ class WaitlistController {
   joinWaitlist = asyncHandler(async (req, res) => {
     const data = await this.waitlistService.joinWaitlist({
       ...req.body,
-      userId: getActorId(req, req.body.userId),
+      userId: req.user?.id || req.body.userId,
     });
     res.status(201).json({ success: true, message: 'Operation successful', data });
   });
@@ -20,12 +19,17 @@ class WaitlistController {
   });
 
   getUserWaitlists = asyncHandler(async (req, res) => {
-    const data = await this.waitlistService.getUserWaitlists(getActorId(req, req.params.userId));
+    const data = await this.waitlistService.getUserWaitlists(req.params.userId);
     res.json({ success: true, message: 'Operation successful', data });
   });
 
   leaveWaitlist = asyncHandler(async (req, res) => {
     const data = await this.waitlistService.leaveWaitlist(req.body.waitlistId);
+    res.json({ success: true, message: 'Operation successful', data });
+  });
+
+  processWaitlist = asyncHandler(async (req, res) => {
+    const data = await this.waitlistService.processWaitlist(req.body.eventId);
     res.json({ success: true, message: 'Operation successful', data });
   });
 }
