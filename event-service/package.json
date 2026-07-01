@@ -8,14 +8,17 @@
     "dev": "nodemon src/server.js"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.1077.0",
+    "@aws-sdk/lib-dynamodb": "^3.1077.0",
     "cors": "^2.8.6",
     "dotenv": "^16.6.1",
     "express": "^4.22.2",
     "express-validator": "^7.2.0",
     "mongodb": "^7.3.0",
     "mongoose": "^8.24.1",
-    "utils-jsdoc": "^6.3.0",
-    "utils-ui-express": "^5.0.1",
+    "serverless-http": "^4.0.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "uuid": "^10.0.0"
   },
   "devDependencies": {

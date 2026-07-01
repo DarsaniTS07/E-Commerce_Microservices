@@ -24,7 +24,7 @@ class EventService {
         page: pagination.page,
         limit: pagination.limit,
         total: result.total,
-        totalPages: Math.ceil(result.total / pagination.limit),
+        totalPages: Math.max(1,Math.ceil(result.total / pagination.limit)),
       },
     };
   }
@@ -35,7 +35,15 @@ class EventService {
       throw new AppError('Event not found', 404);
     }
 
-    const inventory = await this.inventoryClient.getAvailability(eventId).catch(() => null);
+    let inventory = null;
+
+    try {
+      inventory = await this.inventoryClient.getAvailability(eventId);
+    } catch (error) {
+      console.warn(
+        `Inventory service unavailable for event ${eventId}`
+      );
+    }
     return { ...event, inventory };
   }
 

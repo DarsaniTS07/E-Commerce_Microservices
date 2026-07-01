@@ -10,17 +10,28 @@ module.exports = function createEventRoutes(eventService) {
 
   router.get(
     '/',
-    [query('page').optional().isInt({ min: 1 }), query('limit').optional().isInt({ min: 1 }), query('city').optional().isString(), query('category').optional().isString(), query('date').optional().isISO8601()],
+    [
+  query("page").optional().isInt({ min: 1 }),
+  query("limit").optional().isInt({ min: 1 }),
+
+  query("city").optional().isString(),
+
+  query("category").optional().isString(),
+
+  query("date").optional().isISO8601(),
+
+  query("status")
+      .optional()
+      .isIn([
+          "DRAFT",
+          "PUBLISHED",
+          "CANCELLED"
+      ])
+],
     validateRequest,
     controller.listEvents
   );
 
-  router.get(
-    '/search',
-    [query('city').optional().isString(), query('category').optional().isString(), query('date').optional().isISO8601()],
-    validateRequest,
-    controller.listEvents
-  );
 
   router.get(
     '/:eventId',
@@ -40,6 +51,13 @@ module.exports = function createEventRoutes(eventService) {
       body('eventDate').isISO8601(),
       body('eventTime').isString().notEmpty(),
       body('ticketPrice').isFloat({ min: 0 }),
+      body("status")
+    .optional()
+    .isIn([
+        "DRAFT",
+        "PUBLISHED",
+        "CANCELLED"
+    ]),
       body('availableTicketCount').optional().isInt({ min: 0 }),
     ],
     requireRole(['organizer', 'admin']),
@@ -49,7 +67,37 @@ module.exports = function createEventRoutes(eventService) {
 
   router.put(
     '/:eventId',
-    [param('eventId').isString().notEmpty(), body('title').optional().isString(), body('description').optional().isString(), body('ticketPrice').optional().isFloat({ min: 0 })],
+    [
+    param("eventId").isString().notEmpty(),
+
+    body("title").optional().isString(),
+
+    body("description").optional().isString(),
+
+    body("category").optional().isString(),
+
+    body("venue").optional().isString(),
+
+    body("city").optional().isString(),
+
+    body("eventDate").optional().isISO8601(),
+
+    body("eventTime").optional().isString(),
+
+    body("ticketPrice").optional().isFloat({ min: 0 }),
+
+    body("availableTicketCount")
+        .optional()
+        .isInt({ min: 0 }),
+
+    body("status")
+        .optional()
+        .isIn([
+            "DRAFT",
+            "PUBLISHED",
+            "CANCELLED"
+        ])
+],
     requireRole(['organizer', 'admin']),
     validateRequest,
     controller.updateEvent

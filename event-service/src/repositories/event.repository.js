@@ -1,9 +1,11 @@
-const { v4: uuidv4 } = require('uuid');
-const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
-const { DynamoDBDocumentClient, GetCommand, PutCommand, QueryCommand, UpdateCommand } = require('@aws-sdk/lib-dynamodb');
-
-const client = new DynamoDBClient({ region: process.env.AWS_REGION || 'ap-south-1' });
-const docClient = DynamoDBDocumentClient.from(client);
+const { v4: uuidv4 } = require("uuid");
+const docClient = require("../config/dynamodb");
+const {
+    GetCommand,
+    PutCommand,
+    ScanCommand,
+    UpdateCommand,
+} = require("@aws-sdk/lib-dynamodb");
 
 function tableName() {
   return process.env.EVENT_TABLE_NAME;
@@ -14,9 +16,6 @@ function nowIso() {
 }
 
 class EventRepository {
-  activeFilter() {
-    return { isDeleted: { $ne: true } };
-  }
 
   async create(payload) {
     const item = {
@@ -79,22 +78,16 @@ class EventRepository {
 
   async search(filters, pagination) {
     const result = await docClient.send(
-      new QueryCommand({
+    new ScanCommand({
         TableName: tableName(),
-        IndexName: 'status-eventDate-index',
-        KeyConditionExpression: '#status = :status',
-        ExpressionAttributeNames: {
-          '#status': 'status',
-        },
-        ExpressionAttributeValues: {
-          ':status': filters.status || 'PUBLISHED',
-        },
-        ScanIndexForward: false,
-      })
-    );
+    })
+);
 
     const items = (result.Items || []).filter((item) => {
       if (item.isDeleted) return false;
+      if (filters.status && item.status !== filters.status) {
+        return false;
+    }
       if (filters.city && !String(item.city || '').toLowerCase().includes(String(filters.city).toLowerCase())) return false;
       if (filters.category && !String(item.category || '').toLowerCase().includes(String(filters.category).toLowerCase())) return false;
       if (filters.date) {
@@ -105,7 +98,15 @@ class EventRepository {
       return true;
     });
 
+    
+
     const total = items.length;
+
+    items.sort(
+    (a, b) =>
+        new Date(a.eventDate) - new Date(b.eventDate)
+);
+
     const start = pagination.skip || 0;
     const end = start + (pagination.limit || 10);
     return { items: items.slice(start, end), total };
@@ -152,14 +153,19 @@ class EventRepository {
   }
 
   async syncAvailability(eventId, availableTicketCount) {
-    const availableStatus =
-      availableTicketCount <= 0 ? 'SOLD_OUT' : availableTicketCount <= 20 ? 'LIMITED' : 'AVAILABLE';
 
-    return EventModel.findOneAndUpdate(
-      { eventId, ...this.activeFilter() },
-      { $set: { availableTicketCount, availableStatus } },
-      { new: true }
-    );
+    const availableStatus =
+      availableTicketCount <= 0
+        ? "SOLD_OUT"
+        : availableTicketCount <= 20
+          ? "LIMITED"
+          : "AVAILABLE";
+
+    return this.updateByEventId(eventId, {
+      availableTicketCount,
+      availableStatus,
+    });
+
   }
 }
 

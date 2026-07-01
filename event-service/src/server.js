@@ -1,20 +1,20 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const { connectDatabase } = require('./config/db');
-const { createApp } = require('./app');
+const { createApp } = require("./app");
 
 async function bootstrap() {
-  await connectDatabase();
 
-  const app = createApp();
-  const port = Number(process.env.PORT || 3000);
+    const app = createApp();
 
-  app.listen(port, () => {
-    console.log(`Ticket Booking Platform API listening on port ${port}`);
-  });
+    const port = Number(process.env.PORT || 3001);
+
+    app.listen(port, () => {
+        console.log(`Event Service listening on port ${port}`);
+    });
+
 }
 
 bootstrap().catch((error) => {
-  console.error('Failed to start server', error);
-  process.exit(1);
+    console.error("Failed to start server", error);
+    process.exit(1);
 });
