@@ -1,41 +1,61 @@
-const express = require('express');
-const swaggerUi = require('swagger-ui-express');
+const express = require("express");
 
+const { requestLogger } = require("./middlewares/requestLogger");
+const { attachAuthContext } = require("./middlewares/auth");
+const {
+    notFoundHandler,
+    errorHandler,
+} = require("./middlewares/errorHandler");
 
-const { requestLogger } = require('./middlewares/requestLogger');
-const { attachAuthContext } = require('./middlewares/auth');
-const { notFoundHandler, errorHandler } = require('./middlewares/errorHandler');
-const { buildServices } = require('./services');
-const swaggerSpec = require('./config/swagger');
+const createWaitlistRoutes = require("./routes/waitlist.routes");
+const { WaitlistRepository } = require("./repositories/waitlist.repository");
+const { WaitlistService } = require("./services/waitlist.service");
 
+const { InventoryClient } = require("./clients/inventory.client");
+const { NotificationClient } = require("./clients/notification.client");
 
 function createApp() {
-  const app = express();
-  const services = buildServices();
+    const app = express();
 
-  app.use(express.json());
-  app.use(attachAuthContext);
-  app.use(requestLogger);
+    const waitlistRepository = new WaitlistRepository();
 
-  app.get('/health', (req, res) => {
-    res.json({ success: true, message: 'Operation successful', data: { status: 'ok' } });
-  });
+    const inventoryClient = new InventoryClient(
+        process.env.INVENTORY_SERVICE_BASE_URL
+    );
 
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    const notificationClient = new NotificationClient(
+        process.env.NOTIFICATION_SERVICE_BASE_URL
+    );
 
+    const waitlistService = new WaitlistService(
+        waitlistRepository,
+        inventoryClient,
+        notificationClient
+    );
 
-  app.use('/events', require('./services/event/routes')(services.eventService));
-  app.use('/inventory', require('./services/inventory/routes')(services.inventoryService));
-  app.use('/cart', require('./services/cart/routes')(services.cartService));
-  app.use('/orders', require('./services/order/routes')(services.orderService));
-  app.use('/payments', require('./services/payment/routes')(services.paymentService));
-  app.use('/waitlist', require('./services/waitlist/routes')(services.waitlistService));
-  app.use('/notifications', require('./services/notification/routes')(services.notificationService));
+    app.use(express.json());
 
-  app.use(notFoundHandler);
-  app.use(errorHandler);
+    app.use(attachAuthContext);
 
-  return app;
+    app.use(requestLogger);
+
+    app.get("/health", (req, res) => {
+        res.json({
+            success: true,
+            message: "Operation successful",
+            data: {
+                status: "ok",
+            },
+        });
+    });
+
+    app.use("/waitlist", createWaitlistRoutes(waitlistService));
+
+    app.use(notFoundHandler);
+
+    app.use(errorHandler);
+
+    return app;
 }
 
 module.exports = { createApp };

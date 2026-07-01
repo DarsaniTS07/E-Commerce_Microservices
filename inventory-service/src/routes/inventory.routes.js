@@ -1,6 +1,6 @@
 const express = require('express');
 const { body, query } = require('express-validator');
-const { InventoryController } = require('./controller');
+const { InventoryController } = utils;
 const { validateRequest } = require('../../utils/validateRequest');
 const { requireRole } = require('../../utils/requireRole');
 

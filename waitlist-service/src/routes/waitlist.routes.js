@@ -1,6 +1,6 @@
 const express = require('express');
 const { body, query, param } = require('express-validator');
-const { WaitlistController } = require('./controller');
+const { WaitlistController } = utils;
 const { validateRequest } = require('../../middlewares/validateRequest');
 
 module.exports = function createWaitlistRoutes(waitlistService) {

@@ -16,8 +16,8 @@
     "express": "^4.22.2",
     "express-validator": "^7.2.0",
     "serverless-http": "^3.2.0",
-    "swagger-jsdoc": "^6.3.0",
-    "swagger-ui-express": "^5.0.1",
+    "utils-jsdoc": "^6.3.0",
+    "utils-ui-express": "^5.0.1",
     "uuid": "^10.0.0"
   },
   "devDependencies": {

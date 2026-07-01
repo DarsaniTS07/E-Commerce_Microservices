@@ -1,6 +1,6 @@
 const express = require('express');
 const { param, query } = require('express-validator');
-const { NotificationController } = require('./controller');
+const { NotificationController } = utils;
 const { validateRequest } = require('../../middlewares/validateRequest');
 
 module.exports = function createNotificationRoutes(notificationService) {

@@ -157,7 +157,7 @@ NODE_ENV=development
 
 Base URL: `http://localhost:3000`
 
-All endpoints below are listed in Swagger-style format with purpose, parameters, and expected behavior.
+All endpoints below are listed in utilstyle format with purpose, parameters, and expected behavior.
 
 ---
 
