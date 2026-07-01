@@ -1,8 +1,8 @@
 const express = require('express');
 const { body, query } = require('express-validator');
 const { InventoryController } = require('./controller');
-const { validateRequest } = require('../../../E-Commerce/backend/src/middlewares/validateRequest');
-const { requireRole } = require('../../../E-Commerce/backend/src/middlewares/auth');
+const { validateRequest } = require('../../utils/validateRequest');
+const { requireRole } = require('../../utils/requireRole');
 
 module.exports = function createInventoryRoutes(inventoryService) {
   const router = express.Router();

@@ -1,5 +1,5 @@
-const { asyncHandler } = require('../../utils/asyncHandler');
-const { getActorId } = require('../../utils/requestContext');
+const { asyncHandler } = require("../utils/asyncHandler");
+const { getActorId } = require('../utils/requestContext');
 
 class WaitlistController {
   constructor(waitlistService) {

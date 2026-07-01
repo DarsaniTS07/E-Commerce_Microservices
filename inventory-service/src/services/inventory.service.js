@@ -1,4 +1,4 @@
-const { AppError } = require('../../../E-Commerce/backend/src/utils/AppError');
+const { AppError } = require('../../utils/appError');
 
 class InventoryService {
   constructor(inventoryRepository) {

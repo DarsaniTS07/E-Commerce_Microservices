@@ -1,4 +1,4 @@
-const { InventoryModel } = require('./model');
+const { InventoryModel } = require('../models/inventory.model');
 
 class InventoryRepository {
   async create(payload) {

@@ -1,4 +1,4 @@
-const { asyncHandler } = require('../../../E-Commerce/backend/src/utils/asyncHandler');
+const { asyncHandler } = require("../utils/asyncHandler");
 
 class InventoryController {
   constructor(inventoryService) {
