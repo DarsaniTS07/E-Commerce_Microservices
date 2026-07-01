@@ -1,11 +1,8 @@
 require("dotenv").config();
 
-const { connectDatabase } = require("./config/db");
 const { createApp } = require("./app");
 
 async function bootstrap() {
-    await connectDatabase();
-
     const app = createApp();
 
     const port = Number(process.env.PORT || 3002);
@@ -16,6 +13,6 @@ async function bootstrap() {
 }
 
 bootstrap().catch((error) => {
-    console.error(error);
+    console.error("Failed to start server", error);
     process.exit(1);
 });
