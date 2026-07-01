@@ -1,8 +1,8 @@
 const express = require('express');
 const { body, param } = require('express-validator');
-const { PaymentController } = require('./controller');
-const { validateRequest } = require('../../../E-Commerce/backend/src/middlewares/validateRequest');
-const { requireRole } = require('../../../E-Commerce/backend/src/middlewares/auth');
+const { PaymentController } = require('../controllers/payment.controller');
+const { validateRequest } = require('../middlewares/validateRequest');
+const { requireRole } = require('../middlewares/auth');
 
 module.exports = function createPaymentRoutes(paymentService) {
   const router = express.Router();

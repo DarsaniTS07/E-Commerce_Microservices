@@ -1,13 +1,18 @@
-const { AppError } = require('../../../E-Commerce/backend/src/utils/AppError');
+const { AppError } = require('../utils/AppError');
 const { v4: uuidv4 } = require('uuid');
 
 class OrderService {
-  constructor(orderRepository, inventoryService, productRepository, waitlistService, cartRepository = null) {
+  constructor(orderRepository, inventoryClient, eventClient, waitlistClient, cartClient) {
     this.orderRepository = orderRepository;
-    this.inventoryService = inventoryService;
-    this.productRepository = productRepository;
-    this.waitlistService = waitlistService;
-    this.cartRepository = cartRepository;
+    this.inventoryClient = inventoryClient;
+    this.eventClient = eventClient;
+    this.waitlistClient = waitlistClient;
+    this.cartClient = cartClient;
+  }
+
+  async createFromCartId(cartId) {
+    const cart = await this.cartClient.getCartById(cartId);
+    return this.createFromCart(cart);
   }
 
   async createFromCart(cart) {
@@ -15,12 +20,12 @@ class OrderService {
       throw new AppError('Cart reservation is not valid', 409);
     }
 
-    const product = await this.productRepository.findById(cart.eventId);
-    if (!product) {
+    const event = await this.eventClient.getEventById(cart.eventId);
+    if (!event) {
       throw new AppError('Event not found', 404);
     }
 
-    const amount = Number(product.ticketPrice) * Number(cart.quantity);
+    const amount = Number(event.ticketPrice) * Number(cart.quantity);
     const order = await this.orderRepository.create({
       cartId: cart.cartId,
       userId: cart.userId,
@@ -31,9 +36,7 @@ class OrderService {
       ticketCode: null,
     });
 
-    if (this.cartRepository) {
-      await this.cartRepository.updateByCartId(cart.cartId, { status: 'CHECKED_OUT', orderId: order.orderId });
-    }
+    await this.cartClient.checkoutCart(cart.cartId, order.orderId).catch(() => null);
 
     return order;
   }
@@ -77,8 +80,8 @@ class OrderService {
       return order;
     }
 
-    await this.inventoryService.releaseTickets(order.eventId, order.quantity).catch(() => null);
-    await this.waitlistService.processWaitlist(order.eventId).catch(() => null);
+    await this.inventoryClient.releaseTickets(order.eventId, order.quantity).catch(() => null);
+    await this.waitlistClient.processWaitlist(order.eventId).catch(() => null);
 
     return this.orderRepository.updateByOrderId(orderId, {
       status: 'CANCELLED',

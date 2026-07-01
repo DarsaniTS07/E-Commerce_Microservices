@@ -1,5 +1,5 @@
-const { asyncHandler } = require('../../../E-Commerce/backend/src/utils/asyncHandler');
-const { getActorId } = require('../../../E-Commerce/backend/src/utils/requestContext');
+const { asyncHandler } = require('../utils/asyncHandler');
+const { getActorId } = require('../utils/requestContext');
 
 class CartController {
   constructor(cartService) {
@@ -32,6 +32,16 @@ class CartController {
       ...req.body,
       userId: getActorId(req, req.body.userId),
     });
+    res.json({ success: true, message: 'Operation successful', data });
+  });
+
+  getCartItem = asyncHandler(async (req, res) => {
+    const data = await this.cartService.getCartItem(req.query.userId || req.user?.id, req.params.cartId);
+    res.json({ success: true, message: 'Operation successful', data });
+  });
+
+  checkoutCart = asyncHandler(async (req, res) => {
+    const data = await this.cartService.checkoutCart(req.params.cartId, req.body.orderId);
     res.json({ success: true, message: 'Operation successful', data });
   });
 }

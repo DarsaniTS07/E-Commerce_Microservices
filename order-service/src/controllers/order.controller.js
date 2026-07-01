@@ -1,15 +1,13 @@
-const { asyncHandler } = require('../../../E-Commerce/backend/src/utils/asyncHandler');
-const { getActorId } = require('../../../E-Commerce/backend/src/utils/requestContext');
+const { asyncHandler } = require('../utils/asyncHandler');
+const { getActorId } = require('../utils/requestContext');
 
 class OrderController {
-  constructor(orderService, cartRepository) {
+  constructor(orderService) {
     this.orderService = orderService;
-    this.cartRepository = cartRepository;
   }
 
   createOrder = asyncHandler(async (req, res) => {
-    const cart = await this.cartRepository.findByCartId(req.body.cartId);
-    const data = await this.orderService.createFromCart(cart);
+    const data = await this.orderService.createFromCartId(req.body.cartId);
     res.status(201).json({ success: true, message: 'Operation successful', data });
   });
 
@@ -25,6 +23,11 @@ class OrderController {
 
   cancelOrder = asyncHandler(async (req, res) => {
     const data = await this.orderService.cancelOrder(req.params.orderId, req.body.reason);
+    res.json({ success: true, message: 'Operation successful', data });
+  });
+
+  confirmOrder = asyncHandler(async (req, res) => {
+    const data = await this.orderService.confirmOrder(req.params.orderId);
     res.json({ success: true, message: 'Operation successful', data });
   });
 

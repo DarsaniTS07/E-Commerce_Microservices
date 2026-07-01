@@ -1,32 +1,146 @@
-const { PaymentModel } = require('../models/payment.model');
+const { v4: uuidv4 } = require('uuid');
+const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
+const { DynamoDBDocumentClient, GetCommand, PutCommand, QueryCommand, UpdateCommand } = require('@aws-sdk/lib-dynamodb');
+
+const client = new DynamoDBClient({ region: process.env.AWS_REGION || 'ap-south-1' });
+const docClient = DynamoDBDocumentClient.from(client);
+
+function tableName() {
+  return process.env.PAYMENT_TABLE_NAME;
+}
+
+function nowIso() {
+  return new Date().toISOString();
+}
 
 class PaymentRepository {
   async create(payload) {
-    return PaymentModel.create(payload);
+    const item = {
+      paymentId: payload.paymentId || uuidv4(),
+      orderId: payload.orderId,
+      amount: Number(payload.amount),
+      paymentStatus: payload.paymentStatus || 'PENDING',
+      providerReference: payload.providerReference,
+      callbackProcessedAt: payload.callbackProcessedAt || null,
+      createdAt: nowIso(),
+      updatedAt: nowIso(),
+    };
+
+    await docClient.send(
+      new PutCommand({
+        TableName: tableName(),
+        Item: item,
+        ConditionExpression: 'attribute_not_exists(paymentId)',
+      })
+    );
+
+    return item;
   }
 
   async findByPaymentId(paymentId) {
-    return PaymentModel.findOne({ paymentId });
+    const result = await docClient.send(
+      new GetCommand({
+        TableName: tableName(),
+        Key: { paymentId },
+      })
+    );
+
+    return result.Item || null;
   }
 
   async findByOrderId(orderId) {
-    return PaymentModel.findOne({ orderId });
+    const result = await docClient.send(
+      new QueryCommand({
+        TableName: tableName(),
+        IndexName: 'orderId-index',
+        KeyConditionExpression: 'orderId = :orderId',
+        ExpressionAttributeValues: {
+          ':orderId': orderId,
+        },
+        Limit: 1,
+      })
+    );
+
+    return (result.Items && result.Items[0]) || null;
   }
 
   async findByProviderReference(providerReference) {
-    return PaymentModel.findOne({ providerReference });
+    const result = await docClient.send(
+      new QueryCommand({
+        TableName: tableName(),
+        IndexName: 'providerReference-index',
+        KeyConditionExpression: 'providerReference = :providerReference',
+        ExpressionAttributeValues: {
+          ':providerReference': providerReference,
+        },
+        Limit: 1,
+      })
+    );
+
+    return (result.Items && result.Items[0]) || null;
   }
 
   async updateByOrderId(orderId, payload) {
-    return PaymentModel.findOneAndUpdate({ orderId }, { $set: payload }, { new: true });
+    const existing = await this.findByOrderId(orderId);
+    if (!existing) {
+      return null;
+    }
+
+    const names = { '#updatedAt': 'updatedAt' };
+    const values = { ':updatedAt': nowIso() };
+    const sets = ['#updatedAt = :updatedAt'];
+
+    Object.entries(payload).forEach(([key, value]) => {
+      names[`#${key}`] = key;
+      values[`:${key}`] = value instanceof Date ? value.toISOString() : value;
+      sets.push(`#${key} = :${key}`);
+    });
+
+    const result = await docClient.send(
+      new UpdateCommand({
+        TableName: tableName(),
+        Key: { paymentId: existing.paymentId },
+        UpdateExpression: `SET ${sets.join(', ')}`,
+        ExpressionAttributeNames: names,
+        ExpressionAttributeValues: values,
+        ConditionExpression: 'attribute_exists(paymentId)',
+        ReturnValues: 'ALL_NEW',
+      })
+    );
+
+    return result.Attributes || null;
   }
 
   async list() {
-    return PaymentModel.find().sort({ createdAt: -1 });
+    const result = await docClient.send(
+      new QueryCommand({
+        TableName: tableName(),
+        IndexName: 'paymentStatus-createdAt-index',
+        KeyConditionExpression: 'paymentStatus = :status',
+        ExpressionAttributeValues: {
+          ':status': 'PENDING',
+        },
+        ScanIndexForward: false,
+      })
+    );
+
+    return result.Items || [];
   }
 
   async listRefunds() {
-    return PaymentModel.find({ paymentStatus: 'REFUNDED' }).sort({ createdAt: -1 });
+    const result = await docClient.send(
+      new QueryCommand({
+        TableName: tableName(),
+        IndexName: 'paymentStatus-createdAt-index',
+        KeyConditionExpression: 'paymentStatus = :status',
+        ExpressionAttributeValues: {
+          ':status': 'REFUNDED',
+        },
+        ScanIndexForward: false,
+      })
+    );
+
+    return result.Items || [];
   }
 }
 

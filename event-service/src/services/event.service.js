@@ -1,10 +1,10 @@
-const { AppError } = require('../../../E-Commerce/backend/src/utils/AppError');
-const { parsePagination } = require('../../../E-Commerce/backend/src/utils/pagination');
+const { AppError } = require('../utils/AppError');
+const { parsePagination } = require('../utils/pagination');
 
 class EventService {
-  constructor(eventRepository, inventoryRepository) {
+  constructor(eventRepository, inventoryClient) {
     this.eventRepository = eventRepository;
-    this.inventoryRepository = inventoryRepository;
+    this.inventoryClient = inventoryClient;
   }
 
   async listEvents(query) {
@@ -35,8 +35,8 @@ class EventService {
       throw new AppError('Event not found', 404);
     }
 
-    const inventory = await this.inventoryRepository.findByEventId(eventId);
-    return { ...event.toObject(), inventory: inventory ? inventory.toObject() : null };
+    const inventory = await this.inventoryClient.getAvailability(eventId).catch(() => null);
+    return { ...event, inventory };
   }
 
   async createEvent(payload) {
@@ -70,7 +70,7 @@ class EventService {
   }
 
   async refreshAvailability(eventId) {
-    const inventory = await this.inventoryRepository.findByEventId(eventId);
+    const inventory = await this.inventoryClient.getAvailability(eventId).catch(() => null);
     if (!inventory) {
       return null;
     }

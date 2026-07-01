@@ -1,15 +1,15 @@
-const { AppError } = require('../../../E-Commerce/backend/src/utils/AppError');
+const { AppError } = require('../utils/AppError');
 const { v4: uuidv4 } = require('uuid');
 
 class PaymentService {
-  constructor(paymentRepository, orderService, inventoryService) {
+  constructor(paymentRepository, orderClient, inventoryClient) {
     this.paymentRepository = paymentRepository;
-    this.orderService = orderService;
-    this.inventoryService = inventoryService;
+    this.orderClient = orderClient;
+    this.inventoryClient = inventoryClient;
   }
 
   async initiatePayment({ orderId }) {
-    const order = await this.orderService.getOrder(orderId);
+    const order = await this.orderClient.getOrder(orderId);
     if (order.status !== 'PENDING_PAYMENT') {
       throw new AppError('Payment can only be initiated for pending orders', 409);
     }
@@ -44,8 +44,9 @@ class PaymentService {
         paymentStatus: 'SUCCESS',
         callbackProcessedAt: new Date(),
       });
-      await this.inventoryService.confirmTickets((await this.orderService.getOrder(payment.orderId)).eventId, (await this.orderService.getOrder(payment.orderId)).quantity);
-      await this.orderService.confirmOrder(payment.orderId);
+      const order = await this.orderClient.getOrder(payment.orderId);
+      await this.inventoryClient.confirmTickets(order.eventId, order.quantity);
+      await this.orderClient.confirmOrder(payment.orderId);
       return payment;
     }
 
@@ -53,7 +54,7 @@ class PaymentService {
       paymentStatus: 'FAILED',
       callbackProcessedAt: new Date(),
     });
-    await this.orderService.cancelOrder(payment.orderId, 'Payment failed');
+    await this.orderClient.cancelOrder(payment.orderId, 'Payment failed');
     return payment;
   }
 

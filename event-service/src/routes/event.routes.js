@@ -1,8 +1,8 @@
 const express = require('express');
 const { body, param, query } = require('express-validator');
-const { EventController } = require('./controller');
-const { validateRequest } = require('../../../E-Commerce/backend/src/middlewares/validateRequest');
-const { requireRole } = require('../../../E-Commerce/backend/src/middlewares/auth');
+const { EventController } = require('../controllers/event.controller');
+const { validateRequest } = require('../middlewares/validateRequest');
+const { requireRole } = require('../middlewares/auth');
 
 module.exports = function createEventRoutes(eventService) {
   const router = express.Router();

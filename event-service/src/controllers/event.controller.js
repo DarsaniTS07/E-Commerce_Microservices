@@ -1,23 +1,23 @@
-const { asyncHandler } = require('../../../E-Commerce/backend/src/utils/asyncHandler');
-const { getActorId } = require('../../../E-Commerce/backend/src/utils/requestContext');
+const { asyncHandler } = require('../utils/asyncHandler');
+const { getActorId } = require('../utils/requestContext');
 
 class EventController {
-  constructor(productService) {
-    this.productService = productService;
+  constructor(eventService) {
+    this.eventService = eventService;
   }
 
   listEvents = asyncHandler(async (req, res) => {
-    const data = await this.productService.listEvents(req.query);
+    const data = await this.eventService.listEvents(req.query);
     res.json({ success: true, message: 'Operation successful', data });
   });
 
   getEventDetails = asyncHandler(async (req, res) => {
-    const data = await this.productService.getEventDetails(req.params.eventId);
+    const data = await this.eventService.getEventDetails(req.params.eventId);
     res.json({ success: true, message: 'Operation successful', data });
   });
 
   createEvent = asyncHandler(async (req, res) => {
-    const data = await this.productService.createEvent({
+    const data = await this.eventService.createEvent({
       ...req.body,
       createdBy: getActorId(req, req.body.createdBy),
     });
@@ -25,12 +25,12 @@ class EventController {
   });
 
   updateEvent = asyncHandler(async (req, res) => {
-    const data = await this.productService.updateEvent(req.params.eventId, req.body);
+    const data = await this.eventService.updateEvent(req.params.eventId, req.body);
     res.json({ success: true, message: 'Operation successful', data });
   });
 
   deleteEvent = asyncHandler(async (req, res) => {
-    const data = await this.productService.deleteEvent(req.params.eventId);
+    const data = await this.eventService.deleteEvent(req.params.eventId);
     res.json({ success: true, message: 'Operation successful', data });
   });
 }

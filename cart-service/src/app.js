@@ -1,17 +1,21 @@
 const express = require('express');
-const swaggerUi = require('swagger-ui-express');
-
 
 const { requestLogger } = require('./middlewares/requestLogger');
 const { attachAuthContext } = require('./middlewares/auth');
 const { notFoundHandler, errorHandler } = require('./middlewares/errorHandler');
-const { buildServices } = require('./services');
-const swaggerSpec = require('./config/swagger');
+const createCartRoutes = require('./routes/cart.routes');
+const { CartService } = require('./services/cart.service');
+const { CartRepository } = require('./repositories/cart.repository');
+const { InventoryClient } = require('./clients/inventory.client');
+const { WaitlistClient } = require('./clients/waitlist.client');
 
 
 function createApp() {
   const app = express();
-  const services = buildServices();
+  const cartRepository = new CartRepository();
+  const inventoryClient = new InventoryClient(process.env.INVENTORY_SERVICE_BASE_URL);
+  const waitlistClient = new WaitlistClient(process.env.WAITLIST_SERVICE_BASE_URL);
+  const cartService = new CartService(cartRepository, inventoryClient, waitlistClient);
 
   app.use(express.json());
   app.use(attachAuthContext);
@@ -21,16 +25,7 @@ function createApp() {
     res.json({ success: true, message: 'Operation successful', data: { status: 'ok' } });
   });
 
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-
-  app.use('/events', require('./services/event/routes')(services.eventService));
-  app.use('/inventory', require('./services/inventory/routes')(services.inventoryService));
-  app.use('/cart', require('./services/cart/routes')(services.cartService));
-  app.use('/orders', require('./services/order/routes')(services.orderService));
-  app.use('/payments', require('./services/payment/routes')(services.paymentService));
-  app.use('/waitlist', require('./services/waitlist/routes')(services.waitlistService));
-  app.use('/notifications', require('./services/notification/routes')(services.notificationService));
+  app.use('/cart', createCartRoutes(cartService));
 
   app.use(notFoundHandler);
   app.use(errorHandler);

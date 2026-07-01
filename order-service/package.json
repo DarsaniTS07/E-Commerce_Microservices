@@ -1,19 +1,21 @@
 {
-  "name": "ticket-booking-platform-backend",
+  "name": "@ticketing/order-service",
   "version": "1.0.0",
   "description": "Production-style modular backend for a ticket booking platform",
-  "main": "src/server.js",
+  "main": "handler.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "start:lambda": "node -e \"require('./handler')\""
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.893.0",
+    "@aws-sdk/lib-dynamodb": "^3.893.0",
     "cors": "^2.8.6",
     "dotenv": "^16.6.1",
     "express": "^4.22.2",
     "express-validator": "^7.2.0",
-    "mongodb": "^7.3.0",
-    "mongoose": "^8.24.1",
+    "serverless-http": "^3.2.0",
     "swagger-jsdoc": "^6.3.0",
     "swagger-ui-express": "^5.0.1",
     "uuid": "^10.0.0"

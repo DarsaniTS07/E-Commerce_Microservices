@@ -1,4 +1,17 @@
-const { EventModel } = require('../model/event.model');
+const { v4: uuidv4 } = require('uuid');
+const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
+const { DynamoDBDocumentClient, GetCommand, PutCommand, QueryCommand, UpdateCommand } = require('@aws-sdk/lib-dynamodb');
+
+const client = new DynamoDBClient({ region: process.env.AWS_REGION || 'ap-south-1' });
+const docClient = DynamoDBDocumentClient.from(client);
+
+function tableName() {
+  return process.env.EVENT_TABLE_NAME;
+}
+
+function nowIso() {
+  return new Date().toISOString();
+}
 
 class EventRepository {
   activeFilter() {
@@ -6,52 +19,136 @@ class EventRepository {
   }
 
   async create(payload) {
-    return EventModel.create(payload);
+    const item = {
+      eventId: payload.eventId || uuidv4(),
+      title: payload.title,
+      description: payload.description,
+      category: payload.category,
+      venue: payload.venue,
+      city: payload.city,
+      eventDate: new Date(payload.eventDate).toISOString(),
+      eventTime: payload.eventTime,
+      status: payload.status || 'DRAFT',
+      availableStatus: payload.availableStatus || 'HIDDEN',
+      availableTicketCount: Number(payload.availableTicketCount || 0),
+      ticketPrice: Number(payload.ticketPrice || 0),
+      createdBy: payload.createdBy || null,
+      isDeleted: false,
+      deletedAt: null,
+      createdAt: nowIso(),
+      updatedAt: nowIso(),
+    };
+
+    await docClient.send(
+      new PutCommand({
+        TableName: tableName(),
+        Item: item,
+        ConditionExpression: 'attribute_not_exists(eventId)',
+      })
+    );
+
+    return item;
   }
 
   async findById(eventId) {
-    return EventModel.findOne({ eventId, ...this.activeFilter() });
+    const result = await docClient.send(
+      new GetCommand({
+        TableName: tableName(),
+        Key: { eventId },
+      })
+    );
+
+    const item = result.Item || null;
+    if (!item || item.isDeleted) {
+      return null;
+    }
+
+    return item;
   }
 
   async findByIdIncludingDeleted(eventId) {
-    return EventModel.findOne({ eventId });
+    const result = await docClient.send(
+      new GetCommand({
+        TableName: tableName(),
+        Key: { eventId },
+      })
+    );
+
+    return result.Item || null;
   }
 
   async search(filters, pagination) {
-    const query = { ...this.activeFilter() };
+    const result = await docClient.send(
+      new QueryCommand({
+        TableName: tableName(),
+        IndexName: 'status-eventDate-index',
+        KeyConditionExpression: '#status = :status',
+        ExpressionAttributeNames: {
+          '#status': 'status',
+        },
+        ExpressionAttributeValues: {
+          ':status': filters.status || 'PUBLISHED',
+        },
+        ScanIndexForward: false,
+      })
+    );
 
-    if (filters.city) query.city = new RegExp(filters.city, 'i');
-    if (filters.category) query.category = new RegExp(filters.category, 'i');
-    if (filters.status) query.status = filters.status;
-    if (filters.date) {
-      const date = new Date(filters.date);
-      const nextDay = new Date(date);
-      nextDay.setDate(date.getDate() + 1);
-      query.eventDate = { $gte: date, $lt: nextDay };
-    }
+    const items = (result.Items || []).filter((item) => {
+      if (item.isDeleted) return false;
+      if (filters.city && !String(item.city || '').toLowerCase().includes(String(filters.city).toLowerCase())) return false;
+      if (filters.category && !String(item.category || '').toLowerCase().includes(String(filters.category).toLowerCase())) return false;
+      if (filters.date) {
+        const d1 = new Date(item.eventDate).toISOString().slice(0, 10);
+        const d2 = new Date(filters.date).toISOString().slice(0, 10);
+        if (d1 !== d2) return false;
+      }
+      return true;
+    });
 
-    const [items, total] = await Promise.all([
-      EventModel.find(query).sort(pagination.sort).skip(pagination.skip).limit(pagination.limit),
-      EventModel.countDocuments(query),
-    ]);
-
-    return { items, total };
+    const total = items.length;
+    const start = pagination.skip || 0;
+    const end = start + (pagination.limit || 10);
+    return { items: items.slice(start, end), total };
   }
 
   async updateByEventId(eventId, payload) {
-    return EventModel.findOneAndUpdate(
-      { eventId, ...this.activeFilter() },
-      { $set: payload },
-      { new: true }
+    const existing = await this.findById(eventId);
+    if (!existing) {
+      return null;
+    }
+
+    const names = { '#updatedAt': 'updatedAt' };
+    const values = { ':updatedAt': nowIso() };
+    const sets = ['#updatedAt = :updatedAt'];
+
+    Object.entries(payload).forEach(([key, value]) => {
+      names[`#${key}`] = key;
+      values[`:${key}`] = value instanceof Date ? value.toISOString() : value;
+      sets.push(`#${key} = :${key}`);
+    });
+
+    const result = await docClient.send(
+      new UpdateCommand({
+        TableName: tableName(),
+        Key: { eventId },
+        UpdateExpression: `SET ${sets.join(', ')}`,
+        ExpressionAttributeNames: names,
+        ExpressionAttributeValues: values,
+        ConditionExpression: 'attribute_exists(eventId)',
+        ReturnValues: 'ALL_NEW',
+      })
     );
+
+    return result.Attributes || null;
   }
 
   async softDelete(eventId) {
-    return EventModel.findOneAndUpdate(
-      { eventId, ...this.activeFilter() },
-      { $set: { isDeleted: true, deletedAt: new Date(), status: 'CANCELLED', availableStatus: 'HIDDEN' } },
-      { new: true }
-    );
+    return this.updateByEventId(eventId, {
+      isDeleted: true,
+      deletedAt: new Date().toISOString(),
+      status: 'CANCELLED',
+      availableStatus: 'HIDDEN',
+    });
   }
 
   async syncAvailability(eventId, availableTicketCount) {

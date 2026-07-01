@@ -1,16 +1,13 @@
 require('dotenv').config();
 
-const { connectDatabase } = require('./config/db');
 const { createApp } = require('./app');
 
 async function bootstrap() {
-  await connectDatabase();
-
   const app = createApp();
-  const port = Number(process.env.PORT || 3000);
+  const port = Number(process.env.PORT || 3001);
 
   app.listen(port, () => {
-    console.log(`Ticket Booking Platform API listening on port ${port}`);
+    console.log(`Cart service listening on port ${port}`);
   });
 }
 
