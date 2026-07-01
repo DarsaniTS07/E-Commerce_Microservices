@@ -14,8 +14,8 @@
     "express-validator": "^7.2.0",
     "mongodb": "^7.3.0",
     "mongoose": "^8.24.1",
-    "utils-jsdoc": "^6.3.0",
-    "utils-ui-express": "^5.0.1",
+    "swagger-jsdoc": "^6.3.0",
+    "swagger-ui-express": "^5.0.1",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
