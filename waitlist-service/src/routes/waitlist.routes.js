@@ -1,7 +1,8 @@
 const express = require('express');
 const { body, query, param } = require('express-validator');
-const { WaitlistController } = utils;
-const { validateRequest } = require('../../middlewares/validateRequest');
+const { WaitlistController } = require('../controllers/waitlist.controller');
+const { validateRequest } = require('../middlewares/validateRequest');
+const { requireRole } = require('../middlewares/auth');
 
 module.exports = function createWaitlistRoutes(waitlistService) {
   const router = express.Router();
@@ -11,6 +12,8 @@ module.exports = function createWaitlistRoutes(waitlistService) {
   router.get('/', [query('eventId').isString().notEmpty(), query('userId').isString().notEmpty()], validateRequest, controller.getPosition);
   router.get('/users/:userId/waitlists', [param('userId').isString().notEmpty()], validateRequest, controller.getUserWaitlists);
   router.delete('/', [body('waitlistId').isString().notEmpty()], validateRequest, controller.leaveWaitlist);
+  
+  router.post('/internal/waitlist/process', [body('eventId').isString().notEmpty()], requireRole(['admin']), validateRequest, controller.processWaitlist);
 
   return router;
 };

@@ -1,4 +1,4 @@
-const { AppError } = require('../src/utils/AppError');
+const { AppError } = require('../utils/AppError');
 
 function notFoundHandler(req, res) {
   res.status(404).json({

@@ -1,9 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
-const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
-const { DynamoDBDocumentClient, GetCommand, PutCommand, QueryCommand, UpdateCommand } = require('@aws-sdk/lib-dynamodb');
-
-const client = new DynamoDBClient({ region: process.env.AWS_REGION || 'ap-south-1' });
-const docClient = DynamoDBDocumentClient.from(client);
+const docClient = require('../config/dynamodb');
+const { GetCommand, PutCommand, QueryCommand, UpdateCommand } = require('@aws-sdk/lib-dynamodb');
 
 function tableName() {
   return process.env.PAYMENT_TABLE_NAME;

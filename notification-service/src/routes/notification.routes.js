@@ -1,7 +1,8 @@
 const express = require('express');
-const { param, query } = require('express-validator');
-const { NotificationController } = utils;
-const { validateRequest } = require('../../middlewares/validateRequest');
+const { body, param, query } = require('express-validator');
+const { NotificationController } = require('../controllers/notification.controller');
+const { validateRequest } = require('../middlewares/validateRequest');
+const { requireRole } = require('../middlewares/auth');
 
 module.exports = function createNotificationRoutes(notificationService) {
   const router = express.Router();
@@ -9,6 +10,8 @@ module.exports = function createNotificationRoutes(notificationService) {
 
   router.get('/', [query('userId').optional().isString()], validateRequest, controller.getNotifications);
   router.put('/:notificationId/read', [param('notificationId').isString().notEmpty()], validateRequest, controller.markAsRead);
+  
+  router.post('/internal/notifications', [body('userId').isString().notEmpty(), body('message').isString().notEmpty()], requireRole(['admin']), validateRequest, controller.createNotification);
 
   return router;
 };

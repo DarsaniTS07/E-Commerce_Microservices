@@ -1,12 +1,12 @@
-const { AppError } = require('../../utils/AppError');
-const { minutesFromNow } = require('../../utils/time');
+const { AppError } = require('../utils/AppError');
+const { minutesFromNow } = require('../utils/time');
 
 class WaitlistService {
-  constructor(waitlistRepository, notificationService, inventoryService, productRepository) {
+  constructor(waitlistRepository, inventoryClient, notificationClient, eventClient) {
     this.waitlistRepository = waitlistRepository;
-    this.notificationService = notificationService;
-    this.inventoryService = inventoryService;
-    this.productRepository = productRepository;
+    this.inventoryClient = inventoryClient;
+    this.notificationClient = notificationClient;
+    this.eventClient = eventClient;
   }
 
   async joinWaitlist({ eventId, userId, quantity }) {
@@ -47,7 +47,7 @@ class WaitlistService {
       return null;
     }
 
-    const inventory = await this.inventoryService.reserveTickets(eventId, next.quantity).catch(() => null);
+    const inventory = await this.inventoryClient.reserveTickets(eventId, next.quantity).catch(() => null);
     if (!inventory) {
       return null;
     }
@@ -58,18 +58,18 @@ class WaitlistService {
       expiresAt: minutesFromNow(15),
     });
 
-    const product = await this.productRepository.findById(eventId);
+    const product = await this.eventClient.getEventById(eventId).catch(() => null);
     const message = product
       ? `Tickets are now available for Event ${product.title}. Complete booking within 15 minutes.`
       : 'Tickets are now available. Complete booking within 15 minutes.';
 
-    await this.notificationService.createNotification({
+    await this.notificationClient.createNotification({
       userId: next.userId,
       message,
       status: 'UNREAD',
     });
 
-    await this.productRepository.syncAvailability(eventId, inventory.availableTickets);
+    await this.eventClient.syncAvailability(eventId, inventory.availableTickets);
     return notified;
   }
 }

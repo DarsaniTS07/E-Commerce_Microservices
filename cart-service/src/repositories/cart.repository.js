@@ -1,9 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
-const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
-const { DynamoDBDocumentClient, GetCommand, PutCommand, QueryCommand, UpdateCommand } = require('@aws-sdk/lib-dynamodb');
-
-const client = new DynamoDBClient({ region: process.env.AWS_REGION || 'ap-south-1' });
-const docClient = DynamoDBDocumentClient.from(client);
+const docClient = require('../config/dynamodb');
+const { GetCommand, PutCommand, ScanCommand, UpdateCommand } = require('@aws-sdk/lib-dynamodb');
 
 function tableName() {
   return process.env.CART_TABLE_NAME;
@@ -30,7 +27,6 @@ class CartRepository {
       new PutCommand({
         TableName: tableName(),
         Item: item,
-        ConditionExpression: 'attribute_not_exists(cartId)',
       })
     );
 
@@ -39,52 +35,51 @@ class CartRepository {
 
   async findActiveByUserEvent(userId, eventId) {
     const result = await docClient.send(
-      new QueryCommand({
+      new GetCommand({
         TableName: tableName(),
-        IndexName: 'userId-eventId-index',
-        KeyConditionExpression: 'userId = :userId AND eventId = :eventId',
-        FilterExpression: '#status = :active',
-        ExpressionAttributeNames: { '#status': 'status' },
-        ExpressionAttributeValues: {
-          ':userId': userId,
-          ':eventId': eventId,
-          ':active': 'ACTIVE',
-        },
-        Limit: 1,
+        Key: { userId },
       })
     );
 
-    return (result.Items && result.Items[0]) || null;
+    const item = result.Item || null;
+    if (item && item.eventId === eventId && item.status === 'ACTIVE') {
+      return item;
+    }
+    return null;
   }
 
   async findByCartId(cartId) {
     const result = await docClient.send(
-      new GetCommand({
+      new ScanCommand({
         TableName: tableName(),
-        Key: { cartId },
+        FilterExpression: 'cartId = :cartId',
+        ExpressionAttributeValues: {
+          ':cartId': cartId,
+        },
       })
     );
 
-    return result.Item || null;
+    return result.Items?.[0] || null;
   }
 
   async findByUserId(userId) {
     const result = await docClient.send(
-      new QueryCommand({
+      new GetCommand({
         TableName: tableName(),
-        IndexName: 'userId-createdAt-index',
-        KeyConditionExpression: 'userId = :userId',
-        ExpressionAttributeValues: {
-          ':userId': userId,
-        },
-        ScanIndexForward: false,
+        Key: { userId },
       })
     );
 
-    return result.Items || [];
+    const item = result.Item || null;
+    return item ? [item] : [];
   }
 
   async updateByCartId(cartId, payload) {
+    const existing = await this.findByCartId(cartId);
+    if (!existing) {
+      return null;
+    }
+
     const names = { '#updatedAt': 'updatedAt' };
     const values = { ':updatedAt': nowIso() };
     const sets = ['#updatedAt = :updatedAt'];
@@ -98,11 +93,11 @@ class CartRepository {
     const result = await docClient.send(
       new UpdateCommand({
         TableName: tableName(),
-        Key: { cartId },
+        Key: { userId: existing.userId },
         UpdateExpression: `SET ${sets.join(', ')}`,
         ExpressionAttributeNames: names,
         ExpressionAttributeValues: values,
-        ConditionExpression: 'attribute_exists(cartId)',
+        ConditionExpression: 'attribute_exists(userId)',
         ReturnValues: 'ALL_NEW',
       })
     );
@@ -120,10 +115,9 @@ class CartRepository {
 
   async findExpired(now = new Date()) {
     const result = await docClient.send(
-      new QueryCommand({
+      new ScanCommand({
         TableName: tableName(),
-        IndexName: 'status-reservationExpiry-index',
-        KeyConditionExpression: '#status = :status AND reservationExpiry <= :now',
+        FilterExpression: '#status = :status AND reservationExpiry <= :now',
         ExpressionAttributeNames: {
           '#status': 'status',
         },

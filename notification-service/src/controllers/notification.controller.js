@@ -1,5 +1,5 @@
 const { asyncHandler } = require("../utils/asyncHandler");
-const { getActorId } = require('../../utils/requestContext');
+const { getActorId } = require('../utils/requestContext');
 
 class NotificationController {
   constructor(notificationService) {
@@ -14,6 +14,11 @@ class NotificationController {
   markAsRead = asyncHandler(async (req, res) => {
     const data = await this.notificationService.markAsRead(req.params.notificationId);
     res.json({ success: true, message: 'Operation successful', data });
+  });
+
+  createNotification = asyncHandler(async (req, res) => {
+    const data = await this.notificationService.createNotification(req.body);
+    res.status(201).json({ success: true, message: 'Operation successful', data });
   });
 }
 
