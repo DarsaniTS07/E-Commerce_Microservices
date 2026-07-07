@@ -1,3 +1,5 @@
+const { AppError } = require('../utils/AppError');
+
 class CartClient {
   constructor(baseUrl) {
     this.baseUrl = (baseUrl || '').replace(/\/$/, '');
@@ -6,12 +8,19 @@ class CartClient {
   async getCartById(cartId) {
     const response = await fetch(`${this.baseUrl}/cart/internal/carts/${cartId}`, {
       method: 'GET',
-      headers: { 'x-user-role': 'admin' },
+      headers: {
+        'x-user-id': 'order-service',
+        'x-user-role': 'admin',
+      },
     });
 
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) {
-      throw new Error(payload.message || `Cart service request failed: ${response.status}`);
+      throw new AppError(
+        payload.message || `Cart service request failed: ${response.status}`,
+        response.status,
+        payload.errors || []
+      );
     }
 
     return payload.data;
@@ -22,6 +31,7 @@ class CartClient {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-user-id': 'order-service',
         'x-user-role': 'admin',
       },
       body: JSON.stringify({ orderId }),
@@ -29,7 +39,11 @@ class CartClient {
 
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) {
-      throw new Error(payload.message || `Cart service request failed: ${response.status}`);
+      throw new AppError(
+        payload.message || `Cart service request failed: ${response.status}`,
+        response.status,
+        payload.errors || []
+      );
     }
 
     return payload.data;

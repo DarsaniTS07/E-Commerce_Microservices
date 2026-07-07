@@ -36,7 +36,7 @@ class CartController {
   });
 
   getCartItem = asyncHandler(async (req, res) => {
-    const data = await this.cartService.getCartItem(req.query.userId || req.user?.id, req.params.cartId);
+    const data = await this.cartService.getCartItem(req.query.userId, req.params.cartId);
     res.json({ success: true, message: 'Operation successful', data });
   });
 

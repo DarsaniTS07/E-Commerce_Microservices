@@ -52,10 +52,10 @@ class CartService {
   }
 
   async removeItem({ userId, cartId }) {
-    const cart = await this.cartRepository.findByCartId(cartId);
-    if (!cart || cart.userId !== userId || cart.status !== 'ACTIVE') {
-      throw new AppError('Cart item not found', 404);
-    }
+  const cart = await this.cartRepository.findByCartId(cartId);
+  if (!cart || cart.userId !== userId || cart.status !== 'ACTIVE') {
+    throw new AppError('Cart item not found', 404);
+  }
 
     await this.inventoryClient.releaseTickets(cart.eventId, cart.quantity);
     const removed = await this.cartRepository.removeByCartId(cartId);

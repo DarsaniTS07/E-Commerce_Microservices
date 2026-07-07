@@ -1,3 +1,5 @@
+const { AppError } = require('../utils/AppError');
+
 class WaitlistClient {
   constructor(baseUrl) {
     this.baseUrl = (baseUrl || '').replace(/\/$/, '');
@@ -12,14 +14,20 @@ class WaitlistClient {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-user-id': 'cart-service',
         'x-user-role': 'admin',
       },
       body: JSON.stringify({ eventId }),
     });
 
     const payload = await response.json().catch(() => ({}));
+
     if (!response.ok) {
-      throw new Error(payload.message || `Waitlist service request failed: ${response.status}`);
+      throw new AppError(
+        payload.message || `Waitlist service request failed: ${response.status}`,
+        response.status,
+        payload.errors || []
+      );
     }
 
     return payload.data;
