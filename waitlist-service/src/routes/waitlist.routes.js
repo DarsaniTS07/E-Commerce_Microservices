@@ -1,19 +1,77 @@
-const express = require('express');
-const { body, query, param } = require('express-validator');
-const { WaitlistController } = require('../controllers/waitlist.controller');
-const { validateRequest } = require('../middlewares/validateRequest');
-const { requireRole } = require('../middlewares/auth');
+const express = require("express");
+const { body, query, param } = require("express-validator");
+
+const { WaitlistController } = require("../controllers/waitlist.controller");
+const { validateRequest } = require("../middlewares/validateRequest");
+const { requireAuth, requireRole } = require("../middlewares/auth");
+const { requireInternalApiKey } = require("../middlewares/internalAuth");
 
 module.exports = function createWaitlistRoutes(waitlistService) {
   const router = express.Router();
   const controller = new WaitlistController(waitlistService);
 
-  router.post('/', [body('eventId').isString().notEmpty(), body('userId').isString().notEmpty(), body('quantity').isInt({ min: 1 })], validateRequest, controller.joinWaitlist);
-  router.get('/', [query('eventId').isString().notEmpty(), query('userId').isString().notEmpty()], validateRequest, controller.getPosition);
-  router.get('/users/:userId/waitlists', [param('userId').isString().notEmpty()], validateRequest, controller.getUserWaitlists);
-  router.delete('/', [body('waitlistId').isString().notEmpty()], validateRequest, controller.leaveWaitlist);
-  
-  router.post('/internal/waitlist/process', [body('eventId').isString().notEmpty()], requireRole(['admin']), validateRequest, controller.processWaitlist);
+  // ==========================
+  // Public APIs
+  // ==========================
+
+  router.post(
+    "/",
+    requireAuth,
+    requireRole(["user", "admin"]),
+    [
+      body("eventId").isString().notEmpty(),
+      body("quantity").isInt({ min: 1 }),
+    ],
+    validateRequest,
+    controller.joinWaitlist
+  );
+
+  router.get(
+    "/",
+    requireAuth,
+    requireRole(["user", "admin"]),
+    [
+      query("eventId").isString().notEmpty(),
+    ],
+    validateRequest,
+    controller.getPosition
+  );
+
+  router.get(
+    "/users/:userId/waitlists",
+    requireAuth,
+    requireRole(["user", "admin"]),
+    [
+      param("userId").isString().notEmpty(),
+    ],
+    validateRequest,
+    controller.getUserWaitlists
+  );
+
+  router.delete(
+    "/",
+    requireAuth,
+    requireRole(["user", "admin"]),
+    [
+      body("waitlistId").isString().notEmpty(),
+    ],
+    validateRequest,
+    controller.leaveWaitlist
+  );
+
+  // ==========================
+  // Internal API
+  // ==========================
+
+  router.post(
+    "/internal/waitlist/process",
+    requireInternalApiKey,
+    [
+      body("eventId").isString().notEmpty(),
+    ],
+    validateRequest,
+    controller.processWaitlist
+  );
 
   return router;
 };

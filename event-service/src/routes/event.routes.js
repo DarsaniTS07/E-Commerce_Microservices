@@ -18,7 +18,6 @@ module.exports = function createEventRoutes(eventService) {
 
   router.get(
     "/",
-    attachAuthContext,
     requireAuth,
     requireRole(["user", "admin"]),
     [
@@ -37,7 +36,6 @@ module.exports = function createEventRoutes(eventService) {
 
   router.get(
     "/:eventId",
-    attachAuthContext,
     requireAuth,
     requireRole(["user", "admin"]),
     [param("eventId").isString().notEmpty()],
@@ -55,11 +53,24 @@ module.exports = function createEventRoutes(eventService) {
     controller.getEventDetails
   );
 
+  router.put(
+  "/internal/events/:eventId",
+  requireInternalApiKey,
+  [
+    param("eventId").isString().notEmpty(),
+    body("availableTicketCount").optional().isInt({ min: 0 }),
+    body("availableStatus")
+      .optional()
+      .isIn(["AVAILABLE", "LIMITED", "SOLD_OUT", "HIDDEN"]),
+  ],
+  validateRequest,
+  controller.updateEvent
+);
+
   // Organizer/Admin APIs
 
   router.post(
     "/",
-    attachAuthContext,
     requireAuth,
     requireRole(["organizer", "admin"]),
     [
@@ -106,7 +117,6 @@ module.exports = function createEventRoutes(eventService) {
 
   router.delete(
     "/:eventId",
-    attachAuthContext,
     requireAuth,
     requireRole(["organizer", "admin"]),
     [param("eventId").isString().notEmpty()],

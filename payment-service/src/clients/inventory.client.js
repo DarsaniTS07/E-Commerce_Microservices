@@ -1,22 +1,25 @@
-const { AppError } = require('../utils/AppError');
+const { AppError } = require("../utils/AppError");
 
 class InventoryClient {
   constructor(baseUrl) {
-    this.baseUrl = (baseUrl || '').replace(/\/$/, '');
+    this.baseUrl = (baseUrl || "").replace(/\/$/, "");
   }
 
   async confirmTickets(eventId, quantity) {
-    const response = await fetch(`${this.baseUrl}/inventory/internal/confirm`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-user-id': 'payment-service',
-        'x-user-role': 'admin',
-      },
-      body: JSON.stringify({ eventId, quantity }),
-    });
+    const response = await fetch(
+      `${this.baseUrl}/inventory/internal/confirm`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-internal-api-key": process.env.INTERNAL_API_KEY,
+        },
+        body: JSON.stringify({ eventId, quantity }),
+      }
+    );
 
     const payload = await response.json().catch(() => ({}));
+
     if (!response.ok) {
       throw new AppError(
         payload.message || `Inventory service request failed: ${response.status}`,

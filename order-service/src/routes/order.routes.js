@@ -89,6 +89,16 @@ module.exports = function createOrderRoutes(orderService) {
     controller.confirmOrder
   );
 
+  router.get(
+  "/internal/orders/:orderId",
+  requireInternalApiKey,
+  [
+    param("orderId").isString().notEmpty(),
+  ],
+  validateRequest,
+  controller.getOrder
+);
+
   router.post(
     "/internal/orders/:orderId/cancel",
     requireInternalApiKey,

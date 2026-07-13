@@ -1,17 +1,25 @@
 class EventClient {
   constructor(baseUrl) {
-    this.baseUrl = (baseUrl || '').replace(/\/$/, '');
+    this.baseUrl = (baseUrl || "").replace(/\/$/, "");
   }
 
   async getEventById(eventId) {
-    const response = await fetch(`${this.baseUrl}/events/${eventId}`, {
-      method: 'GET',
-      headers: { 'x-user-role': 'admin' },
-    });
+    const response = await fetch(
+      `${this.baseUrl}/events/internal/events/${eventId}`,
+      {
+        method: "GET",
+        headers: {
+          "x-internal-api-key": process.env.INTERNAL_API_KEY,
+        },
+      }
+    );
 
     const payload = await response.json().catch(() => ({}));
+
     if (!response.ok) {
-      throw new Error(payload.message || `Event service request failed: ${response.status}`);
+      throw new Error(
+        payload.message || `Event service request failed: ${response.status}`
+      );
     }
 
     return payload.data;
@@ -22,25 +30,32 @@ class EventClient {
       availableTicketCount <= 0
         ? "SOLD_OUT"
         : availableTicketCount <= 20
-          ? "LIMITED"
-          : "AVAILABLE";
+        ? "LIMITED"
+        : "AVAILABLE";
 
-    const response = await fetch(`${this.baseUrl}/events/${eventId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-user-role': 'admin',
-      },
-      body: JSON.stringify({
-        availableTicketCount,
-        availableStatus,
-      }),
-    });
+    const response = await fetch(
+      `${this.baseUrl}/events/internal/events/${eventId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "x-internal-api-key": process.env.INTERNAL_API_KEY,
+        },
+        body: JSON.stringify({
+          availableTicketCount,
+          availableStatus,
+        }),
+      }
+    );
 
     const payload = await response.json().catch(() => ({}));
+
     if (!response.ok) {
-      throw new Error(payload.message || `Event service request failed: ${response.status}`);
+      throw new Error(
+        payload.message || `Event service request failed: ${response.status}`
+      );
     }
+
     return payload.data;
   }
 }

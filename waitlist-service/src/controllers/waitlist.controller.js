@@ -13,13 +13,21 @@ class WaitlistController {
     res.status(201).json({ success: true, message: 'Operation successful', data });
   });
 
-  getPosition = asyncHandler(async (req, res) => {
-    const data = await this.waitlistService.getPosition(req.query);
-    res.json({ success: true, message: 'Operation successful', data });
+ getPosition = asyncHandler(async (req, res) => {
+  const data = await this.waitlistService.getPosition({
+    eventId: req.query.eventId,
+    userId: req.user.id,
   });
 
+  res.json({
+    success: true,
+    message: "Operation successful",
+    data,
+  });
+});
+
   getUserWaitlists = asyncHandler(async (req, res) => {
-    const data = await this.waitlistService.getUserWaitlists(req.params.userId);
+    const data = await this.waitlistService.getUserWaitlists(req.user.id);
     res.json({ success: true, message: 'Operation successful', data });
   });
 

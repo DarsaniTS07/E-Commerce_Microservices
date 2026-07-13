@@ -1,6 +1,6 @@
 class NotificationClient {
   constructor(baseUrl) {
-    this.baseUrl = (baseUrl || '').replace(/\/$/, '');
+    this.baseUrl = (baseUrl || "").replace(/\/$/, "");
   }
 
   async createNotification(payload) {
@@ -8,18 +8,24 @@ class NotificationClient {
       return null;
     }
 
-    const response = await fetch(`${this.baseUrl}/notifications/internal/notifications`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-user-role': 'admin',
-      },
-      body: JSON.stringify(payload),
-    });
+    const response = await fetch(
+      `${this.baseUrl}/notifications/internal/notifications`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-internal-api-key": process.env.INTERNAL_API_KEY,
+        },
+        body: JSON.stringify(payload),
+      }
+    );
 
     const body = await response.json().catch(() => ({}));
+
     if (!response.ok) {
-      throw new Error(body.message || `Notification service request failed: ${response.status}`);
+      throw new Error(
+        body.message || `Notification service request failed: ${response.status}`
+      );
     }
 
     return body.data;
