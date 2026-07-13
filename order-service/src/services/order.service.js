@@ -2,12 +2,20 @@ const { AppError } = require('../utils/AppError');
 const { v4: uuidv4 } = require('uuid');
 
 class OrderService {
-  constructor(orderRepository, inventoryClient, eventClient, waitlistClient, cartClient) {
+  constructor(
+    orderRepository,
+    inventoryClient,
+    eventClient,
+    waitlistClient,
+    cartClient,
+    snsClient
+  ) {
     this.orderRepository = orderRepository;
     this.inventoryClient = inventoryClient;
     this.eventClient = eventClient;
     this.waitlistClient = waitlistClient;
     this.cartClient = cartClient;
+    this.snsClient = snsClient;
   }
 
   async createFromCartId(cartId) {
@@ -37,6 +45,18 @@ class OrderService {
     });
 
     await this.cartClient.checkoutCart(cart.cartId, order.orderId).catch(() => null);
+
+    await this.snsClient.publish({
+      eventType: "OrderCreated",
+      orderId: order.orderId,
+      userId: order.userId,
+      eventId: order.eventId,
+      quantity: order.quantity,
+      amount: order.amount,
+      message: "Your order has been created successfully."
+    }).catch((err) => {
+      console.error("Failed to publish OrderCreated event:", err);
+    });
 
     return order;
   }

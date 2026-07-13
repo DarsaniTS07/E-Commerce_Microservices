@@ -8,7 +8,7 @@ class InventoryClient {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-user-role': 'admin',
+        'x-internal-api-key': process.env.INTERNAL_API_KEY,
       },
       body: JSON.stringify({ eventId, quantity }),
     });

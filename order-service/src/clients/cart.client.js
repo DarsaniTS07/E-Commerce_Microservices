@@ -9,8 +9,7 @@ class CartClient {
     const response = await fetch(`${this.baseUrl}/cart/internal/carts/${cartId}`, {
       method: 'GET',
       headers: {
-        'x-user-id': 'order-service',
-        'x-user-role': 'admin',
+        'x-internal-api-key': process.env.INTERNAL_API_KEY
       },
     });
 
@@ -31,8 +30,7 @@ class CartClient {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-user-id': 'order-service',
-        'x-user-role': 'admin',
+        'x-internal-api-key': process.env.INTERNAL_API_KEY
       },
       body: JSON.stringify({ orderId }),
     });

@@ -9,20 +9,20 @@ class CartController {
   addItem = asyncHandler(async (req, res) => {
     const data = await this.cartService.addItem({
       ...req.body,
-      userId: getActorId(req, req.body.userId),
+      userId: getActorId(req),
     });
     res.status(201).json({ success: true, message: 'Operation successful', data });
   });
 
   viewCart = asyncHandler(async (req, res) => {
-    const data = await this.cartService.viewCart(getActorId(req, req.query.userId));
+    const data = await this.cartService.viewCart(getActorId(req));
     res.json({ success: true, message: 'Operation successful', data });
   });
 
   updateQuantity = asyncHandler(async (req, res) => {
     const data = await this.cartService.updateQuantity({
       ...req.body,
-      userId: getActorId(req, req.body.userId),
+      userId: getActorId(req),
     });
     res.json({ success: true, message: 'Operation successful', data });
   });
@@ -30,13 +30,17 @@ class CartController {
   removeItem = asyncHandler(async (req, res) => {
     const data = await this.cartService.removeItem({
       ...req.body,
-      userId: getActorId(req, req.body.userId),
+      userId: getActorId(req),
     });
     res.json({ success: true, message: 'Operation successful', data });
   });
 
   getCartItem = asyncHandler(async (req, res) => {
-    const data = await this.cartService.getCartItem(req.query.userId, req.params.cartId);
+    const data = await this.cartService.getCartItem(
+    req.query.userId,
+    req.params.cartId
+);
+  
     res.json({ success: true, message: 'Operation successful', data });
   });
 

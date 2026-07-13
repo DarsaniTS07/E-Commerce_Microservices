@@ -17,7 +17,7 @@ class OrderController {
   });
 
   getUserOrders = asyncHandler(async (req, res) => {
-    const data = await this.orderService.getUserOrders(getActorId(req, req.params.userId));
+const data = await this.orderService.getUserOrders(getActorId(req));
     res.json({ success: true, message: 'Operation successful', data });
   });
 

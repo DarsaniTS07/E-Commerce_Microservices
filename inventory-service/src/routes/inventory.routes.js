@@ -3,16 +3,21 @@ const { body, param, query } = require("express-validator");
 
 const { InventoryController } = require("../controllers/inventory.controller");
 const { validateRequest } = require("../middlewares/validateRequest");
-const { requireRole } = require("../middlewares/auth");
+const { requireAuth, requireRole } = require("../middlewares/auth");
+const { requireInternalApiKey } = require("../middlewares/internalAuth");
 
 module.exports = function createInventoryRoutes(inventoryService) {
   const router = express.Router();
   const controller = new InventoryController(inventoryService);
 
-  // ---------- CRUD APIs ----------
+  // ==========================
+  // User APIs
+  // ==========================
 
   router.get(
     "/",
+    requireAuth,
+    requireRole(["user", "admin"]),
     [query("eventId").optional().isString()],
     validateRequest,
     controller.listInventory
@@ -20,6 +25,8 @@ module.exports = function createInventoryRoutes(inventoryService) {
 
   router.get(
     "/:eventId",
+    requireAuth,
+    requireRole(["user", "admin"]),
     [param("eventId").isString().notEmpty()],
     validateRequest,
     controller.getInventory
@@ -27,72 +34,77 @@ module.exports = function createInventoryRoutes(inventoryService) {
 
   router.post(
     "/",
+    requireAuth,
+    requireRole(["admin"]),
     [
       body("eventId").isString().notEmpty(),
       body("totalTickets").isInt({ min: 0 }),
       body("availableTickets").isInt({ min: 0 }),
       body("reservedTickets").optional().isInt({ min: 0 }),
     ],
-    requireRole(["admin"]),
     validateRequest,
     controller.createInventory
   );
 
   router.put(
     "/:eventId",
+    requireAuth,
+    requireRole(["admin"]),
     [
       param("eventId").isString().notEmpty(),
       body("totalTickets").optional().isInt({ min: 0 }),
       body("availableTickets").optional().isInt({ min: 0 }),
       body("reservedTickets").optional().isInt({ min: 0 }),
     ],
-    requireRole(["admin"]),
     validateRequest,
     controller.updateInventory
   );
 
   router.delete(
     "/:eventId",
-    [param("eventId").isString().notEmpty()],
+    requireAuth,
     requireRole(["admin"]),
+    [param("eventId").isString().notEmpty()],
     validateRequest,
     controller.deleteInventory
   );
 
-  // ---------- Internal APIs ----------
+  // ==========================
+  // Internal APIs
+  // ==========================
 
-  router.post(
-    "/internal/reserve",
-    [
-      body("eventId").isString().notEmpty(),
-      body("quantity").isInt({ min: 1 }),
-    ],
-    requireRole(["admin"]),
-    validateRequest,
-    controller.reserveTickets
-  );
+router.post(
+  "/internal/reserve",
+  requireInternalApiKey,
+  [
+    body("eventId").isString().notEmpty(),
+    body("quantity").isInt({ min: 1 }),
+  ],
+  validateRequest,
+  controller.reserveTickets
+);
 
-  router.post(
-    "/internal/release",
-    [
-      body("eventId").isString().notEmpty(),
-      body("quantity").isInt({ min: 1 }),
-    ],
-    requireRole(["admin"]),
-    validateRequest,
-    controller.releaseTickets
-  );
+router.post(
+  "/internal/release",
+  requireInternalApiKey,
+  [
+    body("eventId").isString().notEmpty(),
+    body("quantity").isInt({ min: 1 }),
+  ],
+  validateRequest,
+  controller.releaseTickets
+);
 
-  router.post(
-    "/internal/confirm",
-    [
-      body("eventId").isString().notEmpty(),
-      body("quantity").isInt({ min: 1 }),
-    ],
-    requireRole(["admin"]),
-    validateRequest,
-    controller.confirmTickets
-  );
+router.post(
+  "/internal/confirm",
+  requireInternalApiKey,
+  [
+    body("eventId").isString().notEmpty(),
+    body("quantity").isInt({ min: 1 }),
+  ],
+  validateRequest,
+  controller.confirmTickets
+);
 
   return router;
 };

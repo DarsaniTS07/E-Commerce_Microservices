@@ -8,6 +8,7 @@ const { PaymentService } = require('./services/payment.service');
 const { PaymentRepository } = require('./repositories/payment.repository');
 const { OrderClient } = require('./clients/order.client');
 const { InventoryClient } = require('./clients/inventory.client');
+const { SnsClient } = require('./clients/sns.client');
 
 
 function createApp() {
@@ -15,7 +16,14 @@ function createApp() {
   const paymentRepository = new PaymentRepository();
   const orderClient = new OrderClient(process.env.ORDER_SERVICE_BASE_URL);
   const inventoryClient = new InventoryClient(process.env.INVENTORY_SERVICE_BASE_URL);
-  const paymentService = new PaymentService(paymentRepository, orderClient, inventoryClient);
+  const snsClient = new SnsClient();
+  const paymentService = new PaymentService(
+  paymentRepository,
+  orderClient,
+  inventoryClient,
+  snsClient
+);
+  
 
   app.use(express.json());
   app.use(attachAuthContext);

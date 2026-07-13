@@ -2,10 +2,11 @@ const { AppError } = require('../utils/AppError');
 const { v4: uuidv4 } = require('uuid');
 
 class PaymentService {
-  constructor(paymentRepository, orderClient, inventoryClient) {
+  constructor(paymentRepository, orderClient, inventoryClient, snsClient) {
     this.paymentRepository = paymentRepository;
     this.orderClient = orderClient;
     this.inventoryClient = inventoryClient;
+    this.snsClient = snsClient;
   }
 
   async initiatePayment({ orderId }) {
@@ -27,36 +28,74 @@ class PaymentService {
     });
   }
 
-  async handleCallback(payload) {
-    const providerReference = payload.providerReference || payload.paymentId;
-    let payment = providerReference ? await this.paymentRepository.findByProviderReference(providerReference) : await this.paymentRepository.findByOrderId(payload.orderId);
+ async handleCallback(payload) {
+  const providerReference = payload.providerReference || payload.paymentId;
 
-    if (!payment) {
-      throw new AppError('Payment record not found', 404);
-    }
+  let payment = providerReference
+    ? await this.paymentRepository.findByProviderReference(providerReference)
+    : await this.paymentRepository.findByOrderId(payload.orderId);
 
-    if (payment.paymentStatus === 'SUCCESS' || payment.paymentStatus === 'FAILED' || payment.paymentStatus === 'REFUNDED') {
-      return payment;
-    }
+  if (!payment) {
+    throw new AppError('Payment record not found', 404);
+  }
 
-    if (payload.status === 'SUCCESS') {
-      payment = await this.paymentRepository.updateByOrderId(payment.orderId, {
-        paymentStatus: 'SUCCESS',
-        callbackProcessedAt: new Date(),
-      });
-      const order = await this.orderClient.getOrder(payment.orderId);
-      await this.inventoryClient.confirmTickets(order.eventId, order.quantity);
-      await this.orderClient.confirmOrder(payment.orderId);
-      return payment;
-    }
-
-    payment = await this.paymentRepository.updateByOrderId(payment.orderId, {
-      paymentStatus: 'FAILED',
-      callbackProcessedAt: new Date(),
-    });
-    await this.orderClient.cancelOrder(payment.orderId, 'Payment failed');
+  if (
+    payment.paymentStatus === 'SUCCESS' ||
+    payment.paymentStatus === 'FAILED' ||
+    payment.paymentStatus === 'REFUNDED'
+  ) {
     return payment;
   }
+
+  if (payload.status === 'SUCCESS') {
+
+    payment = await this.paymentRepository.updateByOrderId(payment.orderId, {
+      paymentStatus: 'SUCCESS',
+      callbackProcessedAt: new Date(),
+    });
+
+    const order = await this.orderClient.getOrder(payment.orderId);
+
+    await this.inventoryClient.confirmTickets(order.eventId, order.quantity);
+
+    await this.orderClient.confirmOrder(payment.orderId);
+
+    await this.snsClient.publish({
+      eventType: "PaymentSucceeded",
+      paymentId: payment.paymentId,
+      orderId: payment.orderId,
+      userId: order.userId,
+      amount: payment.amount,
+      message: "Payment completed successfully."
+    }).catch((err) => {
+      console.error("Failed to publish PaymentSucceeded event:", err);
+    });
+
+    return payment;
+  }
+
+  payment = await this.paymentRepository.updateByOrderId(payment.orderId, {
+    paymentStatus: 'FAILED',
+    callbackProcessedAt: new Date(),
+  });
+
+  const failedOrder = await this.orderClient.getOrder(payment.orderId);
+
+  await this.orderClient.cancelOrder(payment.orderId, 'Payment failed');
+
+  await this.snsClient.publish({
+    eventType: "PaymentFailed",
+    paymentId: payment.paymentId,
+    orderId: payment.orderId,
+    userId: failedOrder.userId,
+    amount: payment.amount,
+    message: "Payment failed."
+  }).catch((err) => {
+    console.error("Failed to publish PaymentFailed event:", err);
+  });
+
+  return payment;
+}
 
   async getPaymentStatus(orderId) {
     const payment = await this.paymentRepository.findByOrderId(orderId);

@@ -1,5 +1,5 @@
-function getActorId(req, fallback = null) {
-  return req.user?.id || fallback;
+function getActorId(req) {
+  return req.user.id;
 }
 
 function getActorRole(req, fallback = 'user') {

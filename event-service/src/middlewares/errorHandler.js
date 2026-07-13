@@ -17,11 +17,13 @@ function errorHandler(error, req, res, next) {
     return res.status(statusCode).json({ success: false, message, errors });
   }
 
-  return res.status(statusCode).json({
-    success: false,
-    message,
-    errors,
-  });
+console.error(error);
+
+return res.status(statusCode).json({
+  success: false,
+  message,
+  stack: error.stack,
+});
 }
 
 module.exports = { notFoundHandler, errorHandler };

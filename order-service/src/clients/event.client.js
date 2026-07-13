@@ -1,17 +1,29 @@
+const { AppError } = require("../utils/AppError");
+
 class EventClient {
   constructor(baseUrl) {
-    this.baseUrl = (baseUrl || '').replace(/\/$/, '');
+    this.baseUrl = (baseUrl || "").replace(/\/$/, "");
   }
 
   async getEventById(eventId) {
-    const response = await fetch(`${this.baseUrl}/events/${eventId}`, {
-      method: 'GET',
-      headers: { 'x-user-role': 'admin' },
-    });
+    const response = await fetch(
+      `${this.baseUrl}/events/internal/events/${eventId}`,
+      {
+        method: "GET",
+        headers: {
+          "x-internal-api-key": process.env.INTERNAL_API_KEY,
+        },
+      }
+    );
 
     const payload = await response.json().catch(() => ({}));
+
     if (!response.ok) {
-      throw new Error(payload.message || `Event service request failed: ${response.status}`);
+      throw new AppError(
+        payload.message || `Event service request failed: ${response.status}`,
+        response.status,
+        payload.errors || []
+      );
     }
 
     return payload.data;

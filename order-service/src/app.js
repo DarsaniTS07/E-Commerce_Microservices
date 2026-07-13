@@ -10,6 +10,7 @@ const { CartClient } = require('./clients/cart.client');
 const { EventClient } = require('./clients/event.client');
 const { InventoryClient } = require('./clients/inventory.client');
 const { WaitlistClient } = require('./clients/waitlist.client');
+const { SnsClient } = require('./clients/sns.client');
 
 
 function createApp() {
@@ -19,7 +20,15 @@ function createApp() {
   const eventClient = new EventClient(process.env.EVENT_SERVICE_BASE_URL);
   const inventoryClient = new InventoryClient(process.env.INVENTORY_SERVICE_BASE_URL);
   const waitlistClient = new WaitlistClient(process.env.WAITLIST_SERVICE_BASE_URL);
-  const orderService = new OrderService(orderRepository, inventoryClient, eventClient, waitlistClient, cartClient);
+  const snsClient = new SnsClient();
+  const orderService = new OrderService(
+  orderRepository,
+  inventoryClient,
+  eventClient,
+  waitlistClient,
+  cartClient,
+  snsClient
+);
 
   app.use(express.json());
   app.use(attachAuthContext);

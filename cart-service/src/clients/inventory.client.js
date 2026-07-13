@@ -1,25 +1,37 @@
-const { AppError } = require('../utils/AppError');
+const { AppError } = require("../utils/AppError");
 
 class InventoryClient {
   constructor(baseUrl) {
-    this.baseUrl = (baseUrl || '').replace(/\/$/, '');
+    this.baseUrl = (baseUrl || "").replace(/\/$/, "");
   }
 
   async reserveTickets(eventId, quantity) {
-    return this.#post('/inventory/internal/reserve', { eventId, quantity });
+    return this.#post("/inventory/internal/reserve", {
+      eventId,
+      quantity,
+    });
   }
 
   async releaseTickets(eventId, quantity) {
-    return this.#post('/inventory/internal/release', { eventId, quantity });
+    return this.#post("/inventory/internal/release", {
+      eventId,
+      quantity,
+    });
+  }
+
+  async confirmTickets(eventId, quantity) {
+    return this.#post("/inventory/internal/confirm", {
+      eventId,
+      quantity,
+    });
   }
 
   async #post(path, body) {
     const response = await fetch(`${this.baseUrl}${path}`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'x-user-id': 'cart-service',
-        'x-user-role': 'admin',
+        "Content-Type": "application/json",
+        "x-internal-api-key": process.env.INTERNAL_API_KEY,
       },
       body: JSON.stringify(body),
     });
