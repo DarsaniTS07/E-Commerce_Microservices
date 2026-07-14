@@ -1,4 +1,4 @@
-const { AppError } = require('../utils/AppError');
+const { AppError } = require("../utils/AppError");
 
 class NotificationService {
   constructor(notificationRepository) {
@@ -17,13 +17,20 @@ class NotificationService {
     return this.notificationRepository.list();
   }
 
-  async markAsRead(notificationId) {
-    const notification = await this.notificationRepository.markAsRead(notificationId);
+  async markAsRead(notificationId, userId) {
+    const notification =
+      await this.notificationRepository.findByNotificationId(notificationId);
+
     if (!notification) {
-      throw new AppError('Notification not found', 404);
+      throw new AppError("Notification not found", 404);
     }
 
-    return notification;
+    // Prevent users from marking another user's notification as read.
+    if (notification.userId !== userId) {
+      throw new AppError("Forbidden", 403);
+    }
+
+    return this.notificationRepository.markAsRead(notificationId);
   }
 }
 
