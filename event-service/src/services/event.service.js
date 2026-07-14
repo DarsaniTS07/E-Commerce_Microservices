@@ -47,17 +47,30 @@ class EventService {
     return { ...event, inventory };
   }
 
-  async createEvent(payload) {
-    const event = await this.eventRepository.create({
-      ...payload,
-      status: payload.status || 'PUBLISHED',
-      availableStatus: 'HIDDEN',
-      availableTicketCount: Number(payload.availableTicketCount || 0),
-      createdBy: payload.createdBy || null,
-    });
+ async createEvent(payload) {
+  const totalTickets =
+    Number(payload.totalTickets ?? payload.availableTicketCount ?? 0);
 
-    return event;
+  const event = await this.eventRepository.create({
+    ...payload,
+    status: payload.status || "PUBLISHED",
+    availableStatus: totalTickets > 0 ? "AVAILABLE" : "SOLD_OUT",
+    availableTicketCount: totalTickets,
+    createdBy: payload.createdBy || null,
+  });
+
+  try {
+    await this.inventoryClient.createInventory({
+      eventId: event.eventId,
+      totalTickets,
+      availableTickets: totalTickets,
+    });
+  } catch (err) {
+    console.error("Failed to create inventory:", err.message);
   }
+
+  return event;
+}
 
   async updateEvent(eventId, payload) {
     const updated = await this.eventRepository.updateByEventId(eventId, payload);

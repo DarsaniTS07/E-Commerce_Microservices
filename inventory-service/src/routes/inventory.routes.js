@@ -73,6 +73,28 @@ module.exports = function createInventoryRoutes(inventoryService) {
   // Internal APIs
   // ==========================
 
+router.get(
+  "/internal/inventory/:eventId",
+  requireInternalApiKey,
+  [
+    param("eventId").isString().notEmpty(),
+  ],
+  validateRequest,
+  controller.getInventory
+);
+
+router.post(
+  "/internal/inventory",
+  requireInternalApiKey,
+  [
+    body("eventId").isString().notEmpty(),
+    body("totalTickets").isInt({ min: 0 }),
+    body("availableTickets").isInt({ min: 0 }),
+  ],
+  validateRequest,
+  controller.createInventory
+);
+
 router.post(
   "/internal/reserve",
   requireInternalApiKey,
