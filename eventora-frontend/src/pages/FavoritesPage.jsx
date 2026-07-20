@@ -53,7 +53,8 @@ export const FavoritesPage = () => {
       }
       navigate("/cart");
     } catch (error) {
-      toast.error("Failed to add to cart. Are you logged in?", { id: toastId });
+      const errorMsg = error.response?.data?.message || error.response?.data?.error || "Failed to add to cart.";
+      toast.error(errorMsg, { id: toastId });
     }
   };
 

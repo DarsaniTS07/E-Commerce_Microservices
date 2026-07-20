@@ -78,6 +78,7 @@ export const HomePage = () => {
   const navigate = useNavigate();
 
   const handleBookEvent = async (event) => {
+    console.log("Booking event:", event);
     const toastId = toast.loading(`Adding ${event.title} to cart...`);
     try {
       const result = await cartService.addToCart(event.eventId || event.id, 1);
@@ -90,7 +91,8 @@ export const HomePage = () => {
       
       navigate("/cart");
     } catch (error) {
-      toast.error("Failed to add to cart. Are you logged in?", { id: toastId });
+      const errorMsg = error.response?.data?.message || error.response?.data?.error || "Failed to add to cart.";
+      toast.error(errorMsg, { id: toastId });
     }
   };
 

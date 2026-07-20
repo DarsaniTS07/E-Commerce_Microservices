@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { CreditCard, ShoppingCart } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
+import { CreditCard, ShoppingCart, ShieldCheck, MapPin, Calendar, Copy, Ticket, CheckCircle, ArrowRight, Ban, Mail, History } from "lucide-react";
 import toast from "react-hot-toast";
 import orderService from "../services/orderService";
 import eventService from "../services/eventService";
 import Button from "../components/Button";
+import { format, parseISO } from "date-fns";
 
 export const OrderConfirmPage = () => {
   const { orderId } = useParams();
@@ -33,6 +34,22 @@ export const OrderConfirmPage = () => {
     }
   };
 
+  const copyOrderId = () => {
+    if (order?.orderId) {
+      navigator.clipboard.writeText(order.orderId);
+      toast.success("Order ID copied to clipboard!");
+    }
+  };
+
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "";
+    try {
+      return format(parseISO(dateStr), "dd MMM, yyyy • h:mm a") + " Onwards";
+    } catch (e) {
+      return dateStr;
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
@@ -51,90 +68,169 @@ export const OrderConfirmPage = () => {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="flex flex-col space-y-8">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 bg-neutral-lightest min-h-screen font-sans">
+      <div className="flex flex-col space-y-4">
         
-        {/* Header */}
-        <div>
-          <h1 className="text-3xl font-extrabold text-neutral-primary tracking-tight">Checkout</h1>
-          
-          {/* Checkout Steps Progress */}
-          <div className="mt-8 bg-neutral-white p-8 rounded-2xl border border-neutral-muted shadow-soft">
-            <div className="flex items-center justify-between max-w-2xl mx-auto relative">
-              {/* Connecting Line Background */}
-              <div className="absolute top-5 left-0 w-full h-1 bg-neutral-light rounded-full -z-0"></div>
-              {/* Connecting Line Active (Past step 1, up to step 2) */}
-              <div className="absolute top-5 left-0 w-1/2 h-1 bg-primary rounded-full -z-0 transition-all duration-500"></div>
-              
-              {/* Step 1: Overview (Done) */}
-              <div className="flex flex-col items-center relative z-10">
-                <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-md cursor-pointer" onClick={() => navigate('/cart')}>
-                  ✓
-                </div>
-                <span className="mt-3 text-sm font-semibold text-neutral-secondary">Overview</span>
+        {/* Checkout Steps Progress */}
+        <div className="bg-neutral-white p-4 md:p-6 rounded-[24px] border border-neutral-muted shadow-sm">
+          <div className="flex items-center justify-between max-w-3xl mx-auto relative">
+            {/* Connecting Line Background */}
+            <div className="absolute top-6 left-[15%] right-[15%] h-0.5 bg-neutral-200 -z-0"></div>
+            {/* Connecting Line Active */}
+            <div className="absolute top-6 left-[15%] w-[35%] h-0.5 bg-[#8b5cf6] -z-0"></div>
+            
+            {/* Step 1: Overview */}
+            <div className="flex flex-col items-center relative z-10 w-1/3 group cursor-pointer" onClick={() => navigate('/cart')}>
+              <div className="w-12 h-12 rounded-full bg-[#8b5cf6] text-white flex items-center justify-center font-bold shadow-md">
+                ✓
               </div>
+              <span className="mt-3 text-[15px] font-bold text-neutral-primary">Overview</span>
+              <span className="text-xs text-neutral-secondary">Review your cart</span>
+            </div>
 
-              {/* Step 2: Order Confirm (Active) */}
-              <div className="flex flex-col items-center relative z-10">
-                <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-md ring-4 ring-primary/20">
-                  2
-                </div>
-                <span className="mt-3 text-sm font-bold text-primary">Order Confirm</span>
+            {/* Step 2: Order Confirm */}
+            <div className="flex flex-col items-center relative z-10 w-1/3">
+              <div className="w-12 h-12 rounded-full bg-[#8b5cf6] text-white flex items-center justify-center font-bold shadow-md ring-4 ring-[#8b5cf6]/20">
+                2
               </div>
+              <span className="mt-3 text-[15px] font-bold text-[#8b5cf6]">Order Confirm</span>
+              <span className="text-xs text-neutral-secondary">Confirm your order</span>
+            </div>
 
-              {/* Step 3: Payment (Pending) */}
-              <div className="flex flex-col items-center relative z-10">
-                <div className="w-10 h-10 rounded-full bg-neutral-white text-neutral-secondary border-2 border-neutral-muted flex items-center justify-center font-bold">
-                  3
-                </div>
-                <span className="mt-3 text-sm font-semibold text-neutral-secondary">Payment</span>
+            {/* Step 3: Payment */}
+            <div className="flex flex-col items-center relative z-10 w-1/3">
+              <div className="w-12 h-12 rounded-full bg-white text-neutral-400 border-2 border-neutral-200 flex items-center justify-center font-bold">
+                3
               </div>
+              <span className="mt-3 text-[15px] font-bold text-neutral-primary">Payment</span>
+              <span className="text-xs text-neutral-secondary">Secure your payment</span>
             </div>
           </div>
         </div>
 
-        {/* Order Details */}
-        <div className="bg-neutral-white rounded-2xl border border-neutral-muted shadow-soft p-8">
-          <h2 className="text-xl font-bold text-neutral-primary mb-6">Order Summary</h2>
+        {/* Main Content Area */}
+        <div className="bg-neutral-white rounded-[24px] border border-neutral-muted shadow-sm p-4 md:p-6">
           
-          <div className="flex flex-col md:flex-row md:items-start md:space-x-8">
-            {/* Event Info */}
-            <div className="flex-1 space-y-4">
-              <div className="p-4 bg-neutral-light rounded-xl border border-neutral-border">
-                <p className="text-sm font-semibold text-neutral-secondary uppercase tracking-wider mb-1">Event</p>
-                <p className="text-lg font-bold text-neutral-primary">{eventDetails?.title || "Unknown Event"}</p>
-                {eventDetails?.city && <p className="text-sm text-neutral-secondary">{eventDetails.city}</p>}
+          {/* Header */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 pb-4 border-b border-neutral-100">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 rounded-[20px] bg-gradient-to-br from-[#8b5cf6] to-[#a855f7] flex items-center justify-center shadow-inner shrink-0">
+                <ShieldCheck size={32} className="text-white opacity-90" strokeWidth={1.5} />
               </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 bg-neutral-light rounded-xl border border-neutral-border">
-                  <p className="text-sm font-semibold text-neutral-secondary uppercase tracking-wider mb-1">Quantity</p>
-                  <p className="text-lg font-bold text-neutral-primary">{order.quantity} ticket{order.quantity > 1 ? 's' : ''}</p>
-                </div>
-                <div className="p-4 bg-neutral-light rounded-xl border border-neutral-border">
-                  <p className="text-sm font-semibold text-neutral-secondary uppercase tracking-wider mb-1">Total Amount</p>
-                  <p className="text-lg font-extrabold text-primary">${order.amount.toFixed(2)}</p>
-                </div>
+              <div>
+                <h2 className="text-2xl font-black text-neutral-primary tracking-tight">Order Summary</h2>
+                <p className="text-sm text-neutral-secondary font-medium">Please review your order details before proceeding to payment</p>
               </div>
             </div>
-            
-            {/* Action Bar */}
-            <div className="mt-8 md:mt-0 w-full md:w-1/3 bg-neutral-light p-6 rounded-xl border border-neutral-border flex flex-col space-y-6">
-              <div>
-                <p className="text-sm text-neutral-secondary mb-2">Order ID</p>
-                <p className="font-mono text-xs font-medium text-neutral-primary bg-neutral-white px-2 py-1 rounded truncate">
-                  {order.orderId}
-                </p>
-              </div>
+            <div className="mt-4 md:mt-0 bg-[#f3e8ff] px-4 py-2 rounded-full flex items-center gap-2 border border-[#e9d5ff]">
+              <ShieldCheck size={16} className="text-[#8b5cf6]" />
+              <span className="text-sm font-bold text-[#8b5cf6]">Secure & Encrypted</span>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6">
+            {/* Left Column */}
+            <div className="lg:col-span-8 flex flex-col space-y-4">
               
-              <Button
-                variant="primary"
-                onClick={() => navigate(`/checkout/payment/${order.orderId}`)}
-                className="w-full flex justify-center items-center py-4 text-sm uppercase tracking-widest font-bold shadow-medium hover:shadow-premium"
-              >
-                Proceed to Payment
-                <CreditCard className="ml-2 w-5 h-5" />
-              </Button>
+              {/* Event Card */}
+              <div className="bg-gradient-to-br from-[#fcf7ff] to-[#fff5f8] rounded-[24px] p-4 border border-[#f3e8ff] flex flex-col md:flex-row gap-4 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-pink-100/50 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+                <div className="w-32 h-32 md:w-40 md:h-40 bg-[#0f0535] rounded-[24px] shrink-0 shadow-lg relative flex flex-col items-center justify-center overflow-hidden">
+                   {/* AWS Logo mock for exact visual match */}
+                   <div className="text-white font-bold text-3xl mb-1">aws</div>
+                   <div className="text-white text-[10px] tracking-[0.2em] uppercase opacity-90">Summit</div>
+                   <div className="text-white text-xs font-semibold mt-1">2026</div>
+                   {/* The smile curve */}
+                   <svg width="40" height="15" viewBox="0 0 100 30" className="absolute top-[55%] left-1/2 -translate-x-1/2 fill-[#ff9900]">
+                      <path d="M93.3,16.5c-15.6,12.5-38.3,17.4-60.6,12.1C18,25,5.6,17.7,1.1,12c-0.8-1,0.5-2.2,1.6-1.5c16.3,10.6,39.6,14.6,58.7,9.3c10-2.8,18.8-7.7,25.6-14c1.2-1.1,3-0.5,3.1,1.1C90.3,10.6,91.5,13.8,93.3,16.5z"/>
+                   </svg>
+                </div>
+                
+                <div className="flex flex-col justify-center relative z-10">
+                  <div className="inline-block bg-[#f3e8ff] text-[#8b5cf6] text-xs font-bold px-3 py-1 rounded-full mb-3 w-max border border-[#e9d5ff]">
+                    Conference
+                  </div>
+                  <h3 className="text-xl font-black text-neutral-primary leading-tight mb-3">{eventDetails?.title || "Event Name"}</h3>
+                  
+                  <div className="flex flex-col space-y-2">
+                    <div className="flex items-center text-[15px] text-neutral-secondary font-medium gap-2">
+                      <MapPin size={18} className="text-[#8b5cf6]" />
+                      <span>{eventDetails?.city || "Location"}</span>
+                    </div>
+                    <div className="flex items-center text-[15px] text-neutral-secondary font-medium gap-2">
+                      <Calendar size={18} className="text-[#8b5cf6]" />
+                      <span>{formatDate(eventDetails?.date)}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-[#f8fafc] p-4 rounded-[24px] border border-neutral-100 flex items-center gap-4">
+                  <div className="w-14 h-14 bg-[#f1f5f9] rounded-2xl flex items-center justify-center text-[#8b5cf6]">
+                    <Ticket size={24} strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-neutral-secondary mb-1">Quantity</p>
+                    <p className="text-lg font-black text-neutral-primary">{order.quantity} Ticket{order.quantity > 1 ? 's' : ''}</p>
+                  </div>
+                </div>
+                <div className="bg-[#f8fafc] p-4 rounded-[24px] border border-neutral-100 flex items-center gap-4">
+                  <div className="w-12 h-12 bg-[#f1f5f9] rounded-2xl flex items-center justify-center text-[#8b5cf6]">
+                    <CreditCard size={20} strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-neutral-secondary mb-1">Total Amount</p>
+                    <p className="text-xl font-black text-[#8b5cf6] tracking-tight">₹{order.amount.toFixed(2)}</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            
+            {/* Right Column */}
+            <div className="lg:col-span-4">
+              <div className="bg-white rounded-[24px] border border-neutral-200 shadow-sm p-4 h-full flex flex-col relative overflow-hidden">
+                <div className="w-full mb-4">
+                  <p className="text-[13px] font-bold text-neutral-secondary mb-2">Order ID</p>
+                  <div className="flex items-center justify-between border border-neutral-200 rounded-xl p-3 bg-[#f8fafc]">
+                    <p className="font-mono text-xs text-neutral-primary truncate mr-2">
+                      {order.orderId}
+                    </p>
+                    <button onClick={copyOrderId} className="text-neutral-400 hover:text-[#8b5cf6] transition-colors p-1" title="Copy ID">
+                      <Copy size={16} />
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="flex-1 space-y-3 mb-4">
+                  <div className="flex items-start gap-3">
+                    <Ban size={18} className="text-[#8b5cf6] mt-0.5 shrink-0" strokeWidth={2} />
+                    <span className="text-[14px] font-medium text-neutral-secondary leading-snug">Tickets are non-transferable</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Mail size={18} className="text-[#8b5cf6] mt-0.5 shrink-0" strokeWidth={2} />
+                    <span className="text-[14px] font-medium text-neutral-secondary leading-snug">You will receive an e-ticket via email</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <History size={18} className="text-[#b19cd9] mt-0.5 shrink-0" strokeWidth={2} />
+                    <span className="text-[14px] font-medium text-neutral-500 leading-snug">Cancellation available up to 24h before event</span>
+                  </div>
+                </div>
+                
+                <Button
+                  variant="primary"
+                  onClick={() => navigate(`/checkout/payment/${order.orderId}`)}
+                  className="w-full py-3 text-sm font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-between px-5 rounded-[16px] bg-gradient-to-r from-[#8b5cf6] to-[#f97316] border-0 text-white mt-auto"
+                >
+                  <div className="flex items-center">
+                    <ShieldCheck className="mr-2 w-4 h-4 opacity-90" />
+                    Proceed to Payment
+                  </div>
+                  <ArrowRight className="w-4 h-4 opacity-90" />
+                </Button>
+              </div>
             </div>
           </div>
         </div>

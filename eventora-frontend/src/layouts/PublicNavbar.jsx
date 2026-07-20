@@ -85,10 +85,11 @@ export const PublicNavbar = () => {
     <header className="h-16 px-4 md:px-6 bg-neutral-white/85 backdrop-blur-md border-b border-neutral-muted flex items-center justify-between sticky top-0 z-50 shadow-soft">
       {/* Left logo */}
       <Link to="/" className="flex items-center gap-2.5 shrink-0">
-        <div className="h-9 w-9 bg-brand-gradient rounded-xl flex items-center justify-center text-neutral-white font-black shadow-soft">
-          E
-        </div>
-        <span className="font-extrabold text-lg tracking-tight text-neutral-primary">Eventora</span>
+        <img 
+          src="/Eventora_logo_copy-removebg-preview.png" 
+          alt="Eventora Logo" 
+          className="h-8 object-contain"
+        />
       </Link>
 
 
@@ -244,10 +245,11 @@ export const PublicNavbar = () => {
             <div className="space-y-6">
               <div className="flex items-center justify-between border-b border-neutral-muted pb-4">
                 <div className="flex items-center gap-2">
-                  <div className="h-8 w-8 bg-brand-gradient rounded-lg flex items-center justify-center text-neutral-white font-bold">
-                    E
-                  </div>
-                  <span className="font-bold text-neutral-primary">Eventora</span>
+                  <img 
+                    src="/Eventora_logo_copy-removebg-preview.png" 
+                    alt="Eventora Logo" 
+                    className="h-8 object-contain"
+                  />
                 </div>
                 <button
                   onClick={() => setDrawerOpen(false)}

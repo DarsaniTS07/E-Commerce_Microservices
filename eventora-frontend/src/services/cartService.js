@@ -22,8 +22,8 @@ export const cartService = {
         items = resData.data.cartItems;
       }
       
-      // Filter out non-active items (e.g. EXPIRED or REMOVED)
-      items = items.filter(item => item.status === 'ACTIVE');
+      // Filter out non-active items (e.g. EXPIRED or REMOVED), but keep items that lack a status field
+      items = items.filter(item => !item.status || item.status === 'ACTIVE');
       
       // Fetch full event details for each item in the cart because the cart API 
       // likely only returns { eventId, quantity } without the title/price/category.

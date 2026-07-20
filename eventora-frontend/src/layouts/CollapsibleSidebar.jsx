@@ -7,6 +7,7 @@ import {
   Home, 
   Ticket, 
   User, 
+  Compass,
   LayoutDashboard, 
   Calendar, 
   Users, 
@@ -20,8 +21,7 @@ export const CollapsibleSidebar = ({ isAdmin = false }) => {
   const { logout, isAuthenticated } = useAuth();
 
   const userLinks = [
-    { label: "Home", path: "/", icon: Home },
-    { label: "Events", path: "/events", icon: Ticket },
+    { label: "Events", path: "/events", icon: Compass },
     ...(isAuthenticated ? [
       { label: "My Bookings", path: "/bookings", icon: Ticket },
       { label: "Profile", path: "/profile", icon: User },

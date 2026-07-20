@@ -1,4 +1,5 @@
 import apiClient from "../api/client";
+import eventService from "./eventService";
 
 export const orderService = {
   createOrder: async (cartId) => {
@@ -7,6 +8,16 @@ export const orderService = {
       return response.data?.data;
     } catch (error) {
       console.error("Failed to create order:", error);
+      throw error;
+    }
+  },
+
+  cancelOrder: async (orderId) => {
+    try {
+      const response = await apiClient.post(`/orders/${orderId}/cancel`);
+      return response.data?.data;
+    } catch (error) {
+      console.error("Failed to cancel order:", error);
       throw error;
     }
   },

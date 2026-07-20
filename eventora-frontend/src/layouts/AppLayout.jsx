@@ -12,7 +12,7 @@ export const AppLayout = () => {
   const isAdmin = user?.role === "Admin";
 
   return (
-    <div className="flex flex-col min-h-screen w-screen bg-neutral-lightest overflow-hidden">
+    <div className="flex flex-col h-screen w-screen bg-neutral-lightest overflow-hidden">
       {/* Top Navigation */}
       <PublicNavbar />
       
