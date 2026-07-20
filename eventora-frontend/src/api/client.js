@@ -2,7 +2,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { getStoredToken, removeStoredToken } from "../utils/auth";
 
-const API_BASE_URL = "https://4bsnhdrhji.execute-api.ap-southeast-1.amazonaws.com";
+const API_BASE_URL = import.meta.env.DEV ? "/api" : "https://4bsnhdrhji.execute-api.ap-southeast-1.amazonaws.com";
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -14,9 +14,17 @@ export const apiClient = axios.create({
 // Request Interceptor: Attach JWT token
 apiClient.interceptors.request.use(
   (config) => {
-    const token = getStoredToken();
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    // If request explicitly marks public, don't attach token
+    if (config.public) {
+      return config;
+    }
+    
+    const idToken = getStoredToken();
+    const accessToken = localStorage.getItem("eventora_access_token");
+    const tokenToUse = accessToken || idToken; // Try AccessToken first
+    
+    if (tokenToUse) {
+      config.headers.Authorization = `Bearer ${tokenToUse}`;
     }
     return config;
   },
@@ -31,6 +39,11 @@ apiClient.interceptors.response.use(
     return response;
   },
   (error) => {
+    // If the request explicitly asks to skip global error toast notifications, just reject the promise
+    if (error.config?.skipToast) {
+      return Promise.reject(error);
+    }
+
     const status = error.response ? error.response.status : null;
     const message = error.response?.data?.message || error.response?.data?.error || error.message;
 

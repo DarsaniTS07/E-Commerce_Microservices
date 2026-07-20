@@ -66,6 +66,7 @@ export const Login = () => {
           label="Email Address"
           type="email"
           placeholder="name@example.com"
+          autoComplete="email"
           error={errors.email?.message}
           {...register("email")}
         />
@@ -75,6 +76,7 @@ export const Login = () => {
             label="Password"
             type="password"
             placeholder="••••••••"
+            autoComplete="current-password"
             error={errors.password?.message}
             {...register("password")}
           />
