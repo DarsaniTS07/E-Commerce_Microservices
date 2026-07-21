@@ -20,6 +20,7 @@ export const EventCard = ({ event, onBook }) => {
     category,
     price,
     ticketsAvailable,
+    imageUrl,
   } = event;
 
   const targetId = id || eventId;
@@ -62,7 +63,10 @@ export const EventCard = ({ event, onBook }) => {
   return (
     <div className="group flex flex-col bg-neutral-white border border-neutral-muted rounded-2xl shadow-soft hover:shadow-premium transition-all duration-300 overflow-hidden relative">
       {/* Banner */}
-      <div className={cn("h-44 w-full bg-gradient-to-br flex flex-col justify-between p-4 relative overflow-hidden", gradient)}>
+      <div 
+        className={cn("h-44 w-full bg-gradient-to-br flex flex-col justify-between p-4 relative overflow-hidden", !imageUrl && gradient)}
+        style={imageUrl ? { backgroundImage: `url(${imageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
+      >
         <div className="absolute inset-0 bg-neutral-primary/10 opacity-30 mix-blend-overlay"></div>
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-neutral-white/10 rounded-full blur-2xl group-hover:scale-110 transition-transform duration-300"></div>
 
@@ -127,7 +131,7 @@ export const EventCard = ({ event, onBook }) => {
           <div className="flex flex-col">
             <span className="text-[9px] uppercase font-bold text-neutral-secondary tracking-widest">Price</span>
             <span className="text-base font-extrabold text-neutral-primary leading-tight">
-              {price > 0 ? `$${price}` : "Free"}
+              {price > 0 ? `₹${price}` : "Free"}
             </span>
           </div>
 

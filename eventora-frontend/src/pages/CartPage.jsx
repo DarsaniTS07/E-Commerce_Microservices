@@ -220,14 +220,11 @@ export const CartPage = () => {
                   
                   {/* Product Info */}
                   <div className="col-span-5 md:col-span-6 flex flex-col xl:flex-row items-start xl:items-center gap-4">
-                    {/* Event Card Mock */}
-                    <div className="w-24 h-24 xl:w-28 xl:h-28 bg-[#0f0535] rounded-xl shrink-0 shadow-md relative flex flex-col items-center justify-center overflow-hidden">
-                       <div className="text-white font-bold text-xl mb-0.5">aws</div>
-                       <div className="text-white text-[8px] tracking-[0.2em] uppercase opacity-90">Summit</div>
-                       <div className="text-white text-[10px] font-semibold mt-0.5">2026</div>
-                       <svg width="24" height="10" viewBox="0 0 100 30" className="absolute top-[55%] left-1/2 -translate-x-1/2 fill-[#ff9900]">
-                          <path d="M93.3,16.5c-15.6,12.5-38.3,17.4-60.6,12.1C18,25,5.6,17.7,1.1,12c-0.8-1,0.5-2.2,1.6-1.5c16.3,10.6,39.6,14.6,58.7,9.3c10-2.8,18.8-7.7,25.6-14c1.2-1.1,3-0.5,3.1,1.1C90.3,10.6,91.5,13.8,93.3,16.5z"/>
-                       </svg>
+                    {/* Event Image */}
+                    <div 
+                      className="w-24 h-24 xl:w-28 xl:h-28 bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500 rounded-xl shrink-0 shadow-md relative flex flex-col items-center justify-center overflow-hidden"
+                      style={item.imageUrl ? { backgroundImage: `url(${item.imageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
+                    >
                     </div>
                     
                     <div className="flex flex-col space-y-1.5">

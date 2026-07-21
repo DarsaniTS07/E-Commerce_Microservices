@@ -149,14 +149,11 @@ export const BookingsPage = () => {
             return (
               <div key={order.orderId || order.id} className="flex flex-col lg:flex-row bg-neutral-white border border-neutral-muted rounded-[24px] shadow-sm overflow-hidden p-3 md:p-4 gap-4">
 
-                {/* Event Image Mock */}
-                <div className="w-full lg:w-48 h-40 lg:h-auto bg-gradient-to-br from-[#4f2a96] via-[#862973] to-[#e44655] rounded-xl shrink-0 shadow-inner relative flex flex-col items-center justify-center overflow-hidden">
-                  <div className="text-white font-bold text-2xl mb-1">aws</div>
-                  <div className="text-white text-[10px] tracking-[0.25em] uppercase opacity-90 font-medium">Summit</div>
-                  <div className="text-white text-xs font-semibold mt-1">2026</div>
-                  <svg width="32" height="12" viewBox="0 0 100 30" className="absolute top-[60%] left-1/2 -translate-x-1/2 fill-[#ff9900]">
-                    <path d="M93.3,16.5c-15.6,12.5-38.3,17.4-60.6,12.1C18,25,5.6,17.7,1.1,12c-0.8-1,0.5-2.2,1.6-1.5c16.3,10.6,39.6,14.6,58.7,9.3c10-2.8,18.8-7.7,25.6-14c1.2-1.1,3-0.5,3.1,1.1C90.3,10.6,91.5,13.8,93.3,16.5z" />
-                  </svg>
+                {/* Event Image */}
+                <div 
+                  className="w-full lg:w-48 h-40 lg:h-auto bg-gradient-to-br from-purple-600 to-orange-500 rounded-xl shrink-0 shadow-inner relative flex flex-col items-center justify-center overflow-hidden"
+                  style={order.event?.imageUrl ? { backgroundImage: `url(${order.event.imageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
+                >
                 </div>
 
                 {/* Event Details */}

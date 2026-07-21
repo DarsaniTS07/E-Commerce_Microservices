@@ -147,11 +147,15 @@ export const PaymentPage = () => {
               
               {/* Event Card */}
               <div className="flex items-center gap-4 p-4 border border-neutral-muted rounded-xl bg-neutral-white mb-6 shadow-sm">
-                <div className="w-24 h-24 bg-brand-gradient rounded-xl flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-inner overflow-hidden">
-                   {/* In a real app, you'd use eventDetails.image */}
-                   <div className="w-full h-full bg-primary/20 flex items-center justify-center backdrop-blur-md">
-                     <Ticket className="text-white opacity-80" />
-                   </div>
+                <div 
+                  className="w-24 h-24 bg-brand-gradient rounded-xl flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-inner overflow-hidden"
+                  style={eventDetails?.imageUrl ? { backgroundImage: `url(${eventDetails.imageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
+                >
+                   {!eventDetails?.imageUrl && (
+                     <div className="w-full h-full bg-primary/20 flex items-center justify-center backdrop-blur-md">
+                       <Ticket className="text-white opacity-80" />
+                     </div>
+                   )}
                 </div>
                 <div className="flex-1">
                   <h3 className="font-bold text-neutral-primary text-lg leading-tight mb-2">{eventDetails?.title || "Event Name"}</h3>
