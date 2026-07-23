@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
 import orderService from "../services/orderService";
+import waitlistService from "../services/waitlistService";
 import Button from "../components/Button";
-import { Calendar, MapPin, Ticket, CreditCard, Inbox, ArrowRight, Clock, Copy, MoreVertical, Lock, ShieldCheck, CheckCircle } from "lucide-react";
+import { Calendar, MapPin, Ticket, CreditCard, Inbox, ArrowRight, Clock, Copy, MoreVertical, Lock, ShieldCheck, CheckCircle, XCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { cn } from "../utils/cn";
 import toast from "react-hot-toast";
@@ -17,21 +18,48 @@ export const BookingsPage = () => {
   const [activeDropdownId, setActiveDropdownId] = useState(null);
   const dropdownRef = useRef(null);
 
-  const { data: orders = [], isLoading, isError } = useQuery({
+  const { data: orders = [], isLoading: isLoadingOrders, isError: isErrorOrders } = useQuery({
     queryKey: ["user-orders", user?.id],
     queryFn: () => orderService.getUserOrders(user.id),
     enabled: !!user?.id,
   });
 
+  const { data: waitlists = [], isLoading: isLoadingWaitlists, isError: isErrorWaitlists } = useQuery({
+    queryKey: ["user-waitlists", user?.id],
+    queryFn: () => waitlistService.getUserWaitlists(user.id),
+    enabled: !!user?.id,
+  });
+
+  const allBookings = [...orders, ...waitlists].sort((a, b) => {
+    const dateA = new Date(a.createdAt || a.joinedAt || 0);
+    const dateB = new Date(b.createdAt || b.joinedAt || 0);
+    return dateB - dateA;
+  });
+  
+  const isLoading = isLoadingOrders || isLoadingWaitlists;
+  const isError = isErrorOrders || isErrorWaitlists;
+
   const cancelMutation = useMutation({
     mutationFn: (orderId) => orderService.cancelOrder(orderId),
     onSuccess: () => {
       toast.success("Order cancelled successfully");
-      queryClient.invalidateQueries(["user-orders", user?.id]);
+      queryClient.invalidateQueries({ queryKey: ["user-orders", user?.id] });
       setActiveDropdownId(null);
     },
     onError: () => {
       toast.error("Failed to cancel order");
+    }
+  });
+
+  const leaveWaitlistMutation = useMutation({
+    mutationFn: (eventId) => waitlistService.leaveWaitlist(eventId),
+    onSuccess: () => {
+      toast.success("Left waitlist successfully");
+      queryClient.invalidateQueries({ queryKey: ["user-waitlists", user?.id] });
+      setActiveDropdownId(null);
+    },
+    onError: () => {
+      toast.error("Failed to leave waitlist");
     }
   });
 
@@ -59,7 +87,7 @@ export const BookingsPage = () => {
     }
   };
 
-  const filteredOrders = orders.filter((order) => {
+  const filteredOrders = allBookings.filter((order) => {
     if (activeTab === "active") {
       return order.status !== "CANCELLED" && order.status !== "FAILED";
     }
@@ -147,7 +175,7 @@ export const BookingsPage = () => {
             const isConfirmed = order.status?.toUpperCase() === "CONFIRMED" || order.status?.toUpperCase() === "SUCCESS" || order.status?.toUpperCase() === "PAID";
 
             return (
-              <div key={order.orderId || order.id} className="flex flex-col lg:flex-row bg-neutral-white border border-neutral-muted rounded-[24px] shadow-sm overflow-hidden p-3 md:p-4 gap-4">
+              <div key={order.orderId || order.id} className="flex flex-col lg:flex-row bg-neutral-white border border-neutral-muted rounded-[24px] shadow-sm p-3 md:p-4 gap-4">
 
                 {/* Event Image */}
                 <div 
@@ -185,14 +213,18 @@ export const BookingsPage = () => {
                         <Ticket size={16} />
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-sm font-black text-neutral-primary leading-none">{order.quantity} Ticket</span>
+                        <span className="text-sm font-black text-neutral-primary leading-none">
+                          {order.isWaitlist ? "Waitlist Entry" : `${order.quantity} Ticket`}
+                        </span>
                         <span className="text-[10px] font-medium text-neutral-secondary mt-1">General Admission</span>
                       </div>
                     </div>
 
                     <div className="flex flex-col pl-4 border-l border-neutral-200">
                       <span className="text-[10px] font-bold text-neutral-secondary uppercase tracking-wider mb-0.5">Total Paid</span>
-                      <span className="text-lg font-black text-[#8b5cf6] leading-none">₹{order.amount ? order.amount.toFixed(2) : "0.00"}</span>
+                      <span className="text-lg font-black text-[#8b5cf6] leading-none">
+                        {order.isWaitlist ? "-" : `₹${order.amount ? (order.amount + 120 + 125).toFixed(2) : "0.00"}`}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -255,14 +287,24 @@ export const BookingsPage = () => {
 
                       {/* Dropdown Menu */}
                       {activeDropdownId === (order.orderId || order.id) && (
-                        <div className="absolute right-0 bottom-[120%] lg:bottom-auto lg:top-[120%] mt-2 w-40 bg-white border border-neutral-200 shadow-lg rounded-xl z-50 overflow-hidden">
-                          <button
-                            onClick={() => cancelMutation.mutate(order.orderId || order.id)}
-                            disabled={cancelMutation.isPending || order.status === "CANCELLED"}
-                            className="w-full text-left px-4 py-2.5 text-sm font-bold text-red-600 hover:bg-red-50 disabled:opacity-50 transition-colors"
-                          >
-                            Cancel Order
-                          </button>
+                        <div className="absolute right-0 bottom-[120%] lg:bottom-auto lg:top-[120%] mt-2 w-48 bg-white border border-neutral-100 shadow-[0_8px_30px_rgb(0,0,0,0.08)] rounded-[16px] z-50 overflow-hidden py-1.5">
+                          {order.isWaitlist ? (
+                            <button
+                              onClick={() => leaveWaitlistMutation.mutate(order.eventId)}
+                              disabled={leaveWaitlistMutation.isPending}
+                              className="w-full text-left px-4 py-2.5 text-[13px] font-bold text-red-500 hover:bg-neutral-50 disabled:opacity-50 transition-colors flex items-center gap-3"
+                            >
+                              <XCircle size={16} className="text-red-500" /> Leave Waitlist
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => cancelMutation.mutate(order.orderId || order.id)}
+                              disabled={cancelMutation.isPending || order.status === "CANCELLED"}
+                              className="w-full text-left px-4 py-2.5 text-[13px] font-bold text-red-500 hover:bg-neutral-50 disabled:opacity-50 transition-colors flex items-center gap-3"
+                            >
+                              <XCircle size={16} className="text-red-500" /> Cancel Ticket
+                            </button>
+                          )}
                         </div>
                       )}
                     </div>

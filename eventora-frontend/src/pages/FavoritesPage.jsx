@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { Heart } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import useFavorites from "../hooks/useFavorites";
+import useAuth from "../hooks/useAuth";
 import eventService from "../services/eventService";
 import cartService from "../services/cartService";
+import waitlistService from "../services/waitlistService";
 import EventCard from "../components/EventCard";
 import SectionHeader from "../components/SectionHeader";
 import Button from "../components/Button";
@@ -14,6 +17,8 @@ export const FavoritesPage = () => {
   const [favoriteEvents, setFavoriteEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
 
   useEffect(() => {
     fetchFavoriteEvents();
@@ -58,6 +63,19 @@ export const FavoritesPage = () => {
     }
   };
 
+  const handleWaitlistEvent = async (event) => {
+    const toastId = toast.loading(`Joining waitlist for ${event.title}...`);
+    try {
+      await waitlistService.joinWaitlist(event.eventId || event.id);
+      queryClient.invalidateQueries({ queryKey: ["user-waitlists", user?.id] });
+      toast.success("Successfully joined the waitlist!", { id: toastId });
+      navigate("/bookings");
+    } catch (error) {
+      const errorMsg = error.response?.data?.message || error.response?.data?.error || "Failed to join waitlist.";
+      toast.error(errorMsg, { id: toastId });
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
       <SectionHeader 
@@ -93,6 +111,7 @@ export const FavoritesPage = () => {
               key={event.eventId} 
               event={event} 
               onBook={handleBookEvent} 
+              onWaitlist={handleWaitlistEvent}
             />
           ))}
         </div>

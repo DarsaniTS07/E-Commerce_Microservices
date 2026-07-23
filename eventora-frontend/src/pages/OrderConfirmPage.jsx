@@ -67,6 +67,12 @@ export const OrderConfirmPage = () => {
     );
   }
 
+  // Calculate dummy fees to match UI mockup
+  const subtotal = order.amount || 0;
+  const serviceFee = 120.00;
+  const tax = 125.00;
+  const totalAmount = subtotal + serviceFee + tax;
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 bg-neutral-lightest min-h-screen font-sans">
       <div className="flex flex-col space-y-4">
@@ -178,7 +184,7 @@ export const OrderConfirmPage = () => {
                   </div>
                   <div>
                     <p className="text-xs font-bold text-neutral-secondary mb-1">Total Amount</p>
-                    <p className="text-xl font-black text-[#8b5cf6] tracking-tight">₹{order.amount.toFixed(2)}</p>
+                    <p className="text-xl font-black text-[#8b5cf6] tracking-tight">₹{totalAmount.toFixed(2)}</p>
                   </div>
                 </div>
               </div>

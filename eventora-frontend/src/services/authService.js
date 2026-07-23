@@ -50,7 +50,6 @@ export const authService = {
       UserAttributes: [
         { Name: "name", Value: name },
         { Name: "email", Value: email },
-        { Name: "custom:role", Value: role },
       ],
     };
 

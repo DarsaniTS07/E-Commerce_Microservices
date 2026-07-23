@@ -25,13 +25,13 @@ export const PublicNavbar = () => {
     refetchInterval: 30000, // Poll every 30s
   });
 
-  const unreadCount = notifications.filter((n) => !n.isRead && !n.read).length;
+  const unreadCount = notifications.filter((n) => n.status !== "READ" && !n.isRead && !n.read).length;
 
   const markAsReadMutation = useMutation({
     mutationFn: (id) => notificationService.markAsRead(id),
     onMutate: async (id) => {
       // Cancel any outgoing refetches so they don't overwrite our optimistic update
-      await queryClient.cancelQueries(["notifications"]);
+      await queryClient.cancelQueries({ queryKey: ["notifications"] });
       // Snapshot the previous value
       const previousNotifications = queryClient.getQueryData(["notifications"]);
       // Optimistically update to the new value
@@ -39,7 +39,7 @@ export const PublicNavbar = () => {
         if (!old) return [];
         return old.map(n => {
           if ((n.notificationId || n.id) === id) {
-            return { ...n, isRead: true, read: true };
+            return { ...n, status: "READ", isRead: true, read: true };
           }
           return n;
         });
@@ -55,7 +55,7 @@ export const PublicNavbar = () => {
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries(["notifications"]);
+      queryClient.invalidateQueries({ queryKey: ["notifications"] });
     }
   });
 
@@ -68,7 +68,7 @@ export const PublicNavbar = () => {
       return;
     }
 
-    if (!n.isRead && !n.read) {
+    if (n.status !== "READ" && !n.isRead && !n.read) {
       markAsReadMutation.mutate(id);
     }
   };
@@ -149,10 +149,10 @@ export const PublicNavbar = () => {
                               <div className="flex gap-3">
                                 <div className={cn(
                                   "w-2 h-2 rounded-full mt-1.5 shrink-0",
-                                  (!n.isRead && !n.read) ? "bg-secondary" : "bg-transparent"
+                                  (n.status !== "READ" && !n.isRead && !n.read) ? "bg-secondary" : "bg-transparent"
                                 )}></div>
                                 <div>
-                                  <p className={cn("text-sm", !n.isRead ? "font-semibold text-neutral-primary" : "text-neutral-secondary")}>
+                                  <p className={cn("text-sm", (n.status !== "READ" && !n.isRead) ? "font-semibold text-neutral-primary" : "text-neutral-secondary")}>
                                     {n.message || n.title}
                                   </p>
                                   <p className="text-xs text-neutral-secondary mt-1">

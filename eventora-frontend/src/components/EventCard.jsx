@@ -6,9 +6,13 @@ import { cn } from "../utils/cn";
 import Badge from "./Badge";
 import Button from "./Button";
 import useFavorites from "../hooks/useFavorites";
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../hooks/useAuth";
+import waitlistService from "../services/waitlistService";
 
-export const EventCard = ({ event, onBook }) => {
+export const EventCard = ({ event, onBook, onWaitlist }) => {
   const { toggleFavorite, isFavorite } = useFavorites();
+  const { user } = useAuth();
 
   const {
     id,
@@ -24,6 +28,14 @@ export const EventCard = ({ event, onBook }) => {
   } = event;
 
   const targetId = id || eventId;
+
+  const { data: waitlists = [] } = useQuery({
+    queryKey: ["user-waitlists", user?.id],
+    queryFn: () => waitlistService.getUserWaitlists(user?.id),
+    enabled: !!user?.id,
+  });
+
+  const isWaitlisted = waitlists.some((w) => (w.eventId || w.event?.eventId || w.event?.id) === targetId);
 
   const handleShare = (e) => {
     e.stopPropagation();
@@ -135,15 +147,32 @@ export const EventCard = ({ event, onBook }) => {
             </span>
           </div>
 
-          <Button
-            onClick={() => onBook && onBook(event)}
-            variant={ticketsAvailable > 0 ? "primary" : "secondary"}
-            disabled={ticketsAvailable <= 0}
-            className="flex items-center gap-1.5 font-bold shadow-soft hover:shadow-medium text-xs px-3 py-2"
-          >
-            Book Now
-            <ArrowRight size={12} />
-          </Button>
+          {ticketsAvailable > 0 ? (
+            <Button
+              onClick={() => onBook && onBook(event)}
+              variant="primary"
+              className="flex items-center gap-1.5 font-bold shadow-soft hover:shadow-medium text-xs px-3 py-2"
+            >
+              Book Now
+              <ArrowRight size={12} />
+            </Button>
+          ) : isWaitlisted ? (
+            <Button
+              disabled
+              variant="outline"
+              className="flex items-center gap-1.5 font-bold text-xs px-3 py-2 border-neutral-300 text-neutral-500 bg-neutral-100 cursor-not-allowed opacity-80"
+            >
+              Waitlisted
+            </Button>
+          ) : (
+            <Button
+              onClick={() => onWaitlist && onWaitlist(event)}
+              variant="outline"
+              className="flex items-center gap-1.5 font-bold shadow-soft hover:shadow-medium text-xs px-3 py-2 border-[#8b5cf6] text-[#8b5cf6] hover:bg-[#f3e8ff]"
+            >
+              Join Waitlist
+            </Button>
+          )}
         </div>
       </div>
     </div>

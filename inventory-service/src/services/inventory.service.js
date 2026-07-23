@@ -55,10 +55,21 @@ class InventoryService {
   }
 
   async reserveTickets(eventId, quantity) {
-    const inventory = await this.inventoryRepository.reserve(
-      eventId,
-      quantity
-    );
+    let inventory;
+    try {
+      inventory = await this.inventoryRepository.reserve(
+        eventId,
+        quantity
+      );
+    } catch (error) {
+      if (error.name === 'ValidationException' || (error.message && error.message.includes('ValidationException'))) {
+        // Inventory record doesn't exist (seeded directly in event-service). Auto-initialize.
+        await this.initializeInventory(eventId, 500); // Default fallback
+        inventory = await this.inventoryRepository.reserve(eventId, quantity);
+      } else {
+        throw error;
+      }
+    }
 
     if (!inventory) {
       throw new AppError("Insufficient tickets available", 409);

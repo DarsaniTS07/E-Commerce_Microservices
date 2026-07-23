@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import useAuth from "../hooks/useAuth";
 import SearchBar from "../components/SearchBar";
 import FilterBar from "../components/FilterBar";
 import CategoryCarousel from "../components/CategoryCarousel";
@@ -8,12 +9,16 @@ import EventCard from "../components/EventCard";
 import SectionHeader from "../components/SectionHeader";
 import eventService from "../services/eventService";
 import cartService from "../services/cartService";
+import waitlistService from "../services/waitlistService";
 import { Inbox, ChevronLeft, ChevronRight } from "lucide-react";
 import Button from "../components/Button";
 import toast from "react-hot-toast";
 
 export const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   
   // Local states for page management
   const page = parseInt(searchParams.get("page") || "1", 10);
@@ -75,8 +80,6 @@ export const HomePage = () => {
     setSearchParams(new URLSearchParams());
   };
 
-  const navigate = useNavigate();
-
   const handleBookEvent = async (event) => {
     console.log("Booking event:", event);
     const toastId = toast.loading(`Adding ${event.title} to cart...`);
@@ -92,6 +95,19 @@ export const HomePage = () => {
       navigate("/cart");
     } catch (error) {
       const errorMsg = error.response?.data?.message || error.response?.data?.error || "Failed to add to cart.";
+      toast.error(errorMsg, { id: toastId });
+    }
+  };
+
+  const handleWaitlistEvent = async (event) => {
+    const toastId = toast.loading(`Joining waitlist for ${event.title}...`);
+    try {
+      await waitlistService.joinWaitlist(event.eventId || event.id);
+      queryClient.invalidateQueries({ queryKey: ["user-waitlists", user?.id] });
+      toast.success("Successfully joined the waitlist!", { id: toastId });
+      navigate("/bookings");
+    } catch (error) {
+      const errorMsg = error.response?.data?.message || error.response?.data?.error || "Failed to join waitlist.";
       toast.error(errorMsg, { id: toastId });
     }
   };
@@ -158,7 +174,7 @@ export const HomePage = () => {
           <div className="space-y-10">
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {data.events.map((event) => (
-                <EventCard key={event.eventId} event={event} onBook={handleBookEvent} />
+                <EventCard key={event.eventId} event={event} onBook={handleBookEvent} onWaitlist={handleWaitlistEvent} />
               ))}
             </div>
 
