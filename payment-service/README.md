@@ -1,19 +1,17 @@
-# Payment Service
+# Eventora Payment Service
 
-Payment microservice integrated with order and inventory APIs.
+The Payment Service acts as an integration layer for processing financial transactions.
 
-## Run locally
+## Key Features
+- Generates mock payment intents.
+- Processes webhooks from payment gateways (e.g., Stripe/Razorpay).
+- Notifies the Order Service of payment success/failure.
 
-1. Install dependencies: `npm install`
-2. Configure `.env`
-3. Start: `npm run dev`
+## Tech Stack
+- Node.js & Express.js
+- AWS DynamoDB
 
-## Lambda entry
-
-- handler: `handler.handler`
-
-## Required DynamoDB indexes
-
-- `orderId-index`
-- `providerReference-index`
-- `paymentStatus-createdAt-index`
+## Setup
+1. Ensure `.env` is configured with `PORT=3004` and `DYNAMODB_TABLE_PAYMENTS`.
+2. Run `npm install`
+3. Run `npm run dev`

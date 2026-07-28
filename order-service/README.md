@@ -1,18 +1,18 @@
-# Order Service
+# Eventora Order Service
 
-Order orchestration microservice integrated with cart, event, inventory, and waitlist APIs.
+The Order Service handles checkout processing and maintains user order histories.
 
-## Run locally
+## Key Features
+- Converts carts into finalized orders.
+- Confirms ticket reservations with the `inventory-service`.
+- Interfaces with the `payment-service` to process transactions.
+- Sends data to `notification-service` upon successful order.
 
-1. Install dependencies: `npm install`
-2. Configure `.env`
-3. Start: `npm run dev`
+## Tech Stack
+- Node.js & Express.js
+- AWS DynamoDB
 
-## Lambda entry
-
-- handler: `handler.handler`
-
-## Required DynamoDB indexes
-
-- `cartId-index`
-- `userId-createdAt-index`
+## Setup
+1. Ensure `.env` is configured with `PORT=3003`, `DYNAMODB_TABLE_ORDERS`, and internal service URLs.
+2. Run `npm install`
+3. Run `npm run dev`

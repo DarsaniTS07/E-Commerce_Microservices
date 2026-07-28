@@ -1,16 +1,25 @@
-# React + Vite
+# Eventora Frontend Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+The frontend client for the Eventora E-Commerce platform. It is a single-page application that provides user interfaces for discovering events, managing carts, checking out, and a dedicated admin dashboard for platform management.
 
-Currently, two official plugins are available:
+## Key Features
+- Responsive and modern UI with Tailwind CSS.
+- Secure authentication via AWS Cognito (Login, Signup, Password resets).
+- Real-time cart and checkout flow.
+- Admin dashboard with data visualization (Recharts).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech Stack
+- React 18
+- Vite
+- Tailwind CSS
+- React Router v6
+- React Query (for data fetching and caching)
+- React Hook Form & Zod (for form validation)
+- Axios
 
-## React Compiler
+## Setup
+1. Ensure `.env` is configured with `VITE_API_URL` and `VITE_COGNITO_CLIENT_ID`.
+2. Run `npm install`
+3. Run `npm run dev`
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+The application will start on `http://localhost:5173`.

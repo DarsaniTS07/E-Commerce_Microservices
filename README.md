@@ -1,85 +1,49 @@
-# 🎟️ Ticket Booking Platform
+# Eventora - E-Commerce Microservices Platform
 
-> A production-style **serverless microservices-based Event Ticket
-> Booking Platform** built using AWS Lambda, API Gateway, DynamoDB,
-> Amazon Cognito, Amazon SNS, CloudWatch, and AWS X-Ray.
+Eventora is a modern, highly scalable event ticketing and management platform built on a microservices architecture. It allows users to discover, book, and manage event tickets while providing administrators with powerful tools to create events, manage inventory, and view platform analytics.
 
-## 🚀 Features
+## Architecture Overview
 
--   Amazon Cognito Authentication (JWT)
--   Role-Based Access Control (User, Organizer, Admin)
--   Event, Inventory, Cart, Order, Payment, Waitlist and Notification
-    Services
--   Event-driven communication using Amazon SNS
--   Internal API security using `x-internal-api-key`
--   AWS X-Ray tracing and CloudWatch monitoring
+The platform is designed using a microservices architecture, with independent services communicating securely via internal APIs. The frontend is built with React and Vite.
 
-## 🏗️ Architecture
+### Core Microservices
 
-``` mermaid
-flowchart TB
-Client[React Frontend] --> Gateway[Amazon API Gateway]
-Client --> Cognito[Amazon Cognito]
-Gateway --> Event
-Gateway --> Inventory
-Gateway --> Cart
-Gateway --> Order
-Gateway --> Payment
-Gateway --> Waitlist
-Gateway --> Notification
-Payment --> SNS[Amazon SNS]
-SNS --> Notification
+
+- **`event-service`** (Port 3001): Manages the creation, retrieval, and updating of events. Acts as the core catalog.
+- **`cart-service`** (Port 3002): Handles user shopping carts and temporarily reserves tickets in the inventory service to prevent double-booking.
+- **`order-service`** (Port 3003): Processes checkouts, creates final orders, and confirms ticket reservations.
+- **`payment-service`** (Port 3004): Handles payment processing (mocked/integrated) and updates order statuses.
+- **`notification-service`** (Port 3005): Responsible for sending emails, SMS, or push notifications to users.
+- **`inventory-service`** (Port 3006): Manages ticket availability, reservations, and total capacity.
+- **`waitlist-service`** (Port 3007): Manages users waiting for tickets to sold-out events.
+- **`user-service`** (Port 3008): Handles user authentication, authorization, and profile management using AWS Cognito.
+
+## Technology Stack
+
+- **Frontend**: React, Vite, Tailwind CSS, React Query, React Hook Form, Zod.
+- **Backend**: Node.js, Express.js.
+- **Database**: AWS DynamoDB (NoSQL) for all microservices.
+- **Authentication**: AWS Cognito.
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18+)
+- AWS Account (DynamoDB and Cognito configured)
+- `.env` files populated for each service with appropriate AWS credentials and internal API keys.
+
+### Running the Project
+
+To run the project locally, you must start each microservice independently on its designated port, followed by the frontend:
+
+```bash
+# Example starting the event-service
+cd event-service
+npm install
+npm run dev
 ```
 
-## 🔄 Booking Flow
+## Internal Communication
 
-User->>Cart: Add to Cart
-Cart->>Order: Create Order
-Order->>Inventory: Reserve Tickets
-Order->>Payment: Initiate Payment
-Payment->>Inventory: Confirm Tickets
-Payment->>Order: Confirm Order
-Payment->>Notification: Send Notification
-```
-
-## 📂 Project Structure
-
-``` text
-ticket-booking-platform/
-├── event-service/
-├── inventory-service/
-├── cart-service/
-├── order-service/
-├── payment-service/
-├── waitlist-service/
-├── notification-service/
-├── frontend/
-├── postman/
-└── README.md
-```
-
-## ☁️ AWS Services
-
--   API Gateway
--   Lambda
--   DynamoDB
--   Cognito
--   SNS
--   CloudWatch
--   X-Ray
-
-## 🧪 Testing Flow
-
-1.  Create Event
-2.  Verify Inventory
-3.  Add to Cart
-4.  Create Order
-5.  Initiate Payment
-6.  Payment Callback
-7.  Verify Order
-8.  Verify Inventory
-9.  Verify Notification
-
-## 👩‍💻 Author
-
-**Darsani T S**
+Services communicate with each other securely using internal API keys passed in the headers (`x-internal-api-key`). Public APIs are secured via AWS Cognito JWT tokens.
