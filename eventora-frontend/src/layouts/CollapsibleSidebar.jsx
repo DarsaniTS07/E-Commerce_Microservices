@@ -4,14 +4,14 @@ import { cn } from "../utils/cn";
 import { 
   ChevronLeft, 
   ChevronRight, 
-  Home, 
   Ticket, 
   User, 
   Compass,
   LayoutDashboard, 
   Calendar, 
   Users, 
-  LogOut 
+  LogOut,
+  CreditCard 
 } from "lucide-react";
 import useAuth from "../hooks/useAuth";
 
@@ -32,6 +32,7 @@ export const CollapsibleSidebar = ({ isAdmin = false }) => {
     { label: "Overview", path: "/admin/dashboard", icon: LayoutDashboard },
     { label: "Manage Events", path: "/admin/events", icon: Calendar },
     { label: "User Accounts", path: "/admin/users", icon: Users },
+    { label: "Payments", path: "/admin/payments", icon: CreditCard },
   ];
 
   const links = isAdmin ? adminLinks : userLinks;

@@ -129,6 +129,28 @@ export const authService = {
       }
     });
     return response.data;
+  },
+
+  updateProfile: async (name) => {
+    const accessToken = localStorage.getItem("eventora_access_token");
+    if (!accessToken) {
+      throw new Error("User session access token is missing.");
+    }
+
+    const payload = {
+      AccessToken: accessToken,
+      UserAttributes: [
+        { Name: "name", Value: name }
+      ]
+    };
+
+    const response = await cognitoClient.post("", JSON.stringify(payload), {
+      headers: {
+        ...defaultHeaders,
+        "X-Amz-Target": "AWSCognitoIdentityProviderService.UpdateUserAttributes",
+      }
+    });
+    return response.data;
   }
 };
 

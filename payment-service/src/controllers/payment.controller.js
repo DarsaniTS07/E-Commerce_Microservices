@@ -24,6 +24,11 @@ class PaymentController {
     const data = await this.paymentService.getRefunds();
     res.json({ success: true, message: 'Operation successful', data });
   });
+
+  getAllPayments = asyncHandler(async (req, res) => {
+    const data = await this.paymentService.getAllPayments();
+    res.json({ success: true, message: 'Operation successful', data });
+  });
 }
 
 module.exports = { PaymentController };

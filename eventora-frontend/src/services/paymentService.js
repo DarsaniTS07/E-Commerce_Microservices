@@ -30,6 +30,16 @@ export const paymentService = {
       console.error("Failed to fetch payment status:", error);
       throw error;
     }
+  },
+
+  getAllPayments: async () => {
+    try {
+      const response = await apiClient.get("/payments");
+      return response.data?.data || [];
+    } catch (error) {
+      console.error("Failed to fetch all payments:", error);
+      throw error;
+    }
   }
 };
 

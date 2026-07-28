@@ -29,7 +29,7 @@ export const Hero = ({ onPrimaryClick, onSecondaryClick }) => {
           <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
             <Button
               onClick={onPrimaryClick}
-              className="bg-brand-gradient hover:opacity-90 text-white shadow-premium rounded-xl px-6 py-4 font-bold flex items-center gap-2 text-lg"
+              className="bg-brand-gradient hover:opacity-90 text-white shadow-premium rounded-xl px-5 py-3 font-bold flex items-center gap-2 text-base"
             >
               Explore Events
               <ArrowRight size={20} />
@@ -37,7 +37,7 @@ export const Hero = ({ onPrimaryClick, onSecondaryClick }) => {
             <Button
               onClick={onSecondaryClick}
               variant="outline"
-              className="bg-white hover:bg-neutral-light text-neutral-primary shadow-soft rounded-xl px-6 py-4 font-bold flex items-center gap-2 text-lg border-neutral-muted"
+              className="bg-white hover:bg-neutral-light text-neutral-primary shadow-soft rounded-xl px-5 py-3 font-bold flex items-center gap-2 text-base border-neutral-muted"
             >
               <Play size={18} fill="currentColor" />
               Watch Demo

@@ -5,8 +5,8 @@ export const eventService = {
     const params = {
       page,
       limit,
-      status,
     };
+    if (status) params.status = status;
     if (city) params.city = city;
     if (category) params.category = category;
     if (date) params.date = date;
@@ -54,11 +54,42 @@ export const eventService = {
           date: item.eventDate,
           price: item.ticketPrice,
           ticketsAvailable: item.availableTicketCount,
+          reservedTickets: item.inventory?.reservedTickets || 0,
         };
       }
       return response.data;
     } catch (error) {
       console.error(`Failed to fetch event ${eventId} from DB:`, error);
+      throw error;
+    }
+  },
+
+  createEvent: async (eventData) => {
+    try {
+      const response = await apiClient.post("/events", eventData);
+      return response.data;
+    } catch (error) {
+      console.error("Failed to create event:", error);
+      throw error;
+    }
+  },
+
+  updateEvent: async (eventId, eventData) => {
+    try {
+      const response = await apiClient.put(`/events/${eventId}`, eventData);
+      return response.data;
+    } catch (error) {
+      console.error(`Failed to update event ${eventId}:`, error);
+      throw error;
+    }
+  },
+
+  deleteEvent: async (eventId) => {
+    try {
+      const response = await apiClient.delete(`/events/${eventId}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Failed to delete event ${eventId}:`, error);
       throw error;
     }
   }

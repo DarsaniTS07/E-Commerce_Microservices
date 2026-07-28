@@ -58,6 +58,16 @@ export const orderService = {
       console.error("Failed to fetch user orders:", error);
       throw error;
     }
+  },
+
+  getAllOrders: async () => {
+    try {
+      const response = await apiClient.get("/orders");
+      return response.data?.data || [];
+    } catch (error) {
+      console.error("Failed to fetch all orders:", error);
+      throw error;
+    }
   }
 };
 

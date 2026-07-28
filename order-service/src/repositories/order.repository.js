@@ -105,6 +105,16 @@ class OrderRepository {
 
     return result.Attributes || null;
   }
+
+  async scanAll() {
+    const { ScanCommand } = require('@aws-sdk/lib-dynamodb');
+    const result = await docClient.send(
+      new ScanCommand({
+        TableName: tableName(),
+      })
+    );
+    return result.Items || [];
+  }
 }
 
 module.exports = { OrderRepository };

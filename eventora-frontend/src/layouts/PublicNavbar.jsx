@@ -181,7 +181,7 @@ export const PublicNavbar = () => {
                 className="font-bold flex items-center gap-1.5 text-xs px-3.5 py-2"
               >
                 <User size={14} />
-                Account
+                {user?.name || "Account"}
               </Button>
               
               {profileDropdownOpen && (

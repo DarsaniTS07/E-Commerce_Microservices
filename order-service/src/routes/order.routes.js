@@ -19,6 +19,14 @@ module.exports = function createOrderRoutes(orderService) {
   // Public APIs
   // ==========================
 
+  // Admin API - View All Orders
+  router.get(
+    "/",
+    requireAuth,
+    requireRole(["admin"]),
+    controller.getAllOrders
+  );
+
   router.post(
     "/",
     requireAuth,

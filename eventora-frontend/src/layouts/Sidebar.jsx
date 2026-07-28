@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "../utils/cn";
-import { X, LayoutDashboard, Ticket, User, Calendar, Users, LogOut } from "lucide-react";
+import { X, LayoutDashboard, Ticket, User, Calendar, Users, LogOut, CreditCard } from "lucide-react";
 import useAuth from "../hooks/useAuth";
 
 export const Sidebar = ({ isOpen, onClose, isAdmin = false }) => {
@@ -18,6 +18,7 @@ export const Sidebar = ({ isOpen, onClose, isAdmin = false }) => {
     { label: "Overview", path: "/admin/dashboard", icon: LayoutDashboard },
     { label: "Manage Events", path: "/admin/events", icon: Calendar },
     { label: "User Accounts", path: "/admin/users", icon: Users },
+    { label: "Payments", path: "/admin/payments", icon: CreditCard },
   ];
 
   const links = isAdmin ? adminLinks : userLinks;

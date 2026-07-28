@@ -113,6 +113,19 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const updateProfile = async (name) => {
+    setIsLoading(true);
+    try {
+      await authService.updateProfile(name);
+      setUser(prev => ({ ...prev, name }));
+      toast.success("Profile updated successfully.");
+    } catch (error) {
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const logout = () => {
     removeStoredToken();
     setUser(null);
@@ -129,6 +142,7 @@ export const AuthProvider = ({ children }) => {
     forgotPassword,
     resetPassword,
     changePassword,
+    updateProfile,
     logout,
   };
 
