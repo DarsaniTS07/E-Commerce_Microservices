@@ -21,7 +21,6 @@ on:
 
 permissions:
   contents: read
-  security-events: write
 
 jobs:
   # ── Snyk SCA + Code scan per service ────────────────────────────────────────
