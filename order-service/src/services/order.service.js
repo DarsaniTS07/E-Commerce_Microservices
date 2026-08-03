@@ -53,7 +53,7 @@ class OrderService {
       eventId: order.eventId,
       quantity: order.quantity,
       amount: order.amount,
-      message: "Your order has been created successfully."
+      message: `Your order for '${event.title}' has been created successfully.`
     }).catch((err) => {
       console.error("Failed to publish OrderCreated event:", err);
     });
@@ -72,6 +72,10 @@ class OrderService {
 
   async getUserOrders(userId) {
     return this.orderRepository.findByUserId(userId);
+  }
+
+  async getAllOrders() {
+    return this.orderRepository.scanAll();
   }
 
   async confirmOrder(orderId) {

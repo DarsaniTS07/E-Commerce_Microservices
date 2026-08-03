@@ -23,6 +23,7 @@ class EventRepository {
       title: payload.title,
       description: payload.description,
       category: payload.category,
+      imageUrl: payload.imageUrl || null,
       venue: payload.venue,
       city: payload.city,
       eventDate: new Date(payload.eventDate).toISOString(),

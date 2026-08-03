@@ -30,13 +30,16 @@ async getOrder(orderId) {
 }
 
   async confirmOrder(orderId) {
+    // API GW route: POST /orders/confirm (orderId in body, not URL)
     const response = await fetch(
-      `${this.baseUrl}/orders/internal/orders/${orderId}/confirm`,
+      `${this.baseUrl}/orders/confirm`,
       {
         method: "POST",
         headers: {
+          "Content-Type": "application/json",
           "x-internal-api-key": process.env.INTERNAL_API_KEY,
         },
+        body: JSON.stringify({ orderId }),
       }
     );
 
@@ -54,15 +57,16 @@ async getOrder(orderId) {
   }
 
   async cancelOrder(orderId, reason) {
+    // API GW route: POST /orders/cancel (orderId in body, not URL)
     const response = await fetch(
-      `${this.baseUrl}/orders/internal/orders/${orderId}/cancel`,
+      `${this.baseUrl}/orders/cancel`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "x-internal-api-key": process.env.INTERNAL_API_KEY,
         },
-        body: JSON.stringify({ reason }),
+        body: JSON.stringify({ orderId, reason }),
       }
     );
 

@@ -109,6 +109,10 @@ class PaymentService {
   async getRefunds() {
     return this.paymentRepository.listRefunds();
   }
+
+  async getAllPayments() {
+    return this.paymentRepository.scanAll();
+  }
 }
 
 module.exports = { PaymentService };

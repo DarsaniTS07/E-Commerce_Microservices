@@ -27,7 +27,16 @@ class WaitlistController {
 });
 
   getUserWaitlists = asyncHandler(async (req, res) => {
-    const data = await this.waitlistService.getUserWaitlists(req.user.id);
+    const requestedUserId = req.params.userId;
+    const actorId = req.user?.id;
+    const actorRole = req.user?.role || req.user?.['custom:role'] || (req.user?.['cognito:groups']?.map(g => String(g).toLowerCase())?.includes('admin') ? 'admin' : 'user');
+    const isAdmin = actorRole?.toLowerCase() === 'admin';
+    
+    if (requestedUserId !== actorId && !isAdmin) {
+      return res.status(403).json({ success: false, message: 'Forbidden' });
+    }
+
+    const data = await this.waitlistService.getUserWaitlists(requestedUserId || actorId);
     res.json({ success: true, message: 'Operation successful', data });
   });
 

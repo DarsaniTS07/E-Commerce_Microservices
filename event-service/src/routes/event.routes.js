@@ -16,20 +16,34 @@ module.exports = function createEventRoutes(eventService) {
 
   // Public APIs
 
+  const listEventsValidation = [
+    query("page").optional().isInt({ min: 1 }),
+    query("limit").optional().isInt({ min: 1 }),
+    query("city").optional().isString(),
+    query("category").optional().isString(),
+    query("date").optional().isISO8601(),
+    query("status")
+      .optional()
+      .isIn(["DRAFT", "PUBLISHED", "CANCELLED"]),
+  ];
+
+  // Root list route — works locally and via API Gateway /events root
   router.get(
     "/",
     requireAuth,
     requireRole(["user", "admin"]),
-    [
-      query("page").optional().isInt({ min: 1 }),
-      query("limit").optional().isInt({ min: 1 }),
-      query("city").optional().isString(),
-      query("category").optional().isString(),
-      query("date").optional().isISO8601(),
-      query("status")
-        .optional()
-        .isIn(["DRAFT", "PUBLISHED", "CANCELLED"]),
-    ],
+    listEventsValidation,
+    validateRequest,
+    controller.listEvents
+  );
+
+  // /list alias — needed for AWS API Gateway since GET /events root has no route,
+  // but ANY /events/{proxy+} exists, so /events/list is matched and forwarded to Lambda
+  router.get(
+    "/list",
+    requireAuth,
+    requireRole(["user", "admin"]),
+    listEventsValidation,
     validateRequest,
     controller.listEvents
   );

@@ -1,33 +1,17 @@
-# Inventory Service
+# Eventora Inventory Service
 
-## Responsibilities
+The Inventory Service acts as the single source of truth for ticket counts, availability, and reservations.
 
-- Maintain ticket availability
-- Reserve tickets
-- Release tickets
-- Confirm ticket reservations
-- Prevent overselling
+## Key Features
+- Tracks total, available, and reserved tickets.
+- Exposes internal APIs for atomic reservation and release of tickets.
+- Connects with `waitlist-service` when events sell out.
 
-## API Endpoints
+## Tech Stack
+- Node.js & Express.js
+- AWS DynamoDB
 
-GET /inventory
-
-POST /inventory/reserve
-
-POST /inventory/release
-
-POST /inventory/confirm
-
-## Future AWS Architecture
-
-API Gateway
-↓
-Lambda
-↓
-Controller
-↓
-Service
-↓
-Repository
-↓
-DynamoDB
+## Setup
+1. Ensure `.env` is configured with `PORT=3006`, `DYNAMODB_TABLE_INVENTORY`, and `INTERNAL_API_KEY`.
+2. Run `npm install`
+3. Run `npm run dev`

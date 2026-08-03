@@ -1,19 +1,19 @@
-# Cart Service
+# Eventora Cart Service
 
-Cart microservice for reservation lifecycle.
+The Cart Service manages user shopping carts for the Eventora platform. It allows users to add tickets to their cart and temporarily reserves them in the inventory service to prevent double-booking before checkout.
 
-## Run locally
+## Key Features
+- Add/Remove tickets from the cart.
+- View cart contents.
+- Temporary ticket reservation holds (communicates with `inventory-service`).
+- Auto-clearing of stale carts (TTL logic).
 
-1. Install dependencies: `npm install`
-2. Configure `.env`
-3. Start: `npm run dev`
+## Tech Stack
+- Node.js & Express.js
+- AWS DynamoDB
+- Internal communication via Axios
 
-## Lambda entry
-
-- handler: `handler.handler`
-
-## Required DynamoDB indexes
-
-- `userId-createdAt-index`
-- `userId-eventId-index`
-- `status-reservationExpiry-index`
+## Setup
+1. Ensure `.env` is configured with `PORT=3002`, `DYNAMODB_TABLE_CART`, and `INVENTORY_SERVICE_BASE_URL`.
+2. Run `npm install`
+3. Run `npm run dev`

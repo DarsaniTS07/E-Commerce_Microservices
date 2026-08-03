@@ -1,0 +1,79 @@
+# ============================================================
+# Reusable Workflow — Deploy
+# Called by: cd.yml (per-service)
+# Handles: Lambda update, version publish, alias update, rollback
+# ============================================================
+
+name: Reusable — Deploy
+
+on:
+  workflow_call:
+    inputs:
+      service:
+        description: "Service name (e.g. cart-service)"
+        required: true
+        type: string
+      aws_region:
+        description: "AWS region to deploy to"
+        required: true
+        type: string
+      environment:
+        description: "Deployment environment (production, staging)"
+        required: false
+        default: "production"
+        type: string
+    secrets:
+      AWS_ROLE_ARN:
+        description: "IAM role ARN for OIDC authentication"
+        required: true
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy ${{ inputs.service }} → ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Make scripts executable
+        run: chmod +x scripts/*.sh
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ inputs.aws_region }}
+          role-session-name: GitHubActions-Deploy-${{ inputs.service }}-${{ github.run_number }}
+
+      - name: Download Lambda package
+        uses: actions/download-artifact@v4
+        with:
+          name: lambda-package-${{ inputs.service }}
+          path: build/
+
+      - name: Deploy to Lambda
+        id: deploy
+        run: bash scripts/deploy.sh "${{ inputs.service }}" "build/${{ inputs.service }}.zip" "${{ inputs.aws_region }}"
+        env:
+          AWS_REGION: ${{ inputs.aws_region }}
+
+      - name: Run smoke tests
+        id: smoke
+        run: bash scripts/smoke-test.sh "${{ inputs.service }}" "${{ inputs.aws_region }}"
+        env:
+          AWS_REGION: ${{ inputs.aws_region }}
+          API_BASE_URL: ${{ vars.API_GATEWAY_URL }}
+
+      - name: Rollback on failure
+        if: failure()
+        run: |
+          echo "::warning::Triggering rollback for ${{ inputs.service }}"
+          bash scripts/rollback.sh "${{ inputs.service }}" "${{ inputs.aws_region }}"
+        env:
+          AWS_REGION: ${{ inputs.aws_region }}

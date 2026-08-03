@@ -17,7 +17,17 @@ class OrderController {
   });
 
   getUserOrders = asyncHandler(async (req, res) => {
-const data = await this.orderService.getUserOrders(getActorId(req));
+    const requestedUserId = req.params.userId;
+    const actorId = getActorId(req);
+    const actorRole = req.user?.role || req.user?.['custom:role'] || (req.user?.['cognito:groups']?.map(g => String(g).toLowerCase())?.includes('admin') ? 'admin' : 'user');
+    const isAdmin = actorRole?.toLowerCase() === 'admin';
+    
+    // If not Admin and trying to access someone else's orders, deny.
+    if (requestedUserId !== actorId && !isAdmin) {
+      return res.status(403).json({ success: false, message: 'Forbidden' });
+    }
+
+    const data = await this.orderService.getUserOrders(requestedUserId || actorId);
     res.json({ success: true, message: 'Operation successful', data });
   });
 
@@ -33,6 +43,11 @@ const data = await this.orderService.getUserOrders(getActorId(req));
 
   getTicket = asyncHandler(async (req, res) => {
     const data = await this.orderService.getTicket(req.params.orderId);
+    res.json({ success: true, message: 'Operation successful', data });
+  });
+
+  getAllOrders = asyncHandler(async (req, res) => {
+    const data = await this.orderService.getAllOrders();
     res.json({ success: true, message: 'Operation successful', data });
   });
 }

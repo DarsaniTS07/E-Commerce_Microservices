@@ -3,7 +3,11 @@ const { body, param, query } = require('express-validator');
 const createEventValidation = [
   body('title').isString().notEmpty(),
   body('description').isString().notEmpty(),
-  body('category').isString().notEmpty(),
+  body('category').isIn([
+    'Technology', 'Music', 'Business', 'Education', 'Culture', 
+    'Sports', 'Food', 'Comedy', 'Arts', 'Workshops'
+  ]),
+  body('imageUrl').optional().isString().isURL(),
   body('venue').isString().notEmpty(),
   body('city').isString().notEmpty(),
   body('eventDate').isISO8601(),

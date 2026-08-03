@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-primary-light: #A78BFA;
+  --color-primary: #7C3AED;
+  --color-primary-dark: #6D28D9;
+  --color-primary-lightest: #F5F3FF;
+
+  --color-secondary-light: #F472B6;
+  --color-secondary: #EC4899;
+  --color-secondary-dark: #DB2777;
+  --color-secondary-lightest: #FDF2F8;
+
+  --color-accent-light: #FB923C;
+  --color-accent: #F97316;
+  --color-accent-dark: #EA580C;
+  --color-accent-lightest: #FFF7ED;
+
+  --color-neutral-lightest: #F8FAFC;
+  --color-neutral-light: #F1F5F9;
+  --color-neutral-muted: #E2E8F0;
+  --color-neutral-border: #CBD5E1;
+  --color-neutral-secondary: #475569;
+  --color-neutral-primary: #0F172A;
+  --color-neutral-white: #FFFFFF;
+
+  --color-danger-light: #FCA5A5;
+  --color-danger: #EF4444;
+  --color-danger-dark: #B91C1C;
+  --color-danger-lightest: #FEF2F2;
+
+  --color-success-light: #86EFAC;
+  --color-success: #22C55E;
+  --color-success-dark: #15803D;
+  --color-success-lightest: #F0FDF4;
+
+  --color-warning-light: #FDE047;
+  --color-warning: #EAB308;
+  --color-warning-dark: #A16207;
+  --color-warning-lightest: #FEFCE8;
+
+  /* Shadows */
+  --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --shadow-premium: 0 20px 25px -5px rgba(0, 0, 0, 0.04), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+  --shadow-glow: 0 0 15px rgba(124, 58, 237, 0.15);
+
+  /* Background Gradients */
+  --background-image-brand-gradient: linear-gradient(135deg, #7C3AED 0%, #EC4899 50%, #F97316 100%);
+  --background-image-brand-hover-gradient: linear-gradient(135deg, #6D28D9 0%, #DB2777 50%, #EA580C 100%);
+  --background-image-purple-pink-gradient: linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+  --background-image-pink-orange-gradient: linear-gradient(135deg, #EC4899 0%, #F97316 100%);
+  --background-image-glass-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 100%);
+
+  /* Radius mapping for custom utility support */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-neutral-lightest);
+  color: var(--color-neutral-primary);
+  min-height: 100vh;
+}
+
+/* Custom premium helper classes */
+.gradient-text {
+  background: var(--background-image-brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-bg {
+  background: var(--background-image-brand-gradient);
+}
+
+.gradient-bg-hover {
+  transition: all 0.3s ease;
+}
+.gradient-bg-hover:hover {
+  background: var(--background-image-brand-hover-gradient);
+}
+
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Custom Scrollbar for premium look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-neutral-border);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neutral-secondary);
+}

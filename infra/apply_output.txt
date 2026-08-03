@@ -1,0 +1,2954 @@
+null_resource.build["event-service"]: Refreshing state... [id=118617020790808050]
+null_resource.build["user-service"]: Refreshing state... [id=4568508069085747943]
+null_resource.build["cart-service"]: Refreshing state... [id=7498368296484106970]
+null_resource.build["waitlist-service"]: Refreshing state... [id=949160924624763859]
+null_resource.build["inventory-service"]: Refreshing state... [id=8834169028815993170]
+null_resource.build["payment-service"]: Refreshing state... [id=5143744524375737359]
+null_resource.build["notification-service"]: Refreshing state... [id=8803211347244302299]
+null_resource.build["order-service"]: Refreshing state... [id=7316971708725009287]
+null_resource.lambda_deploy["darsani_payment_service"]: Refreshing state... [id=8066886880631165996]
+null_resource.lambda_deploy["darsani_waitlist_service"]: Refreshing state... [id=8214728886381819917]
+null_resource.lambda_deploy["darsani_order_service"]: Refreshing state... [id=8840760097345701561]
+null_resource.lambda_deploy["darsani_inventory_service"]: Refreshing state... [id=9112717736094781962]
+null_resource.lambda_deploy["darsani_cart_service"]: Refreshing state... [id=7500091596426707582]
+null_resource.lambda_deploy["darsani_user_service"]: Refreshing state... [id=7014376162444005936]
+null_resource.lambda_deploy["darsani_notification_service"]: Refreshing state... [id=2134586400631533432]
+null_resource.lambda_deploy["darsani_event-service"]: Refreshing state... [id=8142456479171981602]
+null_resource.lambda_config_update["darsani_inventory_service"]: Refreshing state... [id=8757670205892101300]
+null_resource.lambda_config_update["darsani_payment_service"]: Refreshing state... [id=8894668672181059971]
+null_resource.lambda_config_update["darsani_order_service"]: Refreshing state... [id=9183602350456584820]
+null_resource.lambda_config_update["darsani_cart_service"]: Refreshing state... [id=7122421897428157119]
+null_resource.lambda_config_update["darsani_event-service"]: Refreshing state... [id=8373225506979544937]
+null_resource.lambda_config_update["darsani_waitlist_service"]: Refreshing state... [id=2146135251981742169]
+null_resource.lambda_config_update["darsani_notification_service"]: Refreshing state... [id=625823255608972205]
+aws_api_gateway_resource.payments_refunds: Refreshing state... [id=8n05m3]
+aws_api_gateway_method.routes["orders_internal_orderId_confirm"]: Refreshing state... [id=agm-siqbjnkogg-3qvuc5-POST]
+aws_api_gateway_method.routes["payments_refunds_get"]: Refreshing state... [id=agm-siqbjnkogg-8n05m3-GET]
+aws_api_gateway_integration.routes["events_eventId_get"]: Refreshing state... [id=agi-siqbjnkogg-597k7z-GET]
+aws_api_gateway_method.routes["cart_items_delete"]: Refreshing state... [id=agm-siqbjnkogg-nt2sqj-DELETE]
+aws_api_gateway_method.routes["cart_root_post"]: Refreshing state... [id=agm-siqbjnkogg-xohtwf-POST]
+aws_api_gateway_resource.cart_checkout: Refreshing state... [id=1b2cob]
+aws_api_gateway_integration.routes["waitlist_root_post"]: Refreshing state... [id=agi-siqbjnkogg-sys6fg-POST]
+aws_api_gateway_integration.routes["notifications_root"]: Refreshing state... [id=agi-siqbjnkogg-oa1eho-GET]
+aws_api_gateway_integration.routes["cart_items_delete"]: Refreshing state... [id=agi-siqbjnkogg-nt2sqj-DELETE]
+aws_api_gateway_resource.inventory_eventId: Refreshing state... [id=ik08x1]
+aws_api_gateway_resource.notifications_internal_notifications: Refreshing state... [id=glib6i]
+aws_api_gateway_resource.cart: Refreshing state... [id=xohtwf]
+aws_api_gateway_method.routes["waitlist_root_delete"]: Refreshing state... [id=agm-siqbjnkogg-sys6fg-DELETE]
+aws_api_gateway_integration.routes["inventory_internal_inventory_eventId_del"]: Refreshing state... [id=agi-siqbjnkogg-kia7ev-DELETE]
+aws_api_gateway_method.routes["orders_internal_orderId_get"]: Refreshing state... [id=agm-siqbjnkogg-s27p6s-GET]
+aws_api_gateway_method.routes["inventory_internal_inventory_post"]: Refreshing state... [id=agm-siqbjnkogg-m32jn7-POST]
+aws_api_gateway_resource.waitlist: Refreshing state... [id=sys6fg]
+aws_api_gateway_integration.routes["orders_internal_orderId_cancel"]: Refreshing state... [id=agi-siqbjnkogg-j8r4jp-POST]
+aws_api_gateway_resource.cart_internal: Refreshing state... [id=p3zqbp]
+aws_api_gateway_resource.notifications_notificationId: Refreshing state... [id=7fitnm]
+aws_api_gateway_method.routes["users_root"]: Refreshing state... [id=agm-siqbjnkogg-9atl1d-ANY]
+aws_api_gateway_integration.routes["cart_checkout_post"]: Refreshing state... [id=agi-siqbjnkogg-1b2cob-POST]
+aws_api_gateway_resource.cart_items: Refreshing state... [id=nt2sqj]
+aws_api_gateway_rest_api.eventora: Refreshing state... [id=siqbjnkogg]
+aws_api_gateway_method.routes["payments_root"]: Refreshing state... [id=agm-siqbjnkogg-m1fpns-POST]
+aws_api_gateway_integration.routes["events_health_get"]: Refreshing state... [id=agi-siqbjnkogg-jhpblo-GET]
+aws_api_gateway_method.routes["inventory_internal_release_post"]: Refreshing state... [id=agm-siqbjnkogg-tmjz1k-POST]
+aws_api_gateway_method.routes["cart_checkout_post"]: Refreshing state... [id=agm-siqbjnkogg-1b2cob-POST]
+aws_api_gateway_integration.routes["inventory_internal_inventory_eventId_get"]: Refreshing state... [id=agi-siqbjnkogg-kia7ev-GET]
+aws_api_gateway_resource.orders_orderId_cancel: Refreshing state... [id=136ge6]
+aws_api_gateway_integration.routes["orders_orderId_ticket_get"]: Refreshing state... [id=agi-siqbjnkogg-lispkv-GET]
+aws_api_gateway_method.routes["events_eventId_put"]: Refreshing state... [id=agm-siqbjnkogg-597k7z-PUT]
+aws_api_gateway_method.routes["orders_root"]: Refreshing state... [id=agm-siqbjnkogg-uehnb3-POST]
+aws_api_gateway_resource.waitlist_users: Refreshing state... [id=tdrpy3]
+aws_api_gateway_resource.cart_internal_carts_cartId: Refreshing state... [id=p1fast]
+aws_api_gateway_resource.inventory_internal: Refreshing state... [id=5ljbmb]
+aws_api_gateway_method.routes["orders_orderId_get"]: Refreshing state... [id=agm-siqbjnkogg-9cfhj4-GET]
+aws_api_gateway_resource.orders_orderId_ticket: Refreshing state... [id=lispkv]
+aws_api_gateway_integration.routes["cart_root"]: Refreshing state... [id=agi-siqbjnkogg-xohtwf-GET]
+aws_api_gateway_resource.waitlist_internal_waitlist: Refreshing state... [id=u3unic]
+aws_api_gateway_method.routes["waitlist_users_userId_waitlists_get"]: Refreshing state... [id=agm-siqbjnkogg-vub0cp-GET]
+aws_api_gateway_method.routes["waitlist_root_get"]: Refreshing state... [id=agm-siqbjnkogg-sys6fg-GET]
+aws_api_gateway_resource.inventory: Refreshing state... [id=wmfi1n]
+aws_api_gateway_resource.events_health: Refreshing state... [id=jhpblo]
+aws_api_gateway_resource.inventory_internal_inventory: Refreshing state... [id=m32jn7]
+aws_api_gateway_integration.routes["orders_orderId_get"]: Refreshing state... [id=agi-siqbjnkogg-9cfhj4-GET]
+aws_api_gateway_method.routes["inventory_internal_inventory_eventId_put"]: Refreshing state... [id=agm-siqbjnkogg-kia7ev-PUT]
+aws_api_gateway_method.routes["events_eventId_get"]: Refreshing state... [id=agm-siqbjnkogg-597k7z-GET]
+aws_api_gateway_resource.payments_orderId: Refreshing state... [id=ylye8w]
+aws_api_gateway_resource.notifications_notificationId_read: Refreshing state... [id=y7cdaw]
+aws_api_gateway_resource.users_userId: Refreshing state... [id=uq43mp]
+aws_api_gateway_integration.routes["inventory_internal_release_post"]: Refreshing state... [id=agi-siqbjnkogg-tmjz1k-POST]
+aws_api_gateway_integration.routes["notifications_internal_post"]: Refreshing state... [id=agi-siqbjnkogg-glib6i-POST]
+aws_api_gateway_integration.routes["payments_root"]: Refreshing state... [id=agi-siqbjnkogg-m1fpns-POST]
+aws_api_gateway_method.routes["events_root"]: Refreshing state... [id=agm-siqbjnkogg-fg0kfm-ANY]
+aws_api_gateway_resource.orders_orderId: Refreshing state... [id=9cfhj4]
+aws_api_gateway_integration.routes["users_root"]: Refreshing state... [id=agi-siqbjnkogg-9atl1d-ANY]
+aws_api_gateway_method.routes["users_userId_delete"]: Refreshing state... [id=agm-siqbjnkogg-uq43mp-DELETE]
+aws_api_gateway_resource.waitlist_internal: Refreshing state... [id=a0uelx]
+aws_api_gateway_integration.routes["waitlist_root_delete"]: Refreshing state... [id=agi-siqbjnkogg-sys6fg-DELETE]
+aws_api_gateway_resource.events: Refreshing state... [id=fg0kfm]
+aws_api_gateway_method.routes["inventory_root"]: Refreshing state... [id=agm-siqbjnkogg-wmfi1n-ANY]
+aws_api_gateway_resource.api: Refreshing state... [id=9aw0o2]
+aws_api_gateway_integration.routes["orders_internal_orderId_confirm"]: Refreshing state... [id=agi-siqbjnkogg-3qvuc5-POST]
+aws_api_gateway_method.routes["users_userId_orders_get"]: Refreshing state... [id=agm-siqbjnkogg-6redi0-GET]
+aws_api_gateway_method.routes["inventory_internal_reserve_post"]: Refreshing state... [id=agm-siqbjnkogg-k1fjc9-POST]
+aws_api_gateway_method.routes["waitlist_internal_process_post"]: Refreshing state... [id=agm-siqbjnkogg-qudvr6-POST]
+aws_api_gateway_integration.routes["orders_internal_orderId_get"]: Refreshing state... [id=agi-siqbjnkogg-s27p6s-GET]
+aws_api_gateway_resource.waitlist_users_userId: Refreshing state... [id=gd4lb8]
+aws_api_gateway_integration.routes["payments_orderId_get"]: Refreshing state... [id=agi-siqbjnkogg-ylye8w-GET]
+aws_api_gateway_resource.payments_callback: Refreshing state... [id=fxixmw]
+aws_api_gateway_method.routes["inventory_eventId_get"]: Refreshing state... [id=agm-siqbjnkogg-ik08x1-GET]
+aws_api_gateway_method.routes["payments_callback_post"]: Refreshing state... [id=agm-siqbjnkogg-fxixmw-POST]
+aws_api_gateway_method.routes["orders_orderId_cancel_post"]: Refreshing state... [id=agm-siqbjnkogg-136ge6-POST]
+aws_api_gateway_method.routes["cart_root"]: Refreshing state... [id=agm-siqbjnkogg-xohtwf-GET]
+aws_api_gateway_integration.routes["inventory_internal_reserve_post"]: Refreshing state... [id=agi-siqbjnkogg-k1fjc9-POST]
+aws_api_gateway_integration.routes["events_root"]: Refreshing state... [id=agi-siqbjnkogg-fg0kfm-ANY]
+aws_api_gateway_resource.orders: Refreshing state... [id=uehnb3]
+aws_api_gateway_method.routes["orders_internal_orderId_cancel"]: Refreshing state... [id=agm-siqbjnkogg-j8r4jp-POST]
+aws_api_gateway_method.routes["waitlist_root_post"]: Refreshing state... [id=agm-siqbjnkogg-sys6fg-POST]
+aws_api_gateway_resource.inventory_internal_confirm: Refreshing state... [id=rjnwk4]
+aws_api_gateway_integration.routes["waitlist_users_userId_waitlists_get"]: Refreshing state... [id=agi-siqbjnkogg-vub0cp-GET]
+aws_api_gateway_integration.routes["users_userId_get"]: Refreshing state... [id=agi-siqbjnkogg-uq43mp-GET]
+aws_api_gateway_integration.routes["users_userId_orders_get"]: Refreshing state... [id=agi-siqbjnkogg-6redi0-GET]
+aws_api_gateway_method.routes["payments_orderId_get"]: Refreshing state... [id=agm-siqbjnkogg-ylye8w-GET]
+aws_api_gateway_integration.routes["payments_refunds_get"]: Refreshing state... [id=agi-siqbjnkogg-8n05m3-GET]
+aws_api_gateway_resource.users: Refreshing state... [id=9atl1d]
+aws_api_gateway_resource.orders_internal_orders_orderId: Refreshing state... [id=s27p6s]
+aws_api_gateway_integration.routes["events_eventId_put"]: Refreshing state... [id=agi-siqbjnkogg-597k7z-PUT]
+aws_api_gateway_integration.routes["inventory_internal_inventory_eventId_put"]: Refreshing state... [id=agi-siqbjnkogg-kia7ev-PUT]
+aws_api_gateway_method.routes["inventory_internal_inventory_eventId_del"]: Refreshing state... [id=agm-siqbjnkogg-kia7ev-DELETE]
+aws_api_gateway_method.routes["notifications_root"]: Refreshing state... [id=agm-siqbjnkogg-oa1eho-GET]
+aws_api_gateway_resource.notifications: Refreshing state... [id=oa1eho]
+aws_api_gateway_method.routes["events_health_get"]: Refreshing state... [id=agm-siqbjnkogg-jhpblo-GET]
+aws_api_gateway_integration.routes["cart_internal_carts_cartId_get"]: Refreshing state... [id=agi-siqbjnkogg-p1fast-GET]
+aws_api_gateway_method.routes["orders_orderId_ticket_get"]: Refreshing state... [id=agm-siqbjnkogg-lispkv-GET]
+aws_api_gateway_resource.users_userId_orders: Refreshing state... [id=6redi0]
+aws_api_gateway_integration.routes["cart_items_put"]: Refreshing state... [id=agi-siqbjnkogg-nt2sqj-PUT]
+aws_api_gateway_integration.routes["notifications_notificationId_read_put"]: Refreshing state... [id=agi-siqbjnkogg-y7cdaw-PUT]
+aws_api_gateway_integration.routes["orders_orderId_cancel_post"]: Refreshing state... [id=agi-siqbjnkogg-136ge6-POST]
+aws_api_gateway_resource.cart_internal_carts: Refreshing state... [id=w0xl6t]
+aws_api_gateway_integration.routes["users_userId_delete"]: Refreshing state... [id=agi-siqbjnkogg-uq43mp-DELETE]
+aws_api_gateway_resource.waitlist_users_userId_waitlists: Refreshing state... [id=vub0cp]
+aws_api_gateway_resource.v1: Refreshing state... [id=r76is8]
+aws_api_gateway_method.routes["inventory_internal_confirm_post"]: Refreshing state... [id=agm-siqbjnkogg-rjnwk4-POST]
+aws_api_gateway_integration.routes["cart_root_post"]: Refreshing state... [id=agi-siqbjnkogg-xohtwf-POST]
+aws_api_gateway_integration.routes["inventory_eventId_get"]: Refreshing state... [id=agi-siqbjnkogg-ik08x1-GET]
+aws_api_gateway_method.routes["users_userId_get"]: Refreshing state... [id=agm-siqbjnkogg-uq43mp-GET]
+aws_api_gateway_resource.inventory_internal_inventory_eventId: Refreshing state... [id=kia7ev]
+aws_api_gateway_integration.routes["orders_root"]: Refreshing state... [id=agi-siqbjnkogg-uehnb3-POST]
+aws_api_gateway_method.routes["inventory_internal_inventory_eventId_get"]: Refreshing state... [id=agm-siqbjnkogg-kia7ev-GET]
+aws_api_gateway_integration.routes["inventory_internal_confirm_post"]: Refreshing state... [id=agi-siqbjnkogg-rjnwk4-POST]
+aws_api_gateway_resource.notifications_internal: Refreshing state... [id=w9z4gn]
+aws_api_gateway_resource.payments: Refreshing state... [id=m1fpns]
+aws_api_gateway_method.routes["notifications_internal_post"]: Refreshing state... [id=agm-siqbjnkogg-glib6i-POST]
+aws_api_gateway_method.routes["cart_items_put"]: Refreshing state... [id=agm-siqbjnkogg-nt2sqj-PUT]
+aws_api_gateway_integration.routes["waitlist_internal_process_post"]: Refreshing state... [id=agi-siqbjnkogg-qudvr6-POST]
+aws_api_gateway_method.routes["cart_internal_carts_cartId_get"]: Refreshing state... [id=agm-siqbjnkogg-p1fast-GET]
+aws_api_gateway_resource.orders_internal: Refreshing state... [id=wtumld]
+aws_api_gateway_integration.routes["waitlist_root_get"]: Refreshing state... [id=agi-siqbjnkogg-sys6fg-GET]
+aws_api_gateway_resource.waitlist_internal_waitlist_process: Refreshing state... [id=qudvr6]
+aws_api_gateway_resource.orders_internal_orders_orderId_cancel: Refreshing state... [id=j8r4jp]
+aws_api_gateway_integration.routes["events_eventId_delete"]: Refreshing state... [id=agi-siqbjnkogg-597k7z-DELETE]
+aws_api_gateway_integration.routes["inventory_root"]: Refreshing state... [id=agi-siqbjnkogg-wmfi1n-ANY]
+aws_api_gateway_method.routes["notifications_notificationId_read_put"]: Refreshing state... [id=agm-siqbjnkogg-y7cdaw-PUT]
+aws_api_gateway_resource.events_eventId: Refreshing state... [id=597k7z]
+aws_api_gateway_resource.orders_internal_orders: Refreshing state... [id=vd3tdu]
+aws_api_gateway_resource.inventory_internal_release: Refreshing state... [id=tmjz1k]
+aws_api_gateway_integration.routes["inventory_internal_inventory_post"]: Refreshing state... [id=agi-siqbjnkogg-m32jn7-POST]
+data.aws_lambda_function.user_service: Reading...
+aws_api_gateway_resource.orders_internal_orders_orderId_confirm: Refreshing state... [id=3qvuc5]
+data.aws_lambda_function.inventory_service: Reading...
+data.aws_lambda_function.user_service: Read complete after 1s [id=darsani_user_service]
+data.aws_lambda_function.notification_service: Reading...
+data.aws_lambda_function.inventory_service: Read complete after 0s [id=darsani_inventory_service]
+data.aws_iam_role.lambda_exec: Reading...
+data.aws_lambda_function.cart_service: Reading...
+data.aws_lambda_function.notification_service: Read complete after 1s [id=darsani_notification_service]
+data.aws_lambda_function.event_service: Reading...
+aws_api_gateway_integration.routes["payments_callback_post"]: Refreshing state... [id=agi-siqbjnkogg-fxixmw-POST]
+data.aws_lambda_function.cart_service: Read complete after 1s [id=darsani_cart_service]
+data.aws_lambda_function.order_service: Reading...
+data.aws_lambda_function.event_service: Read complete after 0s [id=darsani_event-service]
+aws_api_gateway_method.routes["events_eventId_delete"]: Refreshing state... [id=agm-siqbjnkogg-597k7z-DELETE]
+data.aws_lambda_function.payment_service: Reading...
+data.aws_lambda_function.order_service: Read complete after 0s [id=darsani_order_service]
+aws_api_gateway_resource.inventory_internal_reserve: Refreshing state... [id=k1fjc9]
+data.aws_lambda_function.waitlist_service: Reading...
+data.aws_iam_role.lambda_exec: Read complete after 2s [id=aws_darsani]
+data.aws_lambda_function.payment_service: Read complete after 1s [id=darsani_payment_service]
+data.aws_lambda_function.waitlist_service: Read complete after 1s [id=darsani_waitlist_service]
+aws_lambda_permission.apigw["payments"]: Refreshing state... [id=AllowAPIGatewayInvoke-payments]
+aws_lambda_permission.apigw["cart"]: Refreshing state... [id=AllowAPIGatewayInvoke-cart]
+aws_lambda_permission.apigw["users"]: Refreshing state... [id=AllowAPIGatewayInvoke-users]
+aws_lambda_permission.apigw["orders"]: Refreshing state... [id=AllowAPIGatewayInvoke-orders]
+aws_lambda_permission.apigw["waitlist"]: Refreshing state... [id=AllowAPIGatewayInvoke-waitlist]
+aws_lambda_permission.apigw["notifications"]: Refreshing state... [id=AllowAPIGatewayInvoke-notifications]
+aws_lambda_permission.apigw["events"]: Refreshing state... [id=AllowAPIGatewayInvoke-events]
+aws_lambda_permission.apigw["inventory"]: Refreshing state... [id=AllowAPIGatewayInvoke-inventory]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+  - destroy
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+  # aws_api_gateway_integration.routes["cart_checkout_post"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "1b2cob" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "POST" -> null
+      - id                      = "agi-siqbjnkogg-1b2cob-POST" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "1b2cob" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_cart_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["cart_internal_carts_cartId_get"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "p1fast" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "GET" -> null
+      - id                      = "agi-siqbjnkogg-p1fast-GET" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "p1fast" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_cart_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["cart_items_delete"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "nt2sqj" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "DELETE" -> null
+      - id                      = "agi-siqbjnkogg-nt2sqj-DELETE" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "nt2sqj" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_cart_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["cart_items_put"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "nt2sqj" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "PUT" -> null
+      - id                      = "agi-siqbjnkogg-nt2sqj-PUT" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "nt2sqj" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_cart_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["cart_root"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "xohtwf" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "GET" -> null
+      - id                      = "agi-siqbjnkogg-xohtwf-GET" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "xohtwf" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_cart_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["cart_root_post"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "xohtwf" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "POST" -> null
+      - id                      = "agi-siqbjnkogg-xohtwf-POST" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "xohtwf" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_cart_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["events_eventId_delete"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "597k7z" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "DELETE" -> null
+      - id                      = "agi-siqbjnkogg-597k7z-DELETE" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "597k7z" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_event-service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["events_eventId_get"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "597k7z" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "GET" -> null
+      - id                      = "agi-siqbjnkogg-597k7z-GET" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "597k7z" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_event-service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["events_eventId_put"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "597k7z" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "PUT" -> null
+      - id                      = "agi-siqbjnkogg-597k7z-PUT" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "597k7z" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_event-service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["events_health_get"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "jhpblo" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "GET" -> null
+      - id                      = "agi-siqbjnkogg-jhpblo-GET" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "jhpblo" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_event-service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["events_root"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "fg0kfm" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "ANY" -> null
+      - id                      = "agi-siqbjnkogg-fg0kfm-ANY" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "fg0kfm" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_event-service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["inventory_eventId_get"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "ik08x1" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "GET" -> null
+      - id                      = "agi-siqbjnkogg-ik08x1-GET" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "ik08x1" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_inventory_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["inventory_internal_confirm_post"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "rjnwk4" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "POST" -> null
+      - id                      = "agi-siqbjnkogg-rjnwk4-POST" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "rjnwk4" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_inventory_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["inventory_internal_inventory_eventId_del"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "kia7ev" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "DELETE" -> null
+      - id                      = "agi-siqbjnkogg-kia7ev-DELETE" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "kia7ev" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_inventory_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["inventory_internal_inventory_eventId_get"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "kia7ev" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "GET" -> null
+      - id                      = "agi-siqbjnkogg-kia7ev-GET" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "kia7ev" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_inventory_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["inventory_internal_inventory_eventId_put"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "kia7ev" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "PUT" -> null
+      - id                      = "agi-siqbjnkogg-kia7ev-PUT" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "kia7ev" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_inventory_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["inventory_internal_inventory_post"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "m32jn7" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "POST" -> null
+      - id                      = "agi-siqbjnkogg-m32jn7-POST" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "m32jn7" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_inventory_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["inventory_internal_release_post"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "tmjz1k" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "POST" -> null
+      - id                      = "agi-siqbjnkogg-tmjz1k-POST" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "tmjz1k" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_inventory_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["inventory_internal_reserve_post"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "k1fjc9" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "POST" -> null
+      - id                      = "agi-siqbjnkogg-k1fjc9-POST" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "k1fjc9" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_inventory_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["inventory_root"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "wmfi1n" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "ANY" -> null
+      - id                      = "agi-siqbjnkogg-wmfi1n-ANY" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "wmfi1n" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_inventory_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["notifications_internal_post"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "glib6i" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "POST" -> null
+      - id                      = "agi-siqbjnkogg-glib6i-POST" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "glib6i" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_notification_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["notifications_notificationId_read_put"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "y7cdaw" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "PUT" -> null
+      - id                      = "agi-siqbjnkogg-y7cdaw-PUT" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "y7cdaw" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_notification_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["notifications_root"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "oa1eho" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "GET" -> null
+      - id                      = "agi-siqbjnkogg-oa1eho-GET" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "oa1eho" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_notification_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["orders_internal_orderId_cancel"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "j8r4jp" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "POST" -> null
+      - id                      = "agi-siqbjnkogg-j8r4jp-POST" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "j8r4jp" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_order_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["orders_internal_orderId_confirm"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "3qvuc5" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "POST" -> null
+      - id                      = "agi-siqbjnkogg-3qvuc5-POST" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "3qvuc5" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_order_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["orders_internal_orderId_get"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "s27p6s" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "GET" -> null
+      - id                      = "agi-siqbjnkogg-s27p6s-GET" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "s27p6s" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_order_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["orders_orderId_cancel_post"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "136ge6" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "POST" -> null
+      - id                      = "agi-siqbjnkogg-136ge6-POST" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "136ge6" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_order_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["orders_orderId_get"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "9cfhj4" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "GET" -> null
+      - id                      = "agi-siqbjnkogg-9cfhj4-GET" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "9cfhj4" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_order_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["orders_orderId_ticket_get"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "lispkv" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "GET" -> null
+      - id                      = "agi-siqbjnkogg-lispkv-GET" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "lispkv" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_order_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["orders_root"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "uehnb3" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "POST" -> null
+      - id                      = "agi-siqbjnkogg-uehnb3-POST" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "uehnb3" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_order_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["payments_callback_post"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "fxixmw" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "POST" -> null
+      - id                      = "agi-siqbjnkogg-fxixmw-POST" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "fxixmw" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_payment_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["payments_orderId_get"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "ylye8w" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "GET" -> null
+      - id                      = "agi-siqbjnkogg-ylye8w-GET" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "ylye8w" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_payment_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["payments_refunds_get"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "8n05m3" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "GET" -> null
+      - id                      = "agi-siqbjnkogg-8n05m3-GET" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "8n05m3" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_payment_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["payments_root"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "m1fpns" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "POST" -> null
+      - id                      = "agi-siqbjnkogg-m1fpns-POST" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "m1fpns" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_payment_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["users_root"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "9atl1d" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "ANY" -> null
+      - id                      = "agi-siqbjnkogg-9atl1d-ANY" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "9atl1d" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_user_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["users_userId_delete"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "uq43mp" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "DELETE" -> null
+      - id                      = "agi-siqbjnkogg-uq43mp-DELETE" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "uq43mp" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_user_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["users_userId_get"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "uq43mp" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "GET" -> null
+      - id                      = "agi-siqbjnkogg-uq43mp-GET" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "uq43mp" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_user_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["users_userId_orders_get"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "6redi0" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "GET" -> null
+      - id                      = "agi-siqbjnkogg-6redi0-GET" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "6redi0" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_user_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["waitlist_internal_process_post"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "qudvr6" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "POST" -> null
+      - id                      = "agi-siqbjnkogg-qudvr6-POST" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "qudvr6" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_waitlist_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["waitlist_root_delete"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "sys6fg" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "DELETE" -> null
+      - id                      = "agi-siqbjnkogg-sys6fg-DELETE" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "sys6fg" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_waitlist_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["waitlist_root_get"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "sys6fg" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "GET" -> null
+      - id                      = "agi-siqbjnkogg-sys6fg-GET" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "sys6fg" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_waitlist_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["waitlist_root_post"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "sys6fg" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "POST" -> null
+      - id                      = "agi-siqbjnkogg-sys6fg-POST" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "sys6fg" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_waitlist_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_integration.routes["waitlist_users_userId_waitlists_get"] will be destroyed
+  # (because aws_api_gateway_integration.routes is not in configuration)
+  - resource "aws_api_gateway_integration" "routes" {
+      - cache_key_parameters    = [] -> null
+      - cache_namespace         = "vub0cp" -> null
+      - connection_type         = "INTERNET" -> null
+      - http_method             = "GET" -> null
+      - id                      = "agi-siqbjnkogg-vub0cp-GET" -> null
+      - integration_http_method = "POST" -> null
+      - passthrough_behavior    = "WHEN_NO_MATCH" -> null
+      - request_parameters      = {} -> null
+      - request_templates       = {} -> null
+      - resource_id             = "vub0cp" -> null
+      - rest_api_id             = "siqbjnkogg" -> null
+      - timeout_milliseconds    = 29000 -> null
+      - type                    = "AWS_PROXY" -> null
+      - uri                     = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_waitlist_service/invocations" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["cart_checkout_post"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "POST" -> null
+      - id                   = "agm-siqbjnkogg-1b2cob-POST" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "1b2cob" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["cart_internal_carts_cartId_get"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "GET" -> null
+      - id                   = "agm-siqbjnkogg-p1fast-GET" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "p1fast" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["cart_items_delete"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "DELETE" -> null
+      - id                   = "agm-siqbjnkogg-nt2sqj-DELETE" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "nt2sqj" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["cart_items_put"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "PUT" -> null
+      - id                   = "agm-siqbjnkogg-nt2sqj-PUT" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "nt2sqj" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["cart_root"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "GET" -> null
+      - id                   = "agm-siqbjnkogg-xohtwf-GET" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "xohtwf" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["cart_root_post"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "POST" -> null
+      - id                   = "agm-siqbjnkogg-xohtwf-POST" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "xohtwf" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["events_eventId_delete"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "DELETE" -> null
+      - id                   = "agm-siqbjnkogg-597k7z-DELETE" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "597k7z" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["events_eventId_get"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "GET" -> null
+      - id                   = "agm-siqbjnkogg-597k7z-GET" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "597k7z" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["events_eventId_put"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "PUT" -> null
+      - id                   = "agm-siqbjnkogg-597k7z-PUT" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "597k7z" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["events_health_get"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "GET" -> null
+      - id                   = "agm-siqbjnkogg-jhpblo-GET" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "jhpblo" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["events_root"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "ANY" -> null
+      - id                   = "agm-siqbjnkogg-fg0kfm-ANY" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "fg0kfm" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["inventory_eventId_get"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "GET" -> null
+      - id                   = "agm-siqbjnkogg-ik08x1-GET" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "ik08x1" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["inventory_internal_confirm_post"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "POST" -> null
+      - id                   = "agm-siqbjnkogg-rjnwk4-POST" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "rjnwk4" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["inventory_internal_inventory_eventId_del"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "DELETE" -> null
+      - id                   = "agm-siqbjnkogg-kia7ev-DELETE" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "kia7ev" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["inventory_internal_inventory_eventId_get"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "GET" -> null
+      - id                   = "agm-siqbjnkogg-kia7ev-GET" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "kia7ev" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["inventory_internal_inventory_eventId_put"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "PUT" -> null
+      - id                   = "agm-siqbjnkogg-kia7ev-PUT" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "kia7ev" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["inventory_internal_inventory_post"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "POST" -> null
+      - id                   = "agm-siqbjnkogg-m32jn7-POST" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "m32jn7" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["inventory_internal_release_post"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "POST" -> null
+      - id                   = "agm-siqbjnkogg-tmjz1k-POST" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "tmjz1k" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["inventory_internal_reserve_post"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "POST" -> null
+      - id                   = "agm-siqbjnkogg-k1fjc9-POST" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "k1fjc9" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["inventory_root"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "ANY" -> null
+      - id                   = "agm-siqbjnkogg-wmfi1n-ANY" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "wmfi1n" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["notifications_internal_post"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "POST" -> null
+      - id                   = "agm-siqbjnkogg-glib6i-POST" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "glib6i" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["notifications_notificationId_read_put"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "PUT" -> null
+      - id                   = "agm-siqbjnkogg-y7cdaw-PUT" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "y7cdaw" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["notifications_root"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "GET" -> null
+      - id                   = "agm-siqbjnkogg-oa1eho-GET" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "oa1eho" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["orders_internal_orderId_cancel"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "POST" -> null
+      - id                   = "agm-siqbjnkogg-j8r4jp-POST" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "j8r4jp" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["orders_internal_orderId_confirm"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "POST" -> null
+      - id                   = "agm-siqbjnkogg-3qvuc5-POST" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "3qvuc5" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["orders_internal_orderId_get"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "GET" -> null
+      - id                   = "agm-siqbjnkogg-s27p6s-GET" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "s27p6s" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["orders_orderId_cancel_post"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "POST" -> null
+      - id                   = "agm-siqbjnkogg-136ge6-POST" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "136ge6" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["orders_orderId_get"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "GET" -> null
+      - id                   = "agm-siqbjnkogg-9cfhj4-GET" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "9cfhj4" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["orders_orderId_ticket_get"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "GET" -> null
+      - id                   = "agm-siqbjnkogg-lispkv-GET" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "lispkv" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["orders_root"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "POST" -> null
+      - id                   = "agm-siqbjnkogg-uehnb3-POST" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "uehnb3" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["payments_callback_post"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "POST" -> null
+      - id                   = "agm-siqbjnkogg-fxixmw-POST" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "fxixmw" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["payments_orderId_get"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "GET" -> null
+      - id                   = "agm-siqbjnkogg-ylye8w-GET" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "ylye8w" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["payments_refunds_get"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "GET" -> null
+      - id                   = "agm-siqbjnkogg-8n05m3-GET" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "8n05m3" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["payments_root"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "POST" -> null
+      - id                   = "agm-siqbjnkogg-m1fpns-POST" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "m1fpns" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["users_root"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "ANY" -> null
+      - id                   = "agm-siqbjnkogg-9atl1d-ANY" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "9atl1d" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["users_userId_delete"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "DELETE" -> null
+      - id                   = "agm-siqbjnkogg-uq43mp-DELETE" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "uq43mp" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["users_userId_get"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "GET" -> null
+      - id                   = "agm-siqbjnkogg-uq43mp-GET" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "uq43mp" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["users_userId_orders_get"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "GET" -> null
+      - id                   = "agm-siqbjnkogg-6redi0-GET" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "6redi0" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["waitlist_internal_process_post"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "POST" -> null
+      - id                   = "agm-siqbjnkogg-qudvr6-POST" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "qudvr6" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["waitlist_root_delete"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "DELETE" -> null
+      - id                   = "agm-siqbjnkogg-sys6fg-DELETE" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "sys6fg" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["waitlist_root_get"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "GET" -> null
+      - id                   = "agm-siqbjnkogg-sys6fg-GET" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "sys6fg" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["waitlist_root_post"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "POST" -> null
+      - id                   = "agm-siqbjnkogg-sys6fg-POST" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "sys6fg" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_method.routes["waitlist_users_userId_waitlists_get"] will be destroyed
+  # (because aws_api_gateway_method.routes is not in configuration)
+  - resource "aws_api_gateway_method" "routes" {
+      - api_key_required     = false -> null
+      - authorization        = "NONE" -> null
+      - authorization_scopes = [] -> null
+      - http_method          = "GET" -> null
+      - id                   = "agm-siqbjnkogg-vub0cp-GET" -> null
+      - request_models       = {} -> null
+      - request_parameters   = {} -> null
+      - resource_id          = "vub0cp" -> null
+      - rest_api_id          = "siqbjnkogg" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_api_gateway_resource.api will be destroyed
+  # (because aws_api_gateway_resource.api is not in configuration)
+  - resource "aws_api_gateway_resource" "api" {
+      - id          = "9aw0o2" -> null
+      - parent_id   = "e84pylg359" -> null
+      - path        = "/api" -> null
+      - path_part   = "api" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.cart will be destroyed
+  # (because aws_api_gateway_resource.cart is not in configuration)
+  - resource "aws_api_gateway_resource" "cart" {
+      - id          = "xohtwf" -> null
+      - parent_id   = "r76is8" -> null
+      - path        = "/api/v1/cart" -> null
+      - path_part   = "cart" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.cart_checkout will be destroyed
+  # (because aws_api_gateway_resource.cart_checkout is not in configuration)
+  - resource "aws_api_gateway_resource" "cart_checkout" {
+      - id          = "1b2cob" -> null
+      - parent_id   = "xohtwf" -> null
+      - path        = "/api/v1/cart/checkout" -> null
+      - path_part   = "checkout" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.cart_internal will be destroyed
+  # (because aws_api_gateway_resource.cart_internal is not in configuration)
+  - resource "aws_api_gateway_resource" "cart_internal" {
+      - id          = "p3zqbp" -> null
+      - parent_id   = "xohtwf" -> null
+      - path        = "/api/v1/cart/internal" -> null
+      - path_part   = "internal" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.cart_internal_carts will be destroyed
+  # (because aws_api_gateway_resource.cart_internal_carts is not in configuration)
+  - resource "aws_api_gateway_resource" "cart_internal_carts" {
+      - id          = "w0xl6t" -> null
+      - parent_id   = "p3zqbp" -> null
+      - path        = "/api/v1/cart/internal/carts" -> null
+      - path_part   = "carts" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.cart_internal_carts_cartId will be destroyed
+  # (because aws_api_gateway_resource.cart_internal_carts_cartId is not in configuration)
+  - resource "aws_api_gateway_resource" "cart_internal_carts_cartId" {
+      - id          = "p1fast" -> null
+      - parent_id   = "w0xl6t" -> null
+      - path        = "/api/v1/cart/internal/carts/{cartId}" -> null
+      - path_part   = "{cartId}" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.cart_items will be destroyed
+  # (because aws_api_gateway_resource.cart_items is not in configuration)
+  - resource "aws_api_gateway_resource" "cart_items" {
+      - id          = "nt2sqj" -> null
+      - parent_id   = "xohtwf" -> null
+      - path        = "/api/v1/cart/items" -> null
+      - path_part   = "items" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.events will be destroyed
+  # (because aws_api_gateway_resource.events is not in configuration)
+  - resource "aws_api_gateway_resource" "events" {
+      - id          = "fg0kfm" -> null
+      - parent_id   = "r76is8" -> null
+      - path        = "/api/v1/events" -> null
+      - path_part   = "events" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.events_eventId will be destroyed
+  # (because aws_api_gateway_resource.events_eventId is not in configuration)
+  - resource "aws_api_gateway_resource" "events_eventId" {
+      - id          = "597k7z" -> null
+      - parent_id   = "fg0kfm" -> null
+      - path        = "/api/v1/events/{eventId}" -> null
+      - path_part   = "{eventId}" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.events_health will be destroyed
+  # (because aws_api_gateway_resource.events_health is not in configuration)
+  - resource "aws_api_gateway_resource" "events_health" {
+      - id          = "jhpblo" -> null
+      - parent_id   = "fg0kfm" -> null
+      - path        = "/api/v1/events/health" -> null
+      - path_part   = "health" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.inventory will be destroyed
+  # (because aws_api_gateway_resource.inventory is not in configuration)
+  - resource "aws_api_gateway_resource" "inventory" {
+      - id          = "wmfi1n" -> null
+      - parent_id   = "r76is8" -> null
+      - path        = "/api/v1/inventory" -> null
+      - path_part   = "inventory" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.inventory_eventId will be destroyed
+  # (because aws_api_gateway_resource.inventory_eventId is not in configuration)
+  - resource "aws_api_gateway_resource" "inventory_eventId" {
+      - id          = "ik08x1" -> null
+      - parent_id   = "wmfi1n" -> null
+      - path        = "/api/v1/inventory/{eventId}" -> null
+      - path_part   = "{eventId}" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.inventory_internal will be destroyed
+  # (because aws_api_gateway_resource.inventory_internal is not in configuration)
+  - resource "aws_api_gateway_resource" "inventory_internal" {
+      - id          = "5ljbmb" -> null
+      - parent_id   = "wmfi1n" -> null
+      - path        = "/api/v1/inventory/internal" -> null
+      - path_part   = "internal" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.inventory_internal_confirm will be destroyed
+  # (because aws_api_gateway_resource.inventory_internal_confirm is not in configuration)
+  - resource "aws_api_gateway_resource" "inventory_internal_confirm" {
+      - id          = "rjnwk4" -> null
+      - parent_id   = "5ljbmb" -> null
+      - path        = "/api/v1/inventory/internal/confirm" -> null
+      - path_part   = "confirm" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.inventory_internal_inventory will be destroyed
+  # (because aws_api_gateway_resource.inventory_internal_inventory is not in configuration)
+  - resource "aws_api_gateway_resource" "inventory_internal_inventory" {
+      - id          = "m32jn7" -> null
+      - parent_id   = "5ljbmb" -> null
+      - path        = "/api/v1/inventory/internal/inventory" -> null
+      - path_part   = "inventory" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.inventory_internal_inventory_eventId will be destroyed
+  # (because aws_api_gateway_resource.inventory_internal_inventory_eventId is not in configuration)
+  - resource "aws_api_gateway_resource" "inventory_internal_inventory_eventId" {
+      - id          = "kia7ev" -> null
+      - parent_id   = "m32jn7" -> null
+      - path        = "/api/v1/inventory/internal/inventory/{eventId}" -> null
+      - path_part   = "{eventId}" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.inventory_internal_release will be destroyed
+  # (because aws_api_gateway_resource.inventory_internal_release is not in configuration)
+  - resource "aws_api_gateway_resource" "inventory_internal_release" {
+      - id          = "tmjz1k" -> null
+      - parent_id   = "5ljbmb" -> null
+      - path        = "/api/v1/inventory/internal/release" -> null
+      - path_part   = "release" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.inventory_internal_reserve will be destroyed
+  # (because aws_api_gateway_resource.inventory_internal_reserve is not in configuration)
+  - resource "aws_api_gateway_resource" "inventory_internal_reserve" {
+      - id          = "k1fjc9" -> null
+      - parent_id   = "5ljbmb" -> null
+      - path        = "/api/v1/inventory/internal/reserve" -> null
+      - path_part   = "reserve" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.notifications will be destroyed
+  # (because aws_api_gateway_resource.notifications is not in configuration)
+  - resource "aws_api_gateway_resource" "notifications" {
+      - id          = "oa1eho" -> null
+      - parent_id   = "r76is8" -> null
+      - path        = "/api/v1/notifications" -> null
+      - path_part   = "notifications" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.notifications_internal will be destroyed
+  # (because aws_api_gateway_resource.notifications_internal is not in configuration)
+  - resource "aws_api_gateway_resource" "notifications_internal" {
+      - id          = "w9z4gn" -> null
+      - parent_id   = "oa1eho" -> null
+      - path        = "/api/v1/notifications/internal" -> null
+      - path_part   = "internal" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.notifications_internal_notifications will be destroyed
+  # (because aws_api_gateway_resource.notifications_internal_notifications is not in configuration)
+  - resource "aws_api_gateway_resource" "notifications_internal_notifications" {
+      - id          = "glib6i" -> null
+      - parent_id   = "w9z4gn" -> null
+      - path        = "/api/v1/notifications/internal/notifications" -> null
+      - path_part   = "notifications" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.notifications_notificationId will be destroyed
+  # (because aws_api_gateway_resource.notifications_notificationId is not in configuration)
+  - resource "aws_api_gateway_resource" "notifications_notificationId" {
+      - id          = "7fitnm" -> null
+      - parent_id   = "oa1eho" -> null
+      - path        = "/api/v1/notifications/{notificationId}" -> null
+      - path_part   = "{notificationId}" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.notifications_notificationId_read will be destroyed
+  # (because aws_api_gateway_resource.notifications_notificationId_read is not in configuration)
+  - resource "aws_api_gateway_resource" "notifications_notificationId_read" {
+      - id          = "y7cdaw" -> null
+      - parent_id   = "7fitnm" -> null
+      - path        = "/api/v1/notifications/{notificationId}/read" -> null
+      - path_part   = "read" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.orders will be destroyed
+  # (because aws_api_gateway_resource.orders is not in configuration)
+  - resource "aws_api_gateway_resource" "orders" {
+      - id          = "uehnb3" -> null
+      - parent_id   = "r76is8" -> null
+      - path        = "/api/v1/orders" -> null
+      - path_part   = "orders" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.orders_internal will be destroyed
+  # (because aws_api_gateway_resource.orders_internal is not in configuration)
+  - resource "aws_api_gateway_resource" "orders_internal" {
+      - id          = "wtumld" -> null
+      - parent_id   = "uehnb3" -> null
+      - path        = "/api/v1/orders/internal" -> null
+      - path_part   = "internal" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.orders_internal_orders will be destroyed
+  # (because aws_api_gateway_resource.orders_internal_orders is not in configuration)
+  - resource "aws_api_gateway_resource" "orders_internal_orders" {
+      - id          = "vd3tdu" -> null
+      - parent_id   = "wtumld" -> null
+      - path        = "/api/v1/orders/internal/orders" -> null
+      - path_part   = "orders" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.orders_internal_orders_orderId will be destroyed
+  # (because aws_api_gateway_resource.orders_internal_orders_orderId is not in configuration)
+  - resource "aws_api_gateway_resource" "orders_internal_orders_orderId" {
+      - id          = "s27p6s" -> null
+      - parent_id   = "vd3tdu" -> null
+      - path        = "/api/v1/orders/internal/orders/{orderId}" -> null
+      - path_part   = "{orderId}" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.orders_internal_orders_orderId_cancel will be destroyed
+  # (because aws_api_gateway_resource.orders_internal_orders_orderId_cancel is not in configuration)
+  - resource "aws_api_gateway_resource" "orders_internal_orders_orderId_cancel" {
+      - id          = "j8r4jp" -> null
+      - parent_id   = "s27p6s" -> null
+      - path        = "/api/v1/orders/internal/orders/{orderId}/cancel" -> null
+      - path_part   = "cancel" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.orders_internal_orders_orderId_confirm will be destroyed
+  # (because aws_api_gateway_resource.orders_internal_orders_orderId_confirm is not in configuration)
+  - resource "aws_api_gateway_resource" "orders_internal_orders_orderId_confirm" {
+      - id          = "3qvuc5" -> null
+      - parent_id   = "s27p6s" -> null
+      - path        = "/api/v1/orders/internal/orders/{orderId}/confirm" -> null
+      - path_part   = "confirm" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.orders_orderId will be destroyed
+  # (because aws_api_gateway_resource.orders_orderId is not in configuration)
+  - resource "aws_api_gateway_resource" "orders_orderId" {
+      - id          = "9cfhj4" -> null
+      - parent_id   = "uehnb3" -> null
+      - path        = "/api/v1/orders/{orderId}" -> null
+      - path_part   = "{orderId}" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.orders_orderId_cancel will be destroyed
+  # (because aws_api_gateway_resource.orders_orderId_cancel is not in configuration)
+  - resource "aws_api_gateway_resource" "orders_orderId_cancel" {
+      - id          = "136ge6" -> null
+      - parent_id   = "9cfhj4" -> null
+      - path        = "/api/v1/orders/{orderId}/cancel" -> null
+      - path_part   = "cancel" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.orders_orderId_ticket will be destroyed
+  # (because aws_api_gateway_resource.orders_orderId_ticket is not in configuration)
+  - resource "aws_api_gateway_resource" "orders_orderId_ticket" {
+      - id          = "lispkv" -> null
+      - parent_id   = "9cfhj4" -> null
+      - path        = "/api/v1/orders/{orderId}/ticket" -> null
+      - path_part   = "ticket" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.payments will be destroyed
+  # (because aws_api_gateway_resource.payments is not in configuration)
+  - resource "aws_api_gateway_resource" "payments" {
+      - id          = "m1fpns" -> null
+      - parent_id   = "r76is8" -> null
+      - path        = "/api/v1/payments" -> null
+      - path_part   = "payments" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.payments_callback will be destroyed
+  # (because aws_api_gateway_resource.payments_callback is not in configuration)
+  - resource "aws_api_gateway_resource" "payments_callback" {
+      - id          = "fxixmw" -> null
+      - parent_id   = "m1fpns" -> null
+      - path        = "/api/v1/payments/callback" -> null
+      - path_part   = "callback" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.payments_orderId will be destroyed
+  # (because aws_api_gateway_resource.payments_orderId is not in configuration)
+  - resource "aws_api_gateway_resource" "payments_orderId" {
+      - id          = "ylye8w" -> null
+      - parent_id   = "m1fpns" -> null
+      - path        = "/api/v1/payments/{orderId}" -> null
+      - path_part   = "{orderId}" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.payments_refunds will be destroyed
+  # (because aws_api_gateway_resource.payments_refunds is not in configuration)
+  - resource "aws_api_gateway_resource" "payments_refunds" {
+      - id          = "8n05m3" -> null
+      - parent_id   = "m1fpns" -> null
+      - path        = "/api/v1/payments/refunds" -> null
+      - path_part   = "refunds" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.users will be destroyed
+  # (because aws_api_gateway_resource.users is not in configuration)
+  - resource "aws_api_gateway_resource" "users" {
+      - id          = "9atl1d" -> null
+      - parent_id   = "r76is8" -> null
+      - path        = "/api/v1/users" -> null
+      - path_part   = "users" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.users_userId will be destroyed
+  # (because aws_api_gateway_resource.users_userId is not in configuration)
+  - resource "aws_api_gateway_resource" "users_userId" {
+      - id          = "uq43mp" -> null
+      - parent_id   = "9atl1d" -> null
+      - path        = "/api/v1/users/{userId}" -> null
+      - path_part   = "{userId}" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.users_userId_orders will be destroyed
+  # (because aws_api_gateway_resource.users_userId_orders is not in configuration)
+  - resource "aws_api_gateway_resource" "users_userId_orders" {
+      - id          = "6redi0" -> null
+      - parent_id   = "uq43mp" -> null
+      - path        = "/api/v1/users/{userId}/orders" -> null
+      - path_part   = "orders" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.v1 will be destroyed
+  # (because aws_api_gateway_resource.v1 is not in configuration)
+  - resource "aws_api_gateway_resource" "v1" {
+      - id          = "r76is8" -> null
+      - parent_id   = "9aw0o2" -> null
+      - path        = "/api/v1" -> null
+      - path_part   = "v1" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.waitlist will be destroyed
+  # (because aws_api_gateway_resource.waitlist is not in configuration)
+  - resource "aws_api_gateway_resource" "waitlist" {
+      - id          = "sys6fg" -> null
+      - parent_id   = "r76is8" -> null
+      - path        = "/api/v1/waitlist" -> null
+      - path_part   = "waitlist" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.waitlist_internal will be destroyed
+  # (because aws_api_gateway_resource.waitlist_internal is not in configuration)
+  - resource "aws_api_gateway_resource" "waitlist_internal" {
+      - id          = "a0uelx" -> null
+      - parent_id   = "sys6fg" -> null
+      - path        = "/api/v1/waitlist/internal" -> null
+      - path_part   = "internal" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.waitlist_internal_waitlist will be destroyed
+  # (because aws_api_gateway_resource.waitlist_internal_waitlist is not in configuration)
+  - resource "aws_api_gateway_resource" "waitlist_internal_waitlist" {
+      - id          = "u3unic" -> null
+      - parent_id   = "a0uelx" -> null
+      - path        = "/api/v1/waitlist/internal/waitlist" -> null
+      - path_part   = "waitlist" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.waitlist_internal_waitlist_process will be destroyed
+  # (because aws_api_gateway_resource.waitlist_internal_waitlist_process is not in configuration)
+  - resource "aws_api_gateway_resource" "waitlist_internal_waitlist_process" {
+      - id          = "qudvr6" -> null
+      - parent_id   = "u3unic" -> null
+      - path        = "/api/v1/waitlist/internal/waitlist/process" -> null
+      - path_part   = "process" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.waitlist_users will be destroyed
+  # (because aws_api_gateway_resource.waitlist_users is not in configuration)
+  - resource "aws_api_gateway_resource" "waitlist_users" {
+      - id          = "tdrpy3" -> null
+      - parent_id   = "sys6fg" -> null
+      - path        = "/api/v1/waitlist/users" -> null
+      - path_part   = "users" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.waitlist_users_userId will be destroyed
+  # (because aws_api_gateway_resource.waitlist_users_userId is not in configuration)
+  - resource "aws_api_gateway_resource" "waitlist_users_userId" {
+      - id          = "gd4lb8" -> null
+      - parent_id   = "tdrpy3" -> null
+      - path        = "/api/v1/waitlist/users/{userId}" -> null
+      - path_part   = "{userId}" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_resource.waitlist_users_userId_waitlists will be destroyed
+  # (because aws_api_gateway_resource.waitlist_users_userId_waitlists is not in configuration)
+  - resource "aws_api_gateway_resource" "waitlist_users_userId_waitlists" {
+      - id          = "vub0cp" -> null
+      - parent_id   = "gd4lb8" -> null
+      - path        = "/api/v1/waitlist/users/{userId}/waitlists" -> null
+      - path_part   = "waitlists" -> null
+      - rest_api_id = "siqbjnkogg" -> null
+    }
+
+  # aws_api_gateway_rest_api.eventora will be destroyed
+  # (because aws_api_gateway_rest_api.eventora is not in configuration)
+  - resource "aws_api_gateway_rest_api" "eventora" {
+      - api_key_source               = "HEADER" -> null
+      - arn                          = "arn:aws:apigateway:ap-southeast-1::/restapis/siqbjnkogg" -> null
+      - binary_media_types           = [] -> null
+      - created_date                 = "2026-07-30T06:17:30Z" -> null
+      - disable_execute_api_endpoint = false -> null
+      - execution_arn                = "arn:aws:execute-api:ap-southeast-1:726101441380:siqbjnkogg" -> null
+      - id                           = "siqbjnkogg" -> null
+      - name                         = "eventora-api" -> null
+      - root_resource_id             = "e84pylg359" -> null
+      - tags                         = {} -> null
+      - tags_all                     = {} -> null
+        # (3 unchanged attributes hidden)
+
+      - endpoint_configuration {
+          - ip_address_type  = "ipv4" -> null
+          - types            = [
+              - "EDGE",
+            ] -> null
+          - vpc_endpoint_ids = [] -> null
+        }
+    }
+
+  # aws_apigatewayv2_api.eventora will be created
+  + resource "aws_apigatewayv2_api" "eventora" {
+      + api_endpoint                 = (known after apply)
+      + api_key_selection_expression = "$request.header.x-api-key"
+      + arn                          = (known after apply)
+      + execution_arn                = (known after apply)
+      + id                           = (known after apply)
+      + ip_address_type              = (known after apply)
+      + name                         = "eventora-http-api"
+      + protocol_type                = "HTTP"
+      + route_selection_expression   = "$request.method $request.path"
+      + tags_all                     = (known after apply)
+
+      + cors_configuration {
+          + allow_headers = [
+              + "Authorization",
+              + "Content-Type",
+              + "X-Internal-Api-Key",
+            ]
+          + allow_methods = [
+              + "DELETE",
+              + "GET",
+              + "OPTIONS",
+              + "POST",
+              + "PUT",
+            ]
+          + allow_origins = [
+              + "*",
+            ]
+          + max_age       = 300
+        }
+    }
+
+  # aws_apigatewayv2_integration.lambdas["cart"] will be created
+  + resource "aws_apigatewayv2_integration" "lambdas" {
+      + api_id                                    = (known after apply)
+      + connection_type                           = "INTERNET"
+      + id                                        = (known after apply)
+      + integration_response_selection_expression = (known after apply)
+      + integration_type                          = "AWS_PROXY"
+      + integration_uri                           = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_cart_service/invocations"
+      + payload_format_version                    = "2.0"
+      + timeout_milliseconds                      = (known after apply)
+    }
+
+  # aws_apigatewayv2_integration.lambdas["events"] will be created
+  + resource "aws_apigatewayv2_integration" "lambdas" {
+      + api_id                                    = (known after apply)
+      + connection_type                           = "INTERNET"
+      + id                                        = (known after apply)
+      + integration_response_selection_expression = (known after apply)
+      + integration_type                          = "AWS_PROXY"
+      + integration_uri                           = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_event-service/invocations"
+      + payload_format_version                    = "2.0"
+      + timeout_milliseconds                      = (known after apply)
+    }
+
+  # aws_apigatewayv2_integration.lambdas["inventory"] will be created
+  + resource "aws_apigatewayv2_integration" "lambdas" {
+      + api_id                                    = (known after apply)
+      + connection_type                           = "INTERNET"
+      + id                                        = (known after apply)
+      + integration_response_selection_expression = (known after apply)
+      + integration_type                          = "AWS_PROXY"
+      + integration_uri                           = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_inventory_service/invocations"
+      + payload_format_version                    = "2.0"
+      + timeout_milliseconds                      = (known after apply)
+    }
+
+  # aws_apigatewayv2_integration.lambdas["notifications"] will be created
+  + resource "aws_apigatewayv2_integration" "lambdas" {
+      + api_id                                    = (known after apply)
+      + connection_type                           = "INTERNET"
+      + id                                        = (known after apply)
+      + integration_response_selection_expression = (known after apply)
+      + integration_type                          = "AWS_PROXY"
+      + integration_uri                           = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_notification_service/invocations"
+      + payload_format_version                    = "2.0"
+      + timeout_milliseconds                      = (known after apply)
+    }
+
+  # aws_apigatewayv2_integration.lambdas["orders"] will be created
+  + resource "aws_apigatewayv2_integration" "lambdas" {
+      + api_id                                    = (known after apply)
+      + connection_type                           = "INTERNET"
+      + id                                        = (known after apply)
+      + integration_response_selection_expression = (known after apply)
+      + integration_type                          = "AWS_PROXY"
+      + integration_uri                           = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_order_service/invocations"
+      + payload_format_version                    = "2.0"
+      + timeout_milliseconds                      = (known after apply)
+    }
+
+  # aws_apigatewayv2_integration.lambdas["payments"] will be created
+  + resource "aws_apigatewayv2_integration" "lambdas" {
+      + api_id                                    = (known after apply)
+      + connection_type                           = "INTERNET"
+      + id                                        = (known after apply)
+      + integration_response_selection_expression = (known after apply)
+      + integration_type                          = "AWS_PROXY"
+      + integration_uri                           = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_payment_service/invocations"
+      + payload_format_version                    = "2.0"
+      + timeout_milliseconds                      = (known after apply)
+    }
+
+  # aws_apigatewayv2_integration.lambdas["users"] will be created
+  + resource "aws_apigatewayv2_integration" "lambdas" {
+      + api_id                                    = (known after apply)
+      + connection_type                           = "INTERNET"
+      + id                                        = (known after apply)
+      + integration_response_selection_expression = (known after apply)
+      + integration_type                          = "AWS_PROXY"
+      + integration_uri                           = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_user_service/invocations"
+      + payload_format_version                    = "2.0"
+      + timeout_milliseconds                      = (known after apply)
+    }
+
+  # aws_apigatewayv2_integration.lambdas["waitlist"] will be created
+  + resource "aws_apigatewayv2_integration" "lambdas" {
+      + api_id                                    = (known after apply)
+      + connection_type                           = "INTERNET"
+      + id                                        = (known after apply)
+      + integration_response_selection_expression = (known after apply)
+      + integration_type                          = "AWS_PROXY"
+      + integration_uri                           = "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_waitlist_service/invocations"
+      + payload_format_version                    = "2.0"
+      + timeout_milliseconds                      = (known after apply)
+    }
+
+  # aws_apigatewayv2_route.routes["ANY /api/v1/cart"] will be created
+  + resource "aws_apigatewayv2_route" "routes" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /api/v1/cart"
+      + target             = (known after apply)
+    }
+
+  # aws_apigatewayv2_route.routes["ANY /api/v1/cart/{proxy+}"] will be created
+  + resource "aws_apigatewayv2_route" "routes" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /api/v1/cart/{proxy+}"
+      + target             = (known after apply)
+    }
+
+  # aws_apigatewayv2_route.routes["ANY /api/v1/events"] will be created
+  + resource "aws_apigatewayv2_route" "routes" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /api/v1/events"
+      + target             = (known after apply)
+    }
+
+  # aws_apigatewayv2_route.routes["ANY /api/v1/events/{proxy+}"] will be created
+  + resource "aws_apigatewayv2_route" "routes" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /api/v1/events/{proxy+}"
+      + target             = (known after apply)
+    }
+
+  # aws_apigatewayv2_route.routes["ANY /api/v1/health"] will be created
+  + resource "aws_apigatewayv2_route" "routes" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /api/v1/health"
+      + target             = (known after apply)
+    }
+
+  # aws_apigatewayv2_route.routes["ANY /api/v1/inventory"] will be created
+  + resource "aws_apigatewayv2_route" "routes" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /api/v1/inventory"
+      + target             = (known after apply)
+    }
+
+  # aws_apigatewayv2_route.routes["ANY /api/v1/inventory/{proxy+}"] will be created
+  + resource "aws_apigatewayv2_route" "routes" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /api/v1/inventory/{proxy+}"
+      + target             = (known after apply)
+    }
+
+  # aws_apigatewayv2_route.routes["ANY /api/v1/notifications"] will be created
+  + resource "aws_apigatewayv2_route" "routes" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /api/v1/notifications"
+      + target             = (known after apply)
+    }
+
+  # aws_apigatewayv2_route.routes["ANY /api/v1/notifications/{proxy+}"] will be created
+  + resource "aws_apigatewayv2_route" "routes" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /api/v1/notifications/{proxy+}"
+      + target             = (known after apply)
+    }
+
+  # aws_apigatewayv2_route.routes["ANY /api/v1/orders"] will be created
+  + resource "aws_apigatewayv2_route" "routes" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /api/v1/orders"
+      + target             = (known after apply)
+    }
+
+  # aws_apigatewayv2_route.routes["ANY /api/v1/orders/{proxy+}"] will be created
+  + resource "aws_apigatewayv2_route" "routes" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /api/v1/orders/{proxy+}"
+      + target             = (known after apply)
+    }
+
+  # aws_apigatewayv2_route.routes["ANY /api/v1/payments"] will be created
+  + resource "aws_apigatewayv2_route" "routes" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /api/v1/payments"
+      + target             = (known after apply)
+    }
+
+  # aws_apigatewayv2_route.routes["ANY /api/v1/payments/{proxy+}"] will be created
+  + resource "aws_apigatewayv2_route" "routes" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /api/v1/payments/{proxy+}"
+      + target             = (known after apply)
+    }
+
+  # aws_apigatewayv2_route.routes["ANY /api/v1/users"] will be created
+  + resource "aws_apigatewayv2_route" "routes" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /api/v1/users"
+      + target             = (known after apply)
+    }
+
+  # aws_apigatewayv2_route.routes["ANY /api/v1/users/{proxy+}"] will be created
+  + resource "aws_apigatewayv2_route" "routes" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /api/v1/users/{proxy+}"
+      + target             = (known after apply)
+    }
+
+  # aws_apigatewayv2_route.routes["ANY /api/v1/waitlist"] will be created
+  + resource "aws_apigatewayv2_route" "routes" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /api/v1/waitlist"
+      + target             = (known after apply)
+    }
+
+  # aws_apigatewayv2_route.routes["ANY /api/v1/waitlist/{proxy+}"] will be created
+  + resource "aws_apigatewayv2_route" "routes" {
+      + api_id             = (known after apply)
+      + api_key_required   = false
+      + authorization_type = "NONE"
+      + id                 = (known after apply)
+      + route_key          = "ANY /api/v1/waitlist/{proxy+}"
+      + target             = (known after apply)
+    }
+
+  # aws_apigatewayv2_stage.default will be created
+  + resource "aws_apigatewayv2_stage" "default" {
+      + api_id        = (known after apply)
+      + arn           = (known after apply)
+      + auto_deploy   = true
+      + deployment_id = (known after apply)
+      + execution_arn = (known after apply)
+      + id            = (known after apply)
+      + invoke_url    = (known after apply)
+      + name          = "$default"
+      + tags_all      = (known after apply)
+    }
+
+  # aws_lambda_permission.apigw["cart"] must be replaced
+-/+ resource "aws_lambda_permission" "apigw" {
+      ~ id                  = "AllowAPIGatewayInvoke-cart" -> (known after apply)
+      ~ source_arn          = "arn:aws:execute-api:ap-southeast-1:726101441380:siqbjnkogg/*/*" -> (known after apply) # forces replacement
+      ~ statement_id        = "AllowAPIGatewayInvoke-cart" -> "AllowHTTPAPIInvoke-cart" # forces replacement
+      + statement_id_prefix = (known after apply)
+        # (4 unchanged attributes hidden)
+    }
+
+  # aws_lambda_permission.apigw["events"] must be replaced
+-/+ resource "aws_lambda_permission" "apigw" {
+      ~ id                  = "AllowAPIGatewayInvoke-events" -> (known after apply)
+      ~ source_arn          = "arn:aws:execute-api:ap-southeast-1:726101441380:siqbjnkogg/*/*" -> (known after apply) # forces replacement
+      ~ statement_id        = "AllowAPIGatewayInvoke-events" -> "AllowHTTPAPIInvoke-events" # forces replacement
+      + statement_id_prefix = (known after apply)
+        # (4 unchanged attributes hidden)
+    }
+
+  # aws_lambda_permission.apigw["inventory"] must be replaced
+-/+ resource "aws_lambda_permission" "apigw" {
+      ~ id                  = "AllowAPIGatewayInvoke-inventory" -> (known after apply)
+      ~ source_arn          = "arn:aws:execute-api:ap-southeast-1:726101441380:siqbjnkogg/*/*" -> (known after apply) # forces replacement
+      ~ statement_id        = "AllowAPIGatewayInvoke-inventory" -> "AllowHTTPAPIInvoke-inventory" # forces replacement
+      + statement_id_prefix = (known after apply)
+        # (4 unchanged attributes hidden)
+    }
+
+  # aws_lambda_permission.apigw["notifications"] must be replaced
+-/+ resource "aws_lambda_permission" "apigw" {
+      ~ id                  = "AllowAPIGatewayInvoke-notifications" -> (known after apply)
+      ~ source_arn          = "arn:aws:execute-api:ap-southeast-1:726101441380:siqbjnkogg/*/*" -> (known after apply) # forces replacement
+      ~ statement_id        = "AllowAPIGatewayInvoke-notifications" -> "AllowHTTPAPIInvoke-notifications" # forces replacement
+      + statement_id_prefix = (known after apply)
+        # (4 unchanged attributes hidden)
+    }
+
+  # aws_lambda_permission.apigw["orders"] must be replaced
+-/+ resource "aws_lambda_permission" "apigw" {
+      ~ id                  = "AllowAPIGatewayInvoke-orders" -> (known after apply)
+      ~ source_arn          = "arn:aws:execute-api:ap-southeast-1:726101441380:siqbjnkogg/*/*" -> (known after apply) # forces replacement
+      ~ statement_id        = "AllowAPIGatewayInvoke-orders" -> "AllowHTTPAPIInvoke-orders" # forces replacement
+      + statement_id_prefix = (known after apply)
+        # (4 unchanged attributes hidden)
+    }
+
+  # aws_lambda_permission.apigw["payments"] must be replaced
+-/+ resource "aws_lambda_permission" "apigw" {
+      ~ id                  = "AllowAPIGatewayInvoke-payments" -> (known after apply)
+      ~ source_arn          = "arn:aws:execute-api:ap-southeast-1:726101441380:siqbjnkogg/*/*" -> (known after apply) # forces replacement
+      ~ statement_id        = "AllowAPIGatewayInvoke-payments" -> "AllowHTTPAPIInvoke-payments" # forces replacement
+      + statement_id_prefix = (known after apply)
+        # (4 unchanged attributes hidden)
+    }
+
+  # aws_lambda_permission.apigw["users"] must be replaced
+-/+ resource "aws_lambda_permission" "apigw" {
+      ~ id                  = "AllowAPIGatewayInvoke-users" -> (known after apply)
+      ~ source_arn          = "arn:aws:execute-api:ap-southeast-1:726101441380:siqbjnkogg/*/*" -> (known after apply) # forces replacement
+      ~ statement_id        = "AllowAPIGatewayInvoke-users" -> "AllowHTTPAPIInvoke-users" # forces replacement
+      + statement_id_prefix = (known after apply)
+        # (4 unchanged attributes hidden)
+    }
+
+  # aws_lambda_permission.apigw["waitlist"] must be replaced
+-/+ resource "aws_lambda_permission" "apigw" {
+      ~ id                  = "AllowAPIGatewayInvoke-waitlist" -> (known after apply)
+      ~ source_arn          = "arn:aws:execute-api:ap-southeast-1:726101441380:siqbjnkogg/*/*" -> (known after apply) # forces replacement
+      ~ statement_id        = "AllowAPIGatewayInvoke-waitlist" -> "AllowHTTPAPIInvoke-waitlist" # forces replacement
+      + statement_id_prefix = (known after apply)
+        # (4 unchanged attributes hidden)
+    }
+
+  # null_resource.lambda_deploy["darsani_cart_service"] must be replaced
+-/+ resource "null_resource" "lambda_deploy" {
+      ~ id       = "7500091596426707582" -> (known after apply)
+      ~ triggers = { # forces replacement
+          ~ "zip_hash" = "jWR6YQnfZyMtgYbnjCdkpoTvNr3NprJnEBGEDIqASGo=" -> "FWDyk/47/VG8TwD7j10RJfuEe+DvEopC7CjYckN4hM0="
+        }
+    }
+
+Plan: 36 to add, 0 to change, 143 to destroy.
+
+Changes to Outputs:
+  ~ api_base_url = "https://siqbjnkogg.execute-api.ap-southeast-1.amazonaws.com/prod/api/v1" -> (known after apply)
+  ~ service_urls = {
+      ~ cart          = "https://siqbjnkogg.execute-api.ap-southeast-1.amazonaws.com/prod/api/v1/cart" -> (known after apply)
+      ~ events        = "https://siqbjnkogg.execute-api.ap-southeast-1.amazonaws.com/prod/api/v1/events" -> (known after apply)
+      ~ inventory     = "https://siqbjnkogg.execute-api.ap-southeast-1.amazonaws.com/prod/api/v1/inventory" -> (known after apply)
+      ~ notifications = "https://siqbjnkogg.execute-api.ap-southeast-1.amazonaws.com/prod/api/v1/notifications" -> (known after apply)
+      ~ orders        = "https://siqbjnkogg.execute-api.ap-southeast-1.amazonaws.com/prod/api/v1/orders" -> (known after apply)
+      ~ payments      = "https://siqbjnkogg.execute-api.ap-southeast-1.amazonaws.com/prod/api/v1/payments" -> (known after apply)
+      ~ users         = "https://siqbjnkogg.execute-api.ap-southeast-1.amazonaws.com/prod/api/v1/users" -> (known after apply)
+      ~ waitlist      = "https://siqbjnkogg.execute-api.ap-southeast-1.amazonaws.com/prod/api/v1/waitlist" -> (known after apply)
+    }
+null_resource.lambda_deploy["darsani_cart_service"]: Destroying... [id=7500091596426707582]
+null_resource.lambda_deploy["darsani_cart_service"]: Destruction complete after 0s
+null_resource.lambda_deploy["darsani_cart_service"]: Creating...
+null_resource.lambda_deploy["darsani_cart_service"]: Provisioning with 'local-exec'...
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec): Executing: ["cmd" "/C" "aws lambda update-function-code --function-name %FUNC% --zip-file fileb://%ZIP% --region %REGION% --profile %PROFILE%"]
+aws_lambda_permission.apigw["inventory"]: Destroying... [id=AllowAPIGatewayInvoke-inventory]
+aws_api_gateway_integration.routes["payments_callback_post"]: Destroying... [id=agi-siqbjnkogg-fxixmw-POST]
+aws_api_gateway_integration.routes["cart_checkout_post"]: Destroying... [id=agi-siqbjnkogg-1b2cob-POST]
+aws_lambda_permission.apigw["cart"]: Destroying... [id=AllowAPIGatewayInvoke-cart]
+aws_lambda_permission.apigw["orders"]: Destroying... [id=AllowAPIGatewayInvoke-orders]
+aws_api_gateway_integration.routes["inventory_eventId_get"]: Destroying... [id=agi-siqbjnkogg-ik08x1-GET]
+aws_api_gateway_integration.routes["orders_internal_orderId_confirm"]: Destroying... [id=agi-siqbjnkogg-3qvuc5-POST]
+aws_api_gateway_integration.routes["events_eventId_get"]: Destroying... [id=agi-siqbjnkogg-597k7z-GET]
+aws_api_gateway_integration.routes["inventory_root"]: Destroying... [id=agi-siqbjnkogg-wmfi1n-ANY]
+aws_api_gateway_integration.routes["events_eventId_get"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["orders_internal_orderId_confirm"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["inventory_internal_reserve_post"]: Destroying... [id=agi-siqbjnkogg-k1fjc9-POST]
+aws_lambda_permission.apigw["notifications"]: Destroying... [id=AllowAPIGatewayInvoke-notifications]
+aws_api_gateway_integration.routes["inventory_eventId_get"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["inventory_root"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["cart_root_post"]: Destroying... [id=agi-siqbjnkogg-xohtwf-POST]
+aws_api_gateway_integration.routes["orders_orderId_get"]: Destroying... [id=agi-siqbjnkogg-9cfhj4-GET]
+aws_api_gateway_integration.routes["cart_checkout_post"]: Destruction complete after 0s
+aws_lambda_permission.apigw["events"]: Destroying... [id=AllowAPIGatewayInvoke-events]
+aws_api_gateway_integration.routes["payments_callback_post"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["events_root"]: Destroying... [id=agi-siqbjnkogg-fg0kfm-ANY]
+aws_api_gateway_integration.routes["inventory_internal_reserve_post"]: Destruction complete after 1s
+aws_api_gateway_integration.routes["waitlist_root_post"]: Destroying... [id=agi-siqbjnkogg-sys6fg-POST]
+aws_lambda_permission.apigw["cart"]: Destruction complete after 1s
+aws_api_gateway_integration.routes["inventory_internal_inventory_eventId_del"]: Destroying... [id=agi-siqbjnkogg-kia7ev-DELETE]
+aws_api_gateway_integration.routes["events_root"]: Destruction complete after 1s
+aws_lambda_permission.apigw["inventory"]: Destruction complete after 1s
+aws_api_gateway_integration.routes["inventory_internal_inventory_eventId_put"]: Destroying... [id=agi-siqbjnkogg-kia7ev-PUT]
+aws_lambda_permission.apigw["orders"]: Destruction complete after 1s
+aws_api_gateway_integration.routes["orders_orderId_get"]: Destruction complete after 1s
+aws_api_gateway_integration.routes["cart_root_post"]: Destruction complete after 1s
+aws_api_gateway_integration.routes["payments_root"]: Destroying... [id=agi-siqbjnkogg-m1fpns-POST]
+aws_api_gateway_integration.routes["events_eventId_delete"]: Destroying... [id=agi-siqbjnkogg-597k7z-DELETE]
+aws_api_gateway_integration.routes["waitlist_root_post"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["inventory_internal_release_post"]: Destroying... [id=agi-siqbjnkogg-tmjz1k-POST]
+aws_api_gateway_integration.routes["inventory_internal_inventory_eventId_del"]: Destruction complete after 0s
+aws_lambda_permission.apigw["notifications"]: Destruction complete after 1s
+aws_api_gateway_integration.routes["events_eventId_put"]: Destroying... [id=agi-siqbjnkogg-597k7z-PUT]
+aws_lambda_permission.apigw["payments"]: Destroying... [id=AllowAPIGatewayInvoke-payments]
+aws_api_gateway_integration.routes["inventory_internal_inventory_eventId_put"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["notifications_internal_post"]: Destroying... [id=agi-siqbjnkogg-glib6i-POST]
+aws_lambda_permission.apigw["waitlist"]: Destroying... [id=AllowAPIGatewayInvoke-waitlist]
+aws_api_gateway_integration.routes["payments_root"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["events_eventId_delete"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["orders_orderId_cancel_post"]: Destroying... [id=agi-siqbjnkogg-136ge6-POST]
+aws_api_gateway_integration.routes["inventory_internal_release_post"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["cart_items_put"]: Destroying... [id=agi-siqbjnkogg-nt2sqj-PUT]
+aws_api_gateway_integration.routes["events_eventId_put"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["users_userId_orders_get"]: Destroying... [id=agi-siqbjnkogg-6redi0-GET]
+aws_lambda_permission.apigw["events"]: Destruction complete after 1s
+aws_api_gateway_integration.routes["users_userId_delete"]: Destroying... [id=agi-siqbjnkogg-uq43mp-DELETE]
+aws_api_gateway_integration.routes["notifications_internal_post"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["orders_internal_orderId_get"]: Destroying... [id=agi-siqbjnkogg-s27p6s-GET]
+aws_api_gateway_integration.routes["users_userId_get"]: Destroying... [id=agi-siqbjnkogg-uq43mp-GET]
+aws_api_gateway_integration.routes["notifications_notificationId_read_put"]: Destroying... [id=agi-siqbjnkogg-y7cdaw-PUT]
+aws_api_gateway_integration.routes["orders_orderId_cancel_post"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["cart_items_put"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["orders_root"]: Destroying... [id=agi-siqbjnkogg-uehnb3-POST]
+aws_api_gateway_integration.routes["events_health_get"]: Destroying... [id=agi-siqbjnkogg-jhpblo-GET]
+aws_api_gateway_integration.routes["users_userId_delete"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["users_userId_orders_get"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["inventory_internal_confirm_post"]: Destroying... [id=agi-siqbjnkogg-rjnwk4-POST]
+aws_api_gateway_integration.routes["orders_internal_orderId_get"]: Destruction complete after 0s
+aws_lambda_permission.apigw["users"]: Destroying... [id=AllowAPIGatewayInvoke-users]
+aws_api_gateway_integration.routes["cart_items_delete"]: Destroying... [id=agi-siqbjnkogg-nt2sqj-DELETE]
+aws_lambda_permission.apigw["payments"]: Destruction complete after 0s
+aws_lambda_permission.apigw["waitlist"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["waitlist_root_get"]: Destroying... [id=agi-siqbjnkogg-sys6fg-GET]
+aws_api_gateway_integration.routes["orders_internal_orderId_cancel"]: Destroying... [id=agi-siqbjnkogg-j8r4jp-POST]
+aws_api_gateway_integration.routes["notifications_notificationId_read_put"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["waitlist_root_delete"]: Destroying... [id=agi-siqbjnkogg-sys6fg-DELETE]
+aws_api_gateway_integration.routes["events_health_get"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["inventory_internal_confirm_post"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["waitlist_internal_process_post"]: Destroying... [id=agi-siqbjnkogg-qudvr6-POST]
+aws_api_gateway_integration.routes["payments_refunds_get"]: Destroying... [id=agi-siqbjnkogg-8n05m3-GET]
+aws_api_gateway_integration.routes["cart_items_delete"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["orders_internal_orderId_cancel"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["inventory_internal_inventory_eventId_get"]: Destroying... [id=agi-siqbjnkogg-kia7ev-GET]
+aws_api_gateway_integration.routes["notifications_root"]: Destroying... [id=agi-siqbjnkogg-oa1eho-GET]
+aws_api_gateway_integration.routes["waitlist_root_delete"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["orders_root"]: Destruction complete after 0s
+aws_lambda_permission.apigw["users"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["inventory_internal_inventory_post"]: Destroying... [id=agi-siqbjnkogg-m32jn7-POST]
+aws_api_gateway_integration.routes["payments_refunds_get"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["users_root"]: Destroying... [id=agi-siqbjnkogg-9atl1d-ANY]
+aws_api_gateway_integration.routes["cart_internal_carts_cartId_get"]: Destroying... [id=agi-siqbjnkogg-p1fast-GET]
+aws_api_gateway_integration.routes["waitlist_internal_process_post"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["waitlist_users_userId_waitlists_get"]: Destroying... [id=agi-siqbjnkogg-vub0cp-GET]
+aws_api_gateway_integration.routes["payments_orderId_get"]: Destroying... [id=agi-siqbjnkogg-ylye8w-GET]
+aws_api_gateway_integration.routes["notifications_root"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["inventory_internal_inventory_eventId_get"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["waitlist_root_get"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["orders_orderId_ticket_get"]: Destroying... [id=agi-siqbjnkogg-lispkv-GET]
+aws_api_gateway_integration.routes["inventory_internal_inventory_post"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["cart_root"]: Destroying... [id=agi-siqbjnkogg-xohtwf-GET]
+aws_api_gateway_integration.routes["cart_internal_carts_cartId_get"]: Destruction complete after 0s
+aws_apigatewayv2_api.eventora: Creating...
+aws_api_gateway_integration.routes["payments_orderId_get"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["waitlist_users_userId_waitlists_get"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["cart_root"]: Destruction complete after 0s
+aws_api_gateway_integration.routes["users_root"]: Destruction complete after 1s
+aws_api_gateway_integration.routes["orders_orderId_ticket_get"]: Destruction complete after 1s
+aws_api_gateway_integration.routes["users_userId_get"]: Destruction complete after 1s
+aws_api_gateway_method.routes["inventory_internal_confirm_post"]: Destroying... [id=agm-siqbjnkogg-rjnwk4-POST]
+aws_api_gateway_method.routes["notifications_internal_post"]: Destroying... [id=agm-siqbjnkogg-glib6i-POST]
+aws_api_gateway_method.routes["cart_items_put"]: Destroying... [id=agm-siqbjnkogg-nt2sqj-PUT]
+aws_api_gateway_method.routes["notifications_notificationId_read_put"]: Destroying... [id=agm-siqbjnkogg-y7cdaw-PUT]
+aws_api_gateway_method.routes["events_root"]: Destroying... [id=agm-siqbjnkogg-fg0kfm-ANY]
+aws_api_gateway_method.routes["inventory_internal_inventory_post"]: Destroying... [id=agm-siqbjnkogg-m32jn7-POST]
+aws_api_gateway_method.routes["cart_items_delete"]: Destroying... [id=agm-siqbjnkogg-nt2sqj-DELETE]
+aws_api_gateway_method.routes["cart_internal_carts_cartId_get"]: Destroying... [id=agm-siqbjnkogg-p1fast-GET]
+aws_api_gateway_method.routes["orders_root"]: Destroying... [id=agm-siqbjnkogg-uehnb3-POST]
+aws_api_gateway_method.routes["events_root"]: Destruction complete after 0s
+aws_api_gateway_method.routes["cart_items_delete"]: Destruction complete after 0s
+aws_api_gateway_method.routes["cart_internal_carts_cartId_get"]: Destruction complete after 0s
+aws_api_gateway_method.routes["waitlist_users_userId_waitlists_get"]: Destroying... [id=agm-siqbjnkogg-vub0cp-GET]
+aws_api_gateway_method.routes["cart_items_put"]: Destruction complete after 0s
+aws_api_gateway_method.routes["inventory_internal_reserve_post"]: Destroying... [id=agm-siqbjnkogg-k1fjc9-POST]
+aws_api_gateway_method.routes["cart_root_post"]: Destroying... [id=agm-siqbjnkogg-xohtwf-POST]
+aws_api_gateway_method.routes["inventory_eventId_get"]: Destroying... [id=agm-siqbjnkogg-ik08x1-GET]
+aws_api_gateway_method.routes["waitlist_users_userId_waitlists_get"]: Destruction complete after 0s
+aws_api_gateway_method.routes["waitlist_root_post"]: Destroying... [id=agm-siqbjnkogg-sys6fg-POST]
+aws_api_gateway_method.routes["inventory_eventId_get"]: Destruction complete after 0s
+aws_api_gateway_method.routes["inventory_internal_reserve_post"]: Destruction complete after 0s
+aws_api_gateway_method.routes["payments_root"]: Destroying... [id=agm-siqbjnkogg-m1fpns-POST]
+aws_api_gateway_method.routes["users_userId_orders_get"]: Destroying... [id=agm-siqbjnkogg-6redi0-GET]
+aws_api_gateway_method.routes["waitlist_root_post"]: Destruction complete after 0s
+aws_api_gateway_method.routes["inventory_internal_inventory_eventId_del"]: Destroying... [id=agm-siqbjnkogg-kia7ev-DELETE]
+aws_api_gateway_method.routes["payments_root"]: Destruction complete after 0s
+aws_api_gateway_method.routes["notifications_root"]: Destroying... [id=agm-siqbjnkogg-oa1eho-GET]
+aws_api_gateway_method.routes["users_userId_orders_get"]: Destruction complete after 0s
+aws_api_gateway_method.routes["orders_internal_orderId_confirm"]: Destroying... [id=agm-siqbjnkogg-3qvuc5-POST]
+aws_api_gateway_method.routes["orders_internal_orderId_confirm"]: Destruction complete after 0s
+aws_api_gateway_method.routes["inventory_internal_release_post"]: Destroying... [id=agm-siqbjnkogg-tmjz1k-POST]
+aws_api_gateway_method.routes["inventory_internal_confirm_post"]: Destruction complete after 0s
+aws_api_gateway_method.routes["orders_internal_orderId_get"]: Destroying... [id=agm-siqbjnkogg-s27p6s-GET]
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec): {
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "FunctionName": "darsani_cart_service",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "FunctionArn": "arn:aws:lambda:ap-southeast-1:726101441380:function:darsani_cart_service",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "Runtime": "nodejs24.x",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "Role": "arn:aws:iam::726101441380:role/aws_darsani",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "Handler": "handler.handler",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "CodeSize": 17657752,
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "Description": "",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "Timeout": 30,
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "MemorySize": 128,
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "LastModified": "2026-08-03T06:45:00.000+0000",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "CodeSha256": "FWDyk/47/VG8TwD7j10RJfuEe+DvEopC7CjYckN4hM0=",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "Version": "$LATEST",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "Environment": {
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):         "Variables": {
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):             "CART_TABLE_NAME": "darsani_cart",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):             "INTERNAL_API_KEY": "event-booking-internal-secret-2026",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):             "INVENTORY_SERVICE_BASE_URL": "https://siqbjnkogg.execute-api.ap-southeast-1.amazonaws.com/prod/api/v1/inventory",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):             "EVENT_SERVICE_BASE_URL": "https://siqbjnkogg.execute-api.ap-southeast-1.amazonaws.com/prod/api/v1/events",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):             "COGNITO_CLIENT_ID": "1mguaa0i4kroahbop469djdddm",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):             "COGNITO_USER_POOL_ID": "ap-southeast-1_zHUE3mvtH",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):             "WAITLIST_SERVICE_BASE_URL": "https://siqbjnkogg.execute-api.ap-southeast-1.amazonaws.com/prod/api/v1/waitlist"
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):         }
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     },
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "TracingConfig": {
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):         "Mode": "Active"
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     },
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "RevisionId": "2d1fece7-e109-4fdf-b438-146914661795",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "Layers": [
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):         {
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):             "Arn": "arn:aws:lambda:ap-southeast-1:615299751070:layer:AWSOpenTelemetryDistroJs:14",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):             "CodeSize": 953806
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):         }
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     ],
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "State": "Active",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "LastUpdateStatus": "InProgress",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "LastUpdateStatusReason": "The function is being created.",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "LastUpdateStatusReasonCode": "Creating",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "PackageType": "Zip",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "Architectures": [
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):         "x86_64"
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     ],
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "EphemeralStorage": {
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):         "Size": 512
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     },
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "SnapStart": {
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):         "ApplyOn": "None",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):         "OptimizationStatus": "Off"
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     },
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "RuntimeVersionConfig": {
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):         "RuntimeVersionArn": "arn:aws:lambda:ap-southeast-1::runtime:adfa9c68b2b34ae1cba34f70c4369649bca17aea5fe29e10414b040bf256e6c6"
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     },
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     "LoggingConfig": {
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):         "LogFormat": "Text",
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):         "LogGroup": "/aws/lambda/darsani_cart_service"
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec):     }
+null_resource.lambda_deploy["darsani_cart_service"] (local-exec): }
+null_resource.lambda_deploy["darsani_cart_service"]: Creation complete after 6s [id=4975137120236766281]
+aws_api_gateway_method.routes["payments_orderId_get"]: Destroying... [id=agm-siqbjnkogg-ylye8w-GET]
+aws_api_gateway_method.routes["payments_orderId_get"]: Destruction complete after 0s
+aws_api_gateway_method.routes["users_root"]: Destroying... [id=agm-siqbjnkogg-9atl1d-ANY]
+aws_api_gateway_method.routes["notifications_notificationId_read_put"]: Destruction complete after 2s
+aws_api_gateway_method.routes["inventory_root"]: Destroying... [id=agm-siqbjnkogg-wmfi1n-ANY]
+aws_api_gateway_method.routes["users_root"]: Destruction complete after 0s
+aws_api_gateway_method.routes["events_eventId_put"]: Destroying... [id=agm-siqbjnkogg-597k7z-PUT]
+aws_api_gateway_method.routes["orders_internal_orderId_get"]: Destruction complete after 2s
+aws_api_gateway_method.routes["cart_root"]: Destroying... [id=agm-siqbjnkogg-xohtwf-GET]
+aws_api_gateway_method.routes["cart_root"]: Destruction complete after 0s
+aws_api_gateway_method.routes["users_userId_get"]: Destroying... [id=agm-siqbjnkogg-uq43mp-GET]
+aws_api_gateway_method.routes["users_userId_get"]: Destruction complete after 1s
+aws_api_gateway_method.routes["events_health_get"]: Destroying... [id=agm-siqbjnkogg-jhpblo-GET]
+aws_api_gateway_method.routes["events_health_get"]: Destruction complete after 0s
+aws_api_gateway_method.routes["payments_refunds_get"]: Destroying... [id=agm-siqbjnkogg-8n05m3-GET]
+aws_api_gateway_method.routes["inventory_root"]: Destruction complete after 2s
+aws_api_gateway_method.routes["orders_orderId_cancel_post"]: Destroying... [id=agm-siqbjnkogg-136ge6-POST]
+aws_api_gateway_method.routes["orders_orderId_cancel_post"]: Destruction complete after 0s
+aws_api_gateway_method.routes["events_eventId_get"]: Destroying... [id=agm-siqbjnkogg-597k7z-GET]
+aws_api_gateway_method.routes["events_eventId_put"]: Destruction complete after 2s
+aws_api_gateway_method.routes["waitlist_internal_process_post"]: Destroying... [id=agm-siqbjnkogg-qudvr6-POST]
+aws_api_gateway_method.routes["waitlist_internal_process_post"]: Destruction complete after 0s
+aws_api_gateway_method.routes["inventory_internal_inventory_eventId_put"]: Destroying... [id=agm-siqbjnkogg-kia7ev-PUT]
+aws_api_gateway_method.routes["notifications_internal_post"]: Destruction complete after 4s
+aws_api_gateway_method.routes["orders_orderId_ticket_get"]: Destroying... [id=agm-siqbjnkogg-lispkv-GET]
+aws_api_gateway_method.routes["orders_orderId_ticket_get"]: Destruction complete after 0s
+aws_api_gateway_method.routes["cart_root_post"]: Destruction complete after 4s
+aws_api_gateway_method.routes["cart_checkout_post"]: Destroying... [id=agm-siqbjnkogg-1b2cob-POST]
+aws_api_gateway_method.routes["orders_internal_orderId_cancel"]: Destroying... [id=agm-siqbjnkogg-j8r4jp-POST]
+aws_api_gateway_method.routes["cart_checkout_post"]: Destruction complete after 1s
+aws_api_gateway_method.routes["orders_orderId_get"]: Destroying... [id=agm-siqbjnkogg-9cfhj4-GET]
+aws_api_gateway_method.routes["orders_internal_orderId_cancel"]: Destruction complete after 1s
+aws_api_gateway_method.routes["inventory_internal_inventory_eventId_get"]: Destroying... [id=agm-siqbjnkogg-kia7ev-GET]
+aws_api_gateway_method.routes["payments_refunds_get"]: Destruction complete after 2s
+aws_api_gateway_method.routes["payments_callback_post"]: Destroying... [id=agm-siqbjnkogg-fxixmw-POST]
+aws_api_gateway_method.routes["orders_orderId_get"]: Destruction complete after 0s
+aws_api_gateway_method.routes["waitlist_root_delete"]: Destroying... [id=agm-siqbjnkogg-sys6fg-DELETE]
+aws_api_gateway_method.routes["inventory_internal_inventory_eventId_get"]: Destruction complete after 0s
+aws_api_gateway_method.routes["waitlist_root_get"]: Destroying... [id=agm-siqbjnkogg-sys6fg-GET]
+aws_api_gateway_method.routes["payments_callback_post"]: Destruction complete after 0s
+aws_api_gateway_method.routes["events_eventId_delete"]: Destroying... [id=agm-siqbjnkogg-597k7z-DELETE]
+aws_api_gateway_method.routes["inventory_internal_inventory_post"]: Destruction complete after 5s
+aws_api_gateway_method.routes["users_userId_delete"]: Destroying... [id=agm-siqbjnkogg-uq43mp-DELETE]
+aws_api_gateway_method.routes["orders_root"]: Destruction complete after 5s
+aws_api_gateway_method.routes["events_eventId_get"]: Destruction complete after 2s
+aws_api_gateway_method.routes["inventory_internal_inventory_eventId_put"]: Destruction complete after 2s
+aws_api_gateway_method.routes["waitlist_root_delete"]: Destruction complete after 1s
+aws_api_gateway_method.routes["users_userId_delete"]: Destruction complete after 1s
+aws_api_gateway_method.routes["waitlist_root_get"]: Destruction complete after 2s
+aws_api_gateway_method.routes["events_eventId_delete"]: Destruction complete after 2s
+aws_api_gateway_method.routes["inventory_internal_inventory_eventId_del"]: Destruction complete after 10s
+aws_api_gateway_method.routes["notifications_root"]: Still destroying... [id=agm-siqbjnkogg-oa1eho-GET, 00m10s elapsed]
+aws_api_gateway_method.routes["inventory_internal_release_post"]: Still destroying... [id=agm-siqbjnkogg-tmjz1k-POST, 00m10s elapsed]
+aws_api_gateway_method.routes["inventory_internal_release_post"]: Destruction complete after 11s
+aws_api_gateway_method.routes["notifications_root"]: Destruction complete after 13s
+aws_api_gateway_resource.notifications_notificationId_read: Destroying... [id=y7cdaw]
+aws_api_gateway_resource.inventory_internal_release: Destroying... [id=tmjz1k]
+aws_api_gateway_resource.inventory_internal_inventory_eventId: Destroying... [id=kia7ev]
+aws_api_gateway_resource.waitlist_users_userId_waitlists: Destroying... [id=vub0cp]
+aws_api_gateway_resource.users_userId_orders: Destroying... [id=6redi0]
+aws_api_gateway_resource.orders_internal_orders_orderId_cancel: Destroying... [id=j8r4jp]
+aws_api_gateway_resource.payments_refunds: Destroying... [id=8n05m3]
+aws_api_gateway_resource.cart_checkout: Destroying... [id=1b2cob]
+aws_api_gateway_resource.notifications_internal_notifications: Destroying... [id=glib6i]
+aws_api_gateway_resource.payments_callback: Destroying... [id=fxixmw]
+aws_api_gateway_resource.waitlist_users_userId_waitlists: Destruction complete after 0s
+aws_api_gateway_resource.payments_callback: Destruction complete after 0s
+aws_api_gateway_resource.cart_internal_carts_cartId: Destroying... [id=p1fast]
+aws_api_gateway_resource.payments_refunds: Destruction complete after 0s
+aws_api_gateway_resource.inventory_internal_inventory_eventId: Destruction complete after 0s
+aws_api_gateway_resource.orders_orderId_ticket: Destroying... [id=lispkv]
+aws_api_gateway_resource.inventory_internal_release: Destruction complete after 0s
+aws_api_gateway_resource.notifications_internal_notifications: Destruction complete after 0s
+aws_api_gateway_resource.orders_internal_orders_orderId_cancel: Destruction complete after 0s
+aws_api_gateway_resource.inventory_internal_confirm: Destroying... [id=rjnwk4]
+aws_api_gateway_resource.events_health: Destroying... [id=jhpblo]
+aws_api_gateway_resource.cart_checkout: Destruction complete after 0s
+aws_api_gateway_resource.inventory_internal_reserve: Destroying... [id=k1fjc9]
+aws_api_gateway_resource.events_eventId: Destroying... [id=597k7z]
+aws_api_gateway_resource.notifications_notificationId_read: Destruction complete after 0s
+aws_api_gateway_resource.orders_orderId_cancel: Destroying... [id=136ge6]
+aws_api_gateway_resource.inventory_eventId: Destroying... [id=ik08x1]
+aws_api_gateway_resource.cart_items: Destroying... [id=nt2sqj]
+aws_api_gateway_resource.cart_internal_carts_cartId: Destruction complete after 0s
+aws_api_gateway_resource.waitlist_internal_waitlist_process: Destroying... [id=qudvr6]
+aws_api_gateway_resource.inventory_internal_reserve: Destruction complete after 0s
+aws_api_gateway_resource.inventory_internal_confirm: Destruction complete after 0s
+aws_api_gateway_resource.payments_orderId: Destroying... [id=ylye8w]
+aws_api_gateway_resource.orders_internal_orders_orderId_confirm: Destroying... [id=3qvuc5]
+aws_api_gateway_resource.orders_orderId_cancel: Destruction complete after 0s
+aws_api_gateway_resource.cart_items: Destruction complete after 0s
+aws_api_gateway_resource.waitlist_users_userId: Destroying... [id=gd4lb8]
+aws_api_gateway_resource.inventory_internal_inventory: Destroying... [id=m32jn7]
+aws_api_gateway_resource.inventory_eventId: Destruction complete after 0s
+aws_api_gateway_resource.notifications_internal: Destroying... [id=w9z4gn]
+aws_api_gateway_resource.waitlist_internal_waitlist_process: Destruction complete after 0s
+aws_api_gateway_resource.notifications_notificationId: Destroying... [id=7fitnm]
+aws_api_gateway_resource.events_health: Destruction complete after 4s
+aws_api_gateway_resource.cart_internal_carts: Destroying... [id=w0xl6t]
+aws_api_gateway_resource.cart_internal_carts: Destruction complete after 0s
+aws_api_gateway_resource.waitlist_internal_waitlist: Destroying... [id=u3unic]
+aws_api_gateway_resource.waitlist_internal_waitlist: Destruction complete after 0s
+aws_api_gateway_resource.cart_internal: Destroying... [id=p3zqbp]
+aws_api_gateway_resource.orders_internal_orders_orderId_confirm: Destruction complete after 4s
+aws_api_gateway_resource.waitlist_internal: Destroying... [id=a0uelx]
+aws_api_gateway_resource.waitlist_internal: Destruction complete after 1s
+aws_api_gateway_resource.orders_internal_orders_orderId: Destroying... [id=s27p6s]
+aws_api_gateway_resource.users_userId_orders: Destruction complete after 5s
+aws_api_gateway_resource.users_userId: Destroying... [id=uq43mp]
+aws_api_gateway_resource.users_userId: Destruction complete after 0s
+aws_api_gateway_resource.users: Destroying... [id=9atl1d]
+aws_api_gateway_resource.users: Destruction complete after 0s
+aws_api_gateway_resource.cart_internal: Destruction complete after 2s
+aws_api_gateway_resource.cart: Destroying... [id=xohtwf]
+aws_api_gateway_resource.cart: Destruction complete after 2s
+aws_api_gateway_resource.payments_orderId: Destruction complete after 9s
+aws_api_gateway_resource.payments: Destroying... [id=m1fpns]
+aws_api_gateway_resource.orders_internal_orders_orderId: Destruction complete after 4s
+aws_api_gateway_resource.orders_internal_orders: Destroying... [id=vd3tdu]
+aws_api_gateway_resource.orders_internal_orders: Destruction complete after 0s
+aws_api_gateway_resource.orders_internal: Destroying... [id=wtumld]
+aws_api_gateway_resource.notifications_internal: Destruction complete after 9s
+aws_api_gateway_resource.orders_orderId_ticket: Still destroying... [id=lispkv, 00m10s elapsed]
+aws_api_gateway_resource.events_eventId: Still destroying... [id=597k7z, 00m10s elapsed]
+aws_api_gateway_resource.waitlist_users_userId: Still destroying... [id=gd4lb8, 00m10s elapsed]
+aws_api_gateway_resource.inventory_internal_inventory: Still destroying... [id=m32jn7, 00m10s elapsed]
+aws_api_gateway_resource.notifications_notificationId: Still destroying... [id=7fitnm, 00m10s elapsed]
+aws_api_gateway_resource.payments: Destruction complete after 1s
+aws_api_gateway_resource.orders_orderId_ticket: Destruction complete after 10s
+aws_api_gateway_resource.orders_orderId: Destroying... [id=9cfhj4]
+aws_api_gateway_resource.orders_orderId: Destruction complete after 0s
+aws_api_gateway_resource.events_eventId: Destruction complete after 10s
+aws_api_gateway_resource.events: Destroying... [id=fg0kfm]
+aws_api_gateway_resource.events: Destruction complete after 0s
+aws_api_gateway_resource.orders_internal: Destruction complete after 1s
+aws_api_gateway_resource.orders: Destroying... [id=uehnb3]
+aws_api_gateway_resource.orders: Destruction complete after 1s
+aws_api_gateway_resource.inventory_internal_inventory: Destruction complete after 13s
+aws_api_gateway_resource.inventory_internal: Destroying... [id=5ljbmb]
+aws_api_gateway_resource.inventory_internal: Destruction complete after 0s
+aws_api_gateway_resource.inventory: Destroying... [id=wmfi1n]
+aws_api_gateway_resource.notifications_notificationId: Destruction complete after 14s
+aws_api_gateway_resource.notifications: Destroying... [id=oa1eho]
+aws_api_gateway_resource.inventory: Destruction complete after 2s
+aws_api_gateway_resource.notifications: Destruction complete after 1s
+aws_api_gateway_resource.waitlist_users_userId: Still destroying... [id=gd4lb8, 00m20s elapsed]
+aws_api_gateway_resource.waitlist_users_userId: Destruction complete after 21s
+aws_api_gateway_resource.waitlist_users: Destroying... [id=tdrpy3]
+aws_api_gateway_resource.waitlist_users: Destruction complete after 0s
+aws_api_gateway_resource.waitlist: Destroying... [id=sys6fg]
+aws_api_gateway_resource.waitlist: Destruction complete after 1s
+aws_api_gateway_resource.v1: Destroying... [id=r76is8]
+aws_api_gateway_resource.v1: Destruction complete after 0s
+aws_api_gateway_resource.api: Destroying... [id=9aw0o2]
+aws_api_gateway_resource.api: Destruction complete after 0s
+aws_api_gateway_rest_api.eventora: Destroying... [id=siqbjnkogg]
+aws_api_gateway_rest_api.eventora: Destruction complete after 0s

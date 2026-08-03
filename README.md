@@ -1,567 +1,230 @@
-# Ticket Booking Platform Backend
+# Eventora - E-Commerce Microservices Platform
 
-Production-style modular backend for an event ticket booking platform built with Node.js, Express.js, MongoDB, and Mongoose.
+Eventora is a modern, highly scalable event ticketing and management platform built on a microservices architecture. It allows users to discover, book, and manage event tickets while providing administrators with powerful tools to create events, manage inventory, and view platform analytics.
 
-The codebase is organized as a modular monolith so each domain can later be split into independent services or migrated to AWS-managed services without changing the business logic layer.
+## Architecture Overview
 
-## Goals
+The platform is designed using a microservices architecture, with independent services communicating securely via internal APIs. The frontend is built with React and Vite.
 
-- Prevent overselling of tickets
-- Support cart-based reservations with expiry
-- Support order creation, cancellation, and refunds
-- Support idempotent payment callbacks
-- Support FIFO waitlists for sold-out events
-- Keep controllers thin and business logic isolated in services
-- Keep repositories replaceable so MongoDB can later be swapped with DynamoDB
-- Prepare the API for authentication and role-based authorization
+### Core Microservices
+
+- **`event-service`** (Port 3001): Manages the creation, retrieval, and updating of events. Acts as the core catalog.
+- **`cart-service`** (Port 3002): Handles user shopping carts and temporarily reserves tickets in the inventory service to prevent double-booking.
+- **`order-service`** (Port 3003): Processes checkouts, creates final orders, and confirms ticket reservations.
+- **`payment-service`** (Port 3004): Handles payment processing (mocked/integrated) and updates order statuses.
+- **`notification-service`** (Port 3005): Responsible for sending emails, SMS, or push notifications to users.
+- **`inventory-service`** (Port 3006): Manages ticket availability, reservations, and total capacity.
+- **`waitlist-service`** (Port 3007): Manages users waiting for tickets to sold-out events.
+- **`user-service`** (Port 3008): Handles user authentication, authorization, and profile management using AWS Cognito.
 
 ## Technology Stack
 
-- Node.js
-- Express.js
-- MongoDB
-- dotenv
-- uuid
-- express-validator
-- nodemon
+- **Frontend**: React, Vite, Tailwind CSS, React Query, React Hook Form, Zod.
+- **Backend**: Node.js, Express.js.
+- **Database**: AWS DynamoDB (NoSQL) for all microservices.
+- **Authentication**: AWS Cognito.
 
-## Project Structure
+## Getting Started
 
-```text
-src/
-  app.js
-  server.js
-  config/
-  middlewares/
-  utils/
-  services/
-    product/
-    inventory/
-    cart/
-    order/
-    payment/
-    waitlist/
-    notification/
-```
+### Prerequisites
 
-## Architecture
+- Node.js (v18+)
+- AWS Account (DynamoDB and Cognito configured)
+- `.env` files populated for each service with appropriate AWS credentials and internal API keys.
 
-Each service follows this flow:
+### Running the Project
 
-Controller -> Service -> Repository -> MongoDB
-
-Controllers never access MongoDB directly. Business rules live in services. Repositories are the only layer that touches Mongoose models.
-
-## Booking Lifecycle
-
-```text
-Event Created
-  -> Tickets Published
-  -> Users Browse Events
-  -> Users Add Tickets To Cart
-  -> Inventory Reserved
-  -> Order Created
-  -> Payment Completed
-  -> Booking Confirmed
-
-Payment Failed
-  -> Inventory Released
-  -> Booking Cancelled
-  -> Inventory Released
-  -> Waitlist Triggered
-  -> Notify Next User
-```
-
-## Response Format
-
-### Success
-
-```json
-{
-  "success": true,
-  "message": "Operation successful",
-  "data": {}
-}
-```
-
-### Error
-
-```json
-{
-  "success": false,
-  "message": "Validation failed",
-  "errors": []
-}
-```
-
-## Authentication And Roles
-
-The backend is auth-ready and now supports a request user context through headers while you wire a real identity provider later.
-
-### Current Request Context
-
-- `x-user-id` - Injects the authenticated user id into `req.user.id`
-- `x-user-role` - Injects the authenticated role into `req.user.role`
-
-### Roles
-
-- `user` - Browse events, manage cart, place orders, join waitlists, view notifications
-- `organizer` - Create, update, and remove events they own
-- `admin` - Full operational control, including inventory mutations and refund views
-
-### Route Protection Model
-
-- Public browsing endpoints remain open
-- Event creation and maintenance require `organizer` or `admin`
-- Inventory mutation endpoints require `admin`
-- Refund reporting requires `admin`
-- User-scoped routes now prefer authenticated identity, with the legacy `userId` input kept as fallback during migration
-
-## Running Locally
-
-1. Install dependencies:
+To run the project locally, you must start each microservice independently on its designated port, followed by the frontend:
 
 ```bash
+# Example starting the event-service
+cd event-service
 npm install
-```
-
-2. Use the existing `backend/.env` file, or create `.env` in the backend folder with your local values.
-
-3. Start the API:
-
-```bash
 npm run dev
 ```
 
-4. Health check:
+## Internal Communication
 
-```bash
-GET /health
+Services communicate with each other securely using internal API keys passed in the headers (`x-internal-api-key`). Public APIs are secured via AWS Cognito JWT tokens.
+
+---
+
+# 🛡️ DevSecOps & CI/CD Pipeline Documentation
+
+The E-Commerce Microservices repository has been integrated with a production-grade **DevSecOps CI/CD pipeline** built using **GitHub Actions**. It focuses on speed, cost efficiency, robust security scanning, and reliable deployment with automatic rollbacks.
+
+## 📋 Pipeline Architecture
+
+The pipeline consists of modular workflows utilizing reusable components and parallel matrix strategies:
+
+```mermaid
+graph TD
+  A[Developer Commit] --> B[PR Created]
+  B --> C[CI Workflow]
+  C --> D[GitLeaks Secret Scan]
+  C --> E[Snyk Dependency & Code Scan]
+  C --> F[ESLint & Jest Unit Tests]
+  F --> G{Coverage >= 80%?}
+  G -- Yes --> H[Package Lambda ZIP]
+  G -- No --> I[Fail Build]
+  H --> J[Upload Build Artifact]
+  
+  K[Push to main / Dispatch] --> L[CD Workflow]
+  L --> M[Security Gate]
+  M --> N[Build & Package]
+  N --> O[Deploy to AWS Lambda via OIDC]
+  O --> P[Smoke Test Endpoint]
+  P -- Success --> Q[Deployment Complete]
+  P -- Failure --> R[Trigger Rollback to Previous Version]
 ```
 
-5. Open API docs in the browser:
+## 🛠️ Workflow Files Structure
 
-```bash
-http://localhost:3000/api-docs
+All GitHub Actions configurations are stored inside `.github/workflows/`:
+1. [**`ci.yml`**](file:///.github/workflows/ci.yml): Main CI pipeline triggered on pull requests. Runs linting, testing, and security scanning on changed services.
+2. [**`cd.yml`**](file:///.github/workflows/cd.yml): CD pipeline triggered on pushes to the `main` branch or manual dispatch. Deploys changed services to production.
+3. [**`reusable-security.yml`**](file:///.github/workflows/reusable-security.yml): Runs Snyk (SCA + Code scan) and `npm audit` for changed services.
+4. [**`reusable-test.yml`**](file:///.github/workflows/reusable-test.yml): Runs ESLint and Jest unit tests, checking that coverage is at least 80%.
+5. [**`reusable-build.yml`**](file:///.github/workflows/reusable-build.yml): Validates service package structure and packages them into ZIP files.
+6. [**`reusable-deploy.yml`**](file:///.github/workflows/reusable-deploy.yml): Deploys the service package to AWS Lambda, validates via smoke tests, and triggers rollbacks if necessary.
+
+---
+
+## 🔍 Changed-Service Detection
+
+To avoid unnecessary costs and build times, we detect which services changed since the last deploy/commit:
+- Script: [`detect-changes.sh`](file:///scripts/detect-changes.sh)
+- **Algorithm**: It uses `git diff` to extract files changed between the base commit and head commit. If a change occurs in a service subdirectory (e.g., `cart-service/`), that service is queued for build and deployment.
+- **Workflow / Infrastructure Modifications**: If the shared `scripts/` or `.github/workflows/` directory changes, **all** services are automatically flagged for rebuild to guarantee consistency.
+
+---
+
+## 🔒 DevSecOps Security Tools
+
+The pipeline integrates multiple automated security scanners.
+
+### 1. GitLeaks (Secret Scanning)
+- **Scope**: Scans the entire repository history for exposed credentials, API tokens, private keys, etc., before any build or test tasks run.
+- **Fail Action**: If any secrets are found, the pipeline halts immediately.
+- **Reports**: Reports are uploaded to GitHub Artifacts as a SARIF file.
+
+### 2. Snyk (SCA & Code Quality)
+- **Snyk SCA (`snyk test`)**: Checks open-source library dependencies for known security vulnerabilities.
+- **Snyk Code (`snyk code test`)**: Reviews custom code for security bugs and code quality.
+- **Fail Action**: Fails the build if any **High** or **Critical** vulnerabilities exist.
+- **Reports**: Combined HTML security reports are generated and uploaded.
+
+### 3. Dependency Auditing (`npm audit`)
+- **Scope**: Runs `npm audit --audit-level=high` on changed services.
+- **Reports**: Uploads an audit JSON report.
+
+---
+
+## 🚀 Rollback and Deployment Process
+
+### Deployment (`deploy.sh`)
+- Deploys the service ZIP to AWS Lambda.
+- Publishes a new version of the function.
+- Reads the previous version the `production` alias was pointing to and writes it to a file.
+- Updates the `production` alias to point to the new version.
+
+### Smoke Testing (`smoke-test.sh`)
+- Pings API Gateway endpoints (e.g., `/{service}/api/v1/health`).
+- Validates that the response status code is `< 500` (e.g., `200` or auth `401/403` status).
+- If the endpoint times out or returns a `5xx` error, the smoke test fails and triggers a rollback.
+
+### Rollback (`rollback.sh`)
+- If the smoke test or deploy step fails, the CD pipeline automatically triggers the rollback script.
+- Reverts the `production` alias to point back to the previous stable version recorded during the deployment.
+
+---
+
+## 🔑 GitHub Secrets Config
+
+Ensure the following secrets are configured in your GitHub Repository Settings under **Settings > Secrets and variables > Actions**:
+
+| Secret Name | Description | Example Value |
+|-------------|-------------|---------------|
+| `AWS_ROLE_ARN` | IAM Role ARN assumed via GitHub OIDC | `arn:aws:iam::123456789012:role/github-actions-cd-role` |
+| `SNYK_TOKEN` | Token retrieved from your Snyk Account | `snyk-api-token-xxxx-xxxx-xxxx` |
+
+And the following Variable is recommended:
+- `AWS_REGION` (Default: `ap-southeast-1`)
+- `API_GATEWAY_URL` (E.g. `https://4bsnhdrhji.execute-api.ap-southeast-1.amazonaws.com`)
+
+---
+
+## 🔑 AWS OIDC & IAM Role Setup
+
+To avoid static credentials, configure a GitHub OIDC provider in IAM.
+
+### 1. Identity Provider Config
+- **Provider URL**: `https://token.actions.githubusercontent.com`
+- **Audience**: `sts.amazonaws.com`
+
+### 2. Least Privilege IAM Trust Policy
+Configure your IAM Role to only allow your repository to assume it:
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::ACCOUNT_ID:oidc-provider/token.actions.githubusercontent.com"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+        },
+        "StringLike": {
+          "token.actions.githubusercontent.com:sub": "repo:YOUR_ORG/E-Commerce_Microservices:*"
+        }
+      }
+    }
+  ]
+}
 ```
 
-## Configuration
-
-```env
-PORT=3000
-MONGODB_URI=mongodb://127.0.0.1:27017/ticket_booking_platform (Reference)
-NODE_ENV=development
+### 3. Pipeline Minimum Permissions (IAM Policy)
+Attach this inline policy to the OIDC IAM Role to allow Lambda deployments:
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "lambda:UpdateFunctionCode",
+        "lambda:UpdateFunctionConfiguration",
+        "lambda:GetFunction",
+        "lambda:ListVersionsByFunction",
+        "lambda:GetAlias",
+        "lambda:CreateAlias",
+        "lambda:UpdateAlias"
+      ],
+      "Resource": "arn:aws:lambda:ap-southeast-1:ACCOUNT_ID:function:darsani_*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "apigateway:GET"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
 ```
 
-## API Reference
-
-Base URL: `http://localhost:3000`
-
-All endpoints below are listed in utilstyle format with purpose, parameters, and expected behavior.
-
 ---
 
-## Health
-
-### GET /health
-Returns the service status.
-
-- Purpose: Verify the API is running
-- Auth: None
-- Response: `{ status: "ok" }`
-
----
-
-## Event Service
-
-Purpose: Manage events.
-
-### Event Schema
-
-- `eventId` - Unique event identifier
-- `title` - Event title
-- `description` - Event description
-- `category` - Event category such as Concert, Sports, Standup, Conference
-- `venue` - Venue name
-- `city` - City where the event is hosted
-- `eventDate` - Event date
-- `eventTime` - Event time
-- `status` - `DRAFT`, `PUBLISHED`, or `CANCELLED`
-- `availableStatus` - `AVAILABLE`, `LIMITED`, `SOLD_OUT`, `HIDDEN`
-- `availableTicketCount` - Live ticket count shown to users
-- `ticketPrice` - Ticket price
-- `createdAt` - Creation timestamp
-- `updatedAt` - Update timestamp
-
-### GET /events
-Returns a paginated list of published events.
-
-- Query parameters:
-  - `page` - Page number
-  - `limit` - Page size
-  - `city` - Filter by city
-  - `category` - Filter by category
-  - `date` - Filter by date
-- Notes: Supports sorting through query parameters handled by the pagination helper.
-
-### GET /events/search
-Searches events using the same filter model as the list endpoint.
-
-- Query parameters:
-  - `city`
-  - `category`
-  - `date`
-- Notes: Intended for event discovery and catalog search flows.
-
-### GET /events/:eventId
-Returns full event details.
-
-- Path parameters:
-  - `eventId` - Event identifier
-- Notes: Also includes the linked inventory snapshot when available.
-
-### POST /events
-Creates a new event.
-
-- Body:
-  - `title` - Required string
-  - `description` - Required string
-  - `category` - Required string
-  - `venue` - Required string
-  - `city` - Required string
-  - `eventDate` - Required ISO date string
-  - `eventTime` - Required string
-  - `ticketPrice` - Required number
-  - `availableTicketCount` - Optional number
-- Notes: New events default to `PUBLISHED` unless overridden.
-
-### PUT /events/:eventId
-Updates an event.
-
-- Path parameters:
-  - `eventId` - Event identifier
-- Body:
-  - `title` - Optional string
-  - `description` - Optional string
-  - `ticketPrice` - Optional number
-- Notes: Supports partial updates.
-
-### DELETE /events/:eventId
-Soft deletes an event.
-
-- Path parameters:
-  - `eventId` - Event identifier
-- Notes: Marks the event deleted instead of removing it permanently.
-
----
-
-## Inventory Service
-
-Purpose: Maintain ticket availability and enforce oversell prevention.
-
-### Inventory Schema
-
-- `inventoryId` - Unique inventory identifier
-- `eventId` - Linked event identifier
-- `totalTickets` - Total stock for the event
-- `availableTickets` - Tickets that can still be reserved
-- `reservedTickets` - Tickets currently held in carts or pending checkout
-
-### GET /inventory?eventId=:eventId
-Returns current availability for an event.
-
-- Query parameters:
-  - `eventId` - Required event identifier
-- Notes: Returns the live inventory state.
-
-### POST /inventory/internal/inventory/reserve
-Reserves tickets atomically.
-
-- Body:
-  - `eventId` - Required string
-  - `quantity` - Required integer greater than 0
-- Notes: Fails if insufficient availability exists.
-
-### POST /inventory/internal/inventory/release
-Releases previously reserved tickets.
-
-- Body:
-  - `eventId` - Required string
-  - `quantity` - Required integer greater than 0
-- Notes: Used for cart removal, payment failure, cancellation, and expiry recovery.
-
-### POST /inventory/internal/inventory/confirm
-Confirms reserved tickets after successful payment.
-
-- Body:
-  - `eventId` - Required string
-  - `quantity` - Required integer greater than 0
-- Notes: Moves tickets from reserved to confirmed capacity.
-
----
-
-## Cart Service
-
-Purpose: Temporary holding area before checkout.
-
-### Cart Schema
-
-- `cartId` - Unique cart item identifier
-- `userId` - User identifier
-- `eventId` - Event identifier
-- `quantity` - Ticket quantity
-- `reservationExpiry` - Reservation expiry timestamp
-- `status` - `ACTIVE`, `EXPIRED`, `REMOVED`, `CHECKED_OUT`
-- `orderId` - Linked order identifier after checkout
-
-### POST /cart
-Adds tickets to cart and reserves inventory.
-
-- Body:
-  - `userId` - Required string
-  - `eventId` - Required string
-  - `quantity` - Required integer greater than 0
-- Notes:
-  - If an active cart already exists for the same user and event, the quantity is updated by delta.
-  - Reservation expiry is set to 15 minutes.
-
-### GET /cart?userId=:userId
-Returns the user cart entries.
-
-- Query parameters:
-  - `userId` - Required string
-- Notes: Expired carts are auto-processed before listing.
-
-### PUT /cart/items
-Updates cart quantity and adjusts reservation.
-
-- Body:
-  - `userId` - Required string
-  - `cartId` - Required string
-  - `quantity` - Required integer greater than 0
-- Notes: Increase reserves more inventory, decrease releases inventory.
-
-### DELETE /cart/items
-Removes a cart item and releases inventory.
-
-- Body:
-  - `userId` - Required string
-  - `cartId` - Required string
-- Notes: Also triggers waitlist processing for the event.
-
----
-
-## Order Service
-
-Purpose: Manage booking orders and ticket confirmation lifecycle.
-
-### Order Schema
-
-- `orderId` - Unique order identifier
-- `cartId` - Linked cart item identifier
-- `userId` - User identifier
-- `eventId` - Event identifier
-- `quantity` - Ticket quantity
-- `amount` - Total order amount
-- `status` - `PENDING_PAYMENT`, `CONFIRMED`, `CANCELLED`, `REFUNDED`
-- `ticketCode` - Generated ticket code after confirmation
-- `cancellationReason` - Cancellation reason when applicable
-
-### POST /orders
-Creates an order from a valid cart reservation.
-
-- Body:
-  - `cartId` - Required string
-- Notes:
-  - Validates that the cart is active.
-  - Marks the cart as checked out.
-  - Computes order amount from event ticket price and quantity.
-
-### GET /orders/:orderId
-Returns order details.
-
-- Path parameters:
-  - `orderId` - Required string
-
-### GET /orders/users/:userId/orders
-Returns booking history for a user.
-
-- Path parameters:
-  - `userId` - Required string
-
-### POST /orders/:orderId/cancel
-Cancels a booking and releases inventory.
-
-- Path parameters:
-  - `orderId` - Required string
-- Body:
-  - `reason` - Optional string
-- Notes: Also triggers waitlist processing.
-
-### GET /orders/:orderId/ticket
-Returns the generated ticket payload.
-
-- Path parameters:
-  - `orderId` - Required string
-- Notes: Only available for confirmed orders.
-
----
-
-## Payment Service
-
-Purpose: Handle payment initiation, callbacks, refunds, and idempotency.
-
-### Payment Schema
-
-- `paymentId` - Unique payment identifier
-- `orderId` - Linked order identifier
-- `amount` - Payment amount
-- `paymentStatus` - `PENDING`, `SUCCESS`, `FAILED`, `REFUNDED`
-- `providerReference` - External payment reference
-- `callbackProcessedAt` - Timestamp of callback processing
-- `refundReference` - Refund reference when applicable
-
-### POST /payments
-Initiates a payment for an order.
-
-- Body:
-  - `orderId` - Required string
-- Notes:
-  - Creates one payment record per order.
-  - Repeated initiation returns the existing payment record.
-
-### POST /payments/callback
-Simulates a payment gateway callback.
-
-- Body:
-  - `status` - Required enum: `SUCCESS` or `FAILED`
-  - `orderId` - Optional string
-  - `providerReference` - Optional string
-- Notes:
-  - Idempotent callback processing is supported.
-  - On success: inventory is confirmed and order is confirmed.
-  - On failure: inventory is released and order is cancelled.
-
-### GET /payments/:orderId
-Returns payment status for an order.
-
-- Path parameters:
-  - `orderId` - Required string
-
-### GET /payments/refunds
-Returns refund records.
-
-- Notes: Useful for reconciliation and refund reporting.
-
----
-
-## Waitlist Service
-
-Purpose: Manage FIFO waitlists for sold-out events.
-
-### Waitlist Schema
-
-- `waitlistId` - Unique waitlist entry identifier
-- `eventId` - Event identifier
-- `userId` - User identifier
-- `quantity` - Requested ticket quantity
-- `position` - FIFO position
-- `status` - `WAITING`, `NOTIFIED`, `EXPIRED`, `BOOKED`
-- `joinedAt` - Entry timestamp
-- `notifiedAt` - Notification timestamp
-- `expiresAt` - Booking window expiry timestamp
-
-### POST /waitlist
-Joins a user to the waitlist.
-
-- Body:
-  - `eventId` - Required string
-  - `userId` - Required string
-  - `quantity` - Required integer greater than 0
-- Notes: FIFO position is assigned based on current waiting entries.
-
-### GET /waitlist?eventId=:eventId&userId=:userId
-Returns the waitlist position for a user on an event.
-
-- Query parameters:
-  - `eventId` - Required string
-  - `userId` - Required string
-
-### GET /waitlist/users/:userId/waitlists
-Returns all waitlist entries for a user.
-
-- Path parameters:
-  - `userId` - Required string
-
-### DELETE /waitlist
-Leaves the waitlist.
-
-- Body:
-  - `waitlistId` - Required string
-- Notes: Marks the waitlist entry as expired/left.
-
----
-
-## Notification Service
-
-Purpose: Store system notifications for booking window and waitlist events.
-
-### Notification Schema
-
-- `notificationId` - Unique notification identifier
-- `userId` - Target user identifier
-- `message` - Notification body
-- `status` - `UNREAD` or `READ`
-- `readAt` - Timestamp when the notification was marked read
-
-### GET /notifications
-Returns notifications.
-
-- Query parameters:
-  - `userId` - Optional string
-- Notes: If `userId` is provided, returns only that user's notifications.
-
-### PUT /notifications/:notificationId/read
-Marks a notification as read.
-
-- Path parameters:
-  - `notificationId` - Required string
-
----
-
-## Operational Rules
-
-- Ticket oversell prevention is enforced by inventory reservation checks.
-- Cart reservations expire after 15 minutes.
-- Payment callbacks are idempotent.
-- Cancellations and payment failures release inventory.
-- Waitlist processing follows FIFO ordering.
-- Notifications are created when a user is moved from waitlist into a booking window.
-- All delete-style event actions use soft deletion.
-
-## Error Handling
-
-Common validation failures return `400` with an `errors` array.
-
-Common domain failures use a structured error response and status codes such as:
-
-- `404` - Resource not found
-- `409` - Conflict or business rule violation
-- `500` - Unexpected server error
-
-## Future AWS Migration Fit
-
-The repository/service split is intentionally aligned so the MongoDB repositories can later be replaced with DynamoDB-backed repositories. The business logic should not need to change when that migration happens.
-
-A future cloud implementation can map naturally to:
-
-- API Gateway
-- Lambda
-- DynamoDB
-- SNS
-- SQS
-
-## Notes
-
-- This backend is intentionally documentation-heavy and service-oriented rather than CRUD-only.
-- Internal inventory endpoints are included because they are part of the booking lifecycle, even though they would usually be protected in a real deployment.
+## ➕ Onboarding a New Microservice
+
+To add a new service to the DevSecOps CI/CD pipeline:
+1. Create a new folder at the root (e.g. `catalog-service`).
+2. Implement your logic with a `handler.js` at the root.
+3. Configure `package.json` with a `"test": "jest"` command and the Jest configuration.
+4. Add the service name to the `SERVICES` array inside [`detect-changes.sh`](file:///scripts/detect-changes.sh#L19-L28).
+5. Add the function configuration to `locals.lambda_config` in [`infra/lambdas.tf`](file:///infra/lambdas.tf).
+6. Commit and push. The pipeline will automatically scan, test, package, and deploy the new service!

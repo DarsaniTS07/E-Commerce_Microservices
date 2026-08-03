@@ -83,6 +83,19 @@ router.get(
   controller.getInventory
 );
 
+router.put(
+  "/internal/inventory/:eventId",
+  requireInternalApiKey,
+  [
+    param("eventId").isString().notEmpty(),
+    body("totalTickets").optional().isInt({ min: 0 }),
+    body("availableTickets").optional().isInt({ min: 0 }),
+    body("reservedTickets").optional().isInt({ min: 0 }),
+  ],
+  validateRequest,
+  controller.updateInventory
+);
+
 router.post(
   "/internal/inventory",
   requireInternalApiKey,

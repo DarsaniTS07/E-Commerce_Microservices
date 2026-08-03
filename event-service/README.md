@@ -1,32 +1,19 @@
-# Event Service
+# Eventora Event Service
 
-## Responsibilities
+The Event Service is the core catalog of the Eventora platform. It handles the creation, updating, and retrieval of event details.
 
-- Create Event
-- Update Event
-- Delete Event
-- Search Events
-- Get Event Details
+## Key Features
+- Create and manage events (Admin only).
+- Browse and search events with filters (location, date, category).
+- View detailed event information.
+- Communicates with `inventory-service` to initialize ticket capacity.
 
-## Architecture
+## Tech Stack
+- Node.js & Express.js
+- AWS DynamoDB
+- AWS S3 (for event images)
 
-API Gateway
-↓
-Lambda
-↓
-Controller
-↓
-Service
-↓
-Repository
-↓
-DynamoDB
-
-(Currently Express + MongoDB)
-
-## Future AWS Migration
-
-- API Gateway
-- Lambda
-- DynamoDB
-- EventBridge (EventCreated)
+## Setup
+1. Ensure `.env` is configured with `PORT=3001`, `DYNAMODB_TABLE_EVENTS`, and `INVENTORY_SERVICE_BASE_URL`.
+2. Run `npm install`
+3. Run `npm run dev`

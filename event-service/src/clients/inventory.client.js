@@ -58,6 +58,35 @@ class InventoryClient {
 
     return payloadResponse.data;
   }
+
+  async updateInventory(eventId, payload) {
+    if (!this.baseUrl) {
+      return null;
+    }
+
+    const response = await fetch(
+      `${this.baseUrl}/inventory/internal/inventory/${eventId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "x-internal-api-key": process.env.INTERNAL_API_KEY,
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+
+    const payloadResponse = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(
+        payloadResponse.message ||
+          `Inventory service request failed: ${response.status}`
+      );
+    }
+
+    return payloadResponse.data;
+  }
 }
 
 module.exports = { InventoryClient };

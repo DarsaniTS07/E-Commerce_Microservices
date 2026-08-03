@@ -1,0 +1,207 @@
+# ============================================================
+# CD Pipeline — Continuous Deployment
+# Triggers: push to main OR manual workflow_dispatch
+# Deploys ONLY services that changed since the last deployment.
+# Supports automatic rollback on failure.
+# ============================================================
+
+name: CD — Deploy to Production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      force_deploy_all:
+        description: "Force deploy ALL services (bypass change detection)"
+        required: false
+        default: "false"
+        type: choice
+        options: ["true", "false"]
+      dry_run:
+        description: "Dry run — build and package but do NOT deploy"
+        required: false
+        default: "false"
+        type: choice
+        options: ["true", "false"]
+
+# Only one deployment at a time on main
+concurrency:
+  group: cd-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write
+  actions: read
+
+env:
+  NODE_VERSION: "20"
+  AWS_REGION: ${{ vars.AWS_REGION || 'ap-southeast-1' }}
+
+jobs:
+  # ── 1. Detect which services changed ────────────────────────────────────────
+  detect-changes:
+    name: Detect Changed Services
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      services: ${{ steps.detect.outputs.services }}
+      has_changes: ${{ steps.detect.outputs.has_changes }}
+      matrix: ${{ steps.detect.outputs.matrix }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Make scripts executable
+        run: chmod +x scripts/*.sh
+
+      - name: Detect changed services
+        id: detect
+        run: |
+          if [ "${{ github.event.inputs.force_deploy_all }}" = "true" ]; then
+            echo "🚀 Force deploy ALL services requested"
+            CHANGED='["cart-service","event-service","inventory-service","notification-service","order-service","payment-service","user-service","waitlist-service"]'
+          else
+            CHANGED=$(bash scripts/detect-changes.sh "${{ github.event.before }}" "${{ github.sha }}")
+          fi
+
+          echo "services=$CHANGED" >> "$GITHUB_OUTPUT"
+
+          if [ -z "$CHANGED" ] || [ "$CHANGED" = "[]" ]; then
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+            echo "matrix={\"service\":[]}" >> "$GITHUB_OUTPUT"
+            echo "ℹ️ No service changes detected — nothing to deploy." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+            MATRIX=$(echo "$CHANGED" | jq -c '{service: .}')
+            echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
+            echo "### 🚀 Services to Deploy" >> "$GITHUB_STEP_SUMMARY"
+            echo "\`\`\`json" >> "$GITHUB_STEP_SUMMARY"
+            echo "$CHANGED" >> "$GITHUB_STEP_SUMMARY"
+            echo "\`\`\`" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  # ── 2. Security scan before deployment ──────────────────────────────────────
+  security-gate:
+    name: Security Gate
+    needs: detect-changes
+    if: needs.detect-changes.outputs.has_changes == 'true'
+    uses: ./.github/workflows/reusable-security.yml
+    with:
+      services: ${{ needs.detect-changes.outputs.services }}
+      matrix: ${{ needs.detect-changes.outputs.matrix }}
+    secrets:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  # ── 3. Build and package all changed services ────────────────────────────────
+  build:
+    name: Build & Package
+    needs: [detect-changes, security-gate]
+    if: needs.detect-changes.outputs.has_changes == 'true'
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      matrix: ${{ needs.detect-changes.outputs.matrix }}
+
+  # ── 4. Deploy each changed service ──────────────────────────────────────────
+  deploy:
+    name: Deploy — ${{ matrix.service }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [detect-changes, build]
+    if: |
+      needs.detect-changes.outputs.has_changes == 'true' &&
+      github.event.inputs.dry_run != 'true'
+    strategy:
+      matrix: ${{ fromJson(needs.detect-changes.outputs.matrix) }}
+      fail-fast: false  # Deploy other services even if one fails
+    environment:
+      name: production
+      url: ${{ steps.smoke.outputs.endpoint }}
+    outputs:
+      deploy_status: ${{ steps.deploy.outputs.status }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Make scripts executable
+        run: chmod +x scripts/*.sh
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+          role-session-name: GitHubActions-CD-${{ matrix.service }}-${{ github.run_number }}
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: lambda-package-${{ matrix.service }}
+          path: build/
+
+      - name: Deploy Lambda — ${{ matrix.service }}
+        id: deploy
+        run: |
+          bash scripts/deploy.sh "${{ matrix.service }}" "build/${{ matrix.service }}.zip" "${{ env.AWS_REGION }}"
+        env:
+          AWS_REGION: ${{ env.AWS_REGION }}
+
+      - name: Run smoke tests
+        id: smoke
+        run: |
+          bash scripts/smoke-test.sh "${{ matrix.service }}" "${{ env.AWS_REGION }}"
+        env:
+          AWS_REGION: ${{ env.AWS_REGION }}
+          API_BASE_URL: ${{ vars.API_GATEWAY_URL }}
+
+      - name: Rollback on failure
+        if: failure()
+        run: |
+          echo "::warning::Deployment or smoke test failed — triggering rollback for ${{ matrix.service }}"
+          bash scripts/rollback.sh "${{ matrix.service }}" "${{ env.AWS_REGION }}"
+        env:
+          AWS_REGION: ${{ env.AWS_REGION }}
+
+      - name: Emit deployment step summary
+        if: always()
+        run: |
+          STATUS="${{ steps.deploy.outcome }}"
+          SMOKE="${{ steps.smoke.outcome }}"
+
+          echo "### 🚀 ${{ matrix.service }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Field | Value |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|-------|-------|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Deploy Status | ${STATUS} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Smoke Test | ${SMOKE} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Timestamp | $(date -u '+%Y-%m-%dT%H:%M:%SZ') |" >> "$GITHUB_STEP_SUMMARY"
+
+  # ── 5. Deployment summary ────────────────────────────────────────────────────
+  deployment-summary:
+    name: Deployment Summary
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [detect-changes, security-gate, build, deploy]
+    if: always()
+    steps:
+      - name: Generate deployment summary
+        run: |
+          echo "# 🚀 CD Pipeline — Deployment Report" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Stage | Result |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|-------|--------|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| 🔍 Change Detection | ${{ needs.detect-changes.result }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| 🛡️ Security Gate | ${{ needs.security-gate.result }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| 📦 Build & Package | ${{ needs.build.result }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| 🚀 Lambda Deploy | ${{ needs.deploy.result }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Triggered by:** \`${{ github.actor }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Commit:** [\`${GITHUB_SHA:0:8}\`](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Workflow Run:** [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "${{ needs.deploy.result }}" = "failure" ]; then
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "⚠️ **One or more services failed — automatic rollback was triggered.**" >> "$GITHUB_STEP_SUMMARY"
+          fi

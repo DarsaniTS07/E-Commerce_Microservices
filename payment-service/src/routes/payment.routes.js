@@ -41,6 +41,14 @@ module.exports = function createPaymentRoutes(paymentService) {
     controller.getRefunds
   );
 
+  // Admin API - View All Payments
+  router.get(
+    "/",
+    requireAuth,
+    requireRole(["admin"]),
+    controller.getAllPayments
+  );
+
   // Public API - Get Payment Status
   router.get(
     "/:orderId",

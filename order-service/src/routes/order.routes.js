@@ -19,6 +19,14 @@ module.exports = function createOrderRoutes(orderService) {
   // Public APIs
   // ==========================
 
+  // Admin API - View All Orders
+  router.get(
+    "/",
+    requireAuth,
+    requireRole(["admin"]),
+    controller.getAllOrders
+  );
+
   router.post(
     "/",
     requireAuth,
@@ -104,6 +112,33 @@ module.exports = function createOrderRoutes(orderService) {
     requireInternalApiKey,
     [
       param("orderId").isString().notEmpty(),
+      body("reason").optional().isString(),
+    ],
+    validateRequest,
+    controller.cancelOrder
+  );
+
+  // ==========================
+  // API Gateway alias routes
+  // API GW has POST /orders/confirm and POST /orders/cancel (no orderId in URL)
+  // Payment service calls these; orderId is passed in the request body
+  // ==========================
+
+  router.post(
+    "/confirm",
+    requireInternalApiKey,
+    [
+      body("orderId").isString().notEmpty(),
+    ],
+    validateRequest,
+    controller.confirmOrder
+  );
+
+  router.post(
+    "/cancel",
+    requireInternalApiKey,
+    [
+      body("orderId").isString().notEmpty(),
       body("reason").optional().isString(),
     ],
     validateRequest,

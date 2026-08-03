@@ -23,7 +23,7 @@ async function attachAuthContext(req, res, next) {
       role:
         payload["cognito:groups"] &&
         payload["cognito:groups"].length > 0
-          ? payload["cognito:groups"][0]
+          ? payload["cognito:groups"][0].toLowerCase()
           : "user",
     };
 
