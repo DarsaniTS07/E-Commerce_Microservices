@@ -95,9 +95,9 @@ export const cartService = {
     }
   },
 
-  checkout: async () => {
+  checkout: async (cartId) => {
     try {
-      const response = await apiClient.post("/cart/checkout");
+      const response = await apiClient.post("/cart/checkout", { cartId });
       return response.data?.data;
     } catch (error) {
       console.error("Checkout failed:", error);

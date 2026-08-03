@@ -1,0 +1,134 @@
+# ============================================================
+# Reusable Workflow — Test
+# Called by: ci.yml
+# Runs: ESLint, Jest unit tests, coverage enforcement
+# ============================================================
+
+name: Reusable — Test
+
+on:
+  workflow_call:
+    inputs:
+      matrix:
+        description: "Matrix definition JSON {service: [...]}"
+        required: true
+        type: string
+      coverage_threshold:
+        description: "Minimum coverage percentage (default: 80)"
+        required: false
+        default: 80
+        type: number
+
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
+jobs:
+  test:
+    name: Test — ${{ matrix.service }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      matrix: ${{ fromJson(inputs.matrix) }}
+      fail-fast: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: ${{ matrix.service }}/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.service }}
+        run: npm ci --prefer-offline
+
+      - name: Run ESLint
+        id: eslint
+        working-directory: ${{ matrix.service }}
+        run: |
+          if [ -f ".eslintrc*" ] || [ -f "eslint.config.*" ]; then
+            npx eslint src/ --format json --output-file eslint-report.json || {
+              echo "ESLINT_FAILED=true" >> "$GITHUB_ENV"
+              npx eslint src/ --format stylish || true
+            }
+          else
+            echo "ℹ️ No ESLint config found for ${{ matrix.service }} — skipping lint"
+          fi
+        continue-on-error: true
+
+      - name: Run unit tests with coverage
+        id: jest
+        working-directory: ${{ matrix.service }}
+        run: |
+          npx jest \
+            --ci \
+            --coverage \
+            --coverageThreshold='{"global":{"lines":${{ inputs.coverage_threshold }},"branches":${{ inputs.coverage_threshold }},"functions":${{ inputs.coverage_threshold }},"statements":${{ inputs.coverage_threshold }}}}' \
+            --reporters=default \
+            --reporters=jest-junit \
+            --forceExit \
+            2>&1 | tee jest-output.txt
+
+          EXIT_CODE=${PIPESTATUS[0]}
+
+          if [ $EXIT_CODE -ne 0 ]; then
+            if grep -q "Your test suite must contain at least one test" jest-output.txt; then
+              echo "::warning::No tests found for ${{ matrix.service }}"
+            elif grep -q "Jest: \"global\" coverage threshold" jest-output.txt; then
+              echo "::error::Coverage below ${{ inputs.coverage_threshold }}% threshold for ${{ matrix.service }}"
+              exit 1
+            else
+              exit 1
+            fi
+          fi
+        env:
+          CI: true
+          NODE_ENV: test
+
+      - name: Extract coverage summary
+        if: always()
+        working-directory: ${{ matrix.service }}
+        run: |
+          echo "### 🧪 Test Results — ${{ matrix.service }}" >> "$GITHUB_STEP_SUMMARY"
+
+          if [ -f "coverage/coverage-summary.json" ]; then
+            LINES=$(jq '.total.lines.pct' coverage/coverage-summary.json 2>/dev/null || echo "N/A")
+            BRANCHES=$(jq '.total.branches.pct' coverage/coverage-summary.json 2>/dev/null || echo "N/A")
+            FUNCTIONS=$(jq '.total.functions.pct' coverage/coverage-summary.json 2>/dev/null || echo "N/A")
+            STATEMENTS=$(jq '.total.statements.pct' coverage/coverage-summary.json 2>/dev/null || echo "N/A")
+
+            echo "| Metric | Coverage | Threshold |" >> "$GITHUB_STEP_SUMMARY"
+            echo "|--------|----------|-----------|" >> "$GITHUB_STEP_SUMMARY"
+            echo "| Lines | ${LINES}% | ${{ inputs.coverage_threshold }}% |" >> "$GITHUB_STEP_SUMMARY"
+            echo "| Branches | ${BRANCHES}% | ${{ inputs.coverage_threshold }}% |" >> "$GITHUB_STEP_SUMMARY"
+            echo "| Functions | ${FUNCTIONS}% | ${{ inputs.coverage_threshold }}% |" >> "$GITHUB_STEP_SUMMARY"
+            echo "| Statements | ${STATEMENTS}% | ${{ inputs.coverage_threshold }}% |" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "_Coverage report not generated._" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.service }}
+          path: |
+            ${{ matrix.service }}/coverage/
+            ${{ matrix.service }}/junit.xml
+            ${{ matrix.service }}/jest-output.txt
+            ${{ matrix.service }}/eslint-report.json
+          retention-days: 14
+
+      - name: Publish test results (JUnit)
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: "Tests — ${{ matrix.service }}"
+          path: "${{ matrix.service }}/junit.xml"
+          reporter: jest-junit
+        continue-on-error: true

@@ -1,0 +1,400 @@
+{
+    "items": [
+        {
+            "id": "136ge6",
+            "parentId": "9cfhj4",
+            "pathPart": "cancel",
+            "path": "/api/v1/orders/{orderId}/cancel",
+            "resourceMethods": {
+                "POST": {}
+            }
+        },
+        {
+            "id": "1b2cob",
+            "parentId": "xohtwf",
+            "pathPart": "checkout",
+            "path": "/api/v1/cart/checkout",
+            "resourceMethods": {
+                "POST": {}
+            }
+        },
+        {
+            "id": "3qvuc5",
+            "parentId": "s27p6s",
+            "pathPart": "confirm",
+            "path": "/api/v1/orders/internal/orders/{orderId}/confirm",
+            "resourceMethods": {
+                "POST": {}
+            }
+        },
+        {
+            "id": "597k7z",
+            "parentId": "fg0kfm",
+            "pathPart": "{eventId}",
+            "path": "/api/v1/events/{eventId}",
+            "resourceMethods": {
+                "DELETE": {},
+                "GET": {},
+                "PUT": {}
+            }
+        },
+        {
+            "id": "5ljbmb",
+            "parentId": "wmfi1n",
+            "pathPart": "internal",
+            "path": "/api/v1/inventory/internal"
+        },
+        {
+            "id": "6redi0",
+            "parentId": "uq43mp",
+            "pathPart": "orders",
+            "path": "/api/v1/users/{userId}/orders",
+            "resourceMethods": {
+                "GET": {}
+            }
+        },
+        {
+            "id": "7fitnm",
+            "parentId": "oa1eho",
+            "pathPart": "{notificationId}",
+            "path": "/api/v1/notifications/{notificationId}"
+        },
+        {
+            "id": "8n05m3",
+            "parentId": "m1fpns",
+            "pathPart": "refunds",
+            "path": "/api/v1/payments/refunds",
+            "resourceMethods": {
+                "GET": {}
+            }
+        },
+        {
+            "id": "9atl1d",
+            "parentId": "r76is8",
+            "pathPart": "users",
+            "path": "/api/v1/users",
+            "resourceMethods": {
+                "ANY": {}
+            }
+        },
+        {
+            "id": "9aw0o2",
+            "parentId": "e84pylg359",
+            "pathPart": "api",
+            "path": "/api"
+        },
+        {
+            "id": "9cfhj4",
+            "parentId": "uehnb3",
+            "pathPart": "{orderId}",
+            "path": "/api/v1/orders/{orderId}",
+            "resourceMethods": {
+                "GET": {}
+            }
+        },
+        {
+            "id": "a0uelx",
+            "parentId": "sys6fg",
+            "pathPart": "internal",
+            "path": "/api/v1/waitlist/internal"
+        },
+        {
+            "id": "e84pylg359",
+            "path": "/"
+        },
+        {
+            "id": "fg0kfm",
+            "parentId": "r76is8",
+            "pathPart": "events",
+            "path": "/api/v1/events",
+            "resourceMethods": {
+                "ANY": {}
+            }
+        },
+        {
+            "id": "fxixmw",
+            "parentId": "m1fpns",
+            "pathPart": "callback",
+            "path": "/api/v1/payments/callback",
+            "resourceMethods": {
+                "POST": {}
+            }
+        },
+        {
+            "id": "gd4lb8",
+            "parentId": "tdrpy3",
+            "pathPart": "{userId}",
+            "path": "/api/v1/waitlist/users/{userId}"
+        },
+        {
+            "id": "glib6i",
+            "parentId": "w9z4gn",
+            "pathPart": "notifications",
+            "path": "/api/v1/notifications/internal/notifications",
+            "resourceMethods": {
+                "POST": {}
+            }
+        },
+        {
+            "id": "ik08x1",
+            "parentId": "wmfi1n",
+            "pathPart": "{eventId}",
+            "path": "/api/v1/inventory/{eventId}",
+            "resourceMethods": {
+                "GET": {}
+            }
+        },
+        {
+            "id": "j8r4jp",
+            "parentId": "s27p6s",
+            "pathPart": "cancel",
+            "path": "/api/v1/orders/internal/orders/{orderId}/cancel",
+            "resourceMethods": {
+                "POST": {}
+            }
+        },
+        {
+            "id": "jhpblo",
+            "parentId": "fg0kfm",
+            "pathPart": "health",
+            "path": "/api/v1/events/health",
+            "resourceMethods": {
+                "GET": {}
+            }
+        },
+        {
+            "id": "k1fjc9",
+            "parentId": "5ljbmb",
+            "pathPart": "reserve",
+            "path": "/api/v1/inventory/internal/reserve",
+            "resourceMethods": {
+                "POST": {}
+            }
+        },
+        {
+            "id": "kia7ev",
+            "parentId": "m32jn7",
+            "pathPart": "{eventId}",
+            "path": "/api/v1/inventory/internal/inventory/{eventId}",
+            "resourceMethods": {
+                "DELETE": {},
+                "GET": {},
+                "PUT": {}
+            }
+        },
+        {
+            "id": "lispkv",
+            "parentId": "9cfhj4",
+            "pathPart": "ticket",
+            "path": "/api/v1/orders/{orderId}/ticket",
+            "resourceMethods": {
+                "GET": {}
+            }
+        },
+        {
+            "id": "m1fpns",
+            "parentId": "r76is8",
+            "pathPart": "payments",
+            "path": "/api/v1/payments",
+            "resourceMethods": {
+                "POST": {}
+            }
+        },
+        {
+            "id": "m32jn7",
+            "parentId": "5ljbmb",
+            "pathPart": "inventory",
+            "path": "/api/v1/inventory/internal/inventory",
+            "resourceMethods": {
+                "POST": {}
+            }
+        },
+        {
+            "id": "nt2sqj",
+            "parentId": "xohtwf",
+            "pathPart": "items",
+            "path": "/api/v1/cart/items",
+            "resourceMethods": {
+                "DELETE": {},
+                "PUT": {}
+            }
+        },
+        {
+            "id": "oa1eho",
+            "parentId": "r76is8",
+            "pathPart": "notifications",
+            "path": "/api/v1/notifications",
+            "resourceMethods": {
+                "GET": {}
+            }
+        },
+        {
+            "id": "p1fast",
+            "parentId": "w0xl6t",
+            "pathPart": "{cartId}",
+            "path": "/api/v1/cart/internal/carts/{cartId}",
+            "resourceMethods": {
+                "GET": {}
+            }
+        },
+        {
+            "id": "p3zqbp",
+            "parentId": "xohtwf",
+            "pathPart": "internal",
+            "path": "/api/v1/cart/internal"
+        },
+        {
+            "id": "qudvr6",
+            "parentId": "u3unic",
+            "pathPart": "process",
+            "path": "/api/v1/waitlist/internal/waitlist/process",
+            "resourceMethods": {
+                "POST": {}
+            }
+        },
+        {
+            "id": "r76is8",
+            "parentId": "9aw0o2",
+            "pathPart": "v1",
+            "path": "/api/v1"
+        },
+        {
+            "id": "rjnwk4",
+            "parentId": "5ljbmb",
+            "pathPart": "confirm",
+            "path": "/api/v1/inventory/internal/confirm",
+            "resourceMethods": {
+                "POST": {}
+            }
+        },
+        {
+            "id": "s27p6s",
+            "parentId": "vd3tdu",
+            "pathPart": "{orderId}",
+            "path": "/api/v1/orders/internal/orders/{orderId}",
+            "resourceMethods": {
+                "GET": {}
+            }
+        },
+        {
+            "id": "sys6fg",
+            "parentId": "r76is8",
+            "pathPart": "waitlist",
+            "path": "/api/v1/waitlist",
+            "resourceMethods": {
+                "DELETE": {},
+                "GET": {},
+                "POST": {}
+            }
+        },
+        {
+            "id": "tdrpy3",
+            "parentId": "sys6fg",
+            "pathPart": "users",
+            "path": "/api/v1/waitlist/users"
+        },
+        {
+            "id": "tmjz1k",
+            "parentId": "5ljbmb",
+            "pathPart": "release",
+            "path": "/api/v1/inventory/internal/release",
+            "resourceMethods": {
+                "POST": {}
+            }
+        },
+        {
+            "id": "u3unic",
+            "parentId": "a0uelx",
+            "pathPart": "waitlist",
+            "path": "/api/v1/waitlist/internal/waitlist"
+        },
+        {
+            "id": "uehnb3",
+            "parentId": "r76is8",
+            "pathPart": "orders",
+            "path": "/api/v1/orders",
+            "resourceMethods": {
+                "POST": {}
+            }
+        },
+        {
+            "id": "uq43mp",
+            "parentId": "9atl1d",
+            "pathPart": "{userId}",
+            "path": "/api/v1/users/{userId}",
+            "resourceMethods": {
+                "DELETE": {},
+                "GET": {}
+            }
+        },
+        {
+            "id": "vd3tdu",
+            "parentId": "wtumld",
+            "pathPart": "orders",
+            "path": "/api/v1/orders/internal/orders"
+        },
+        {
+            "id": "vub0cp",
+            "parentId": "gd4lb8",
+            "pathPart": "waitlists",
+            "path": "/api/v1/waitlist/users/{userId}/waitlists",
+            "resourceMethods": {
+                "GET": {}
+            }
+        },
+        {
+            "id": "w0xl6t",
+            "parentId": "p3zqbp",
+            "pathPart": "carts",
+            "path": "/api/v1/cart/internal/carts"
+        },
+        {
+            "id": "w9z4gn",
+            "parentId": "oa1eho",
+            "pathPart": "internal",
+            "path": "/api/v1/notifications/internal"
+        },
+        {
+            "id": "wmfi1n",
+            "parentId": "r76is8",
+            "pathPart": "inventory",
+            "path": "/api/v1/inventory",
+            "resourceMethods": {
+                "ANY": {}
+            }
+        },
+        {
+            "id": "wtumld",
+            "parentId": "uehnb3",
+            "pathPart": "internal",
+            "path": "/api/v1/orders/internal"
+        },
+        {
+            "id": "xohtwf",
+            "parentId": "r76is8",
+            "pathPart": "cart",
+            "path": "/api/v1/cart",
+            "resourceMethods": {
+                "ANY": {}
+            }
+        },
+        {
+            "id": "y7cdaw",
+            "parentId": "7fitnm",
+            "pathPart": "read",
+            "path": "/api/v1/notifications/{notificationId}/read",
+            "resourceMethods": {
+                "PUT": {}
+            }
+        },
+        {
+            "id": "ylye8w",
+            "parentId": "m1fpns",
+            "pathPart": "{orderId}",
+            "path": "/api/v1/payments/{orderId}",
+            "resourceMethods": {
+                "GET": {}
+            }
+        }
+    ]
+}

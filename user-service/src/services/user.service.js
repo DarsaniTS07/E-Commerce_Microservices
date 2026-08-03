@@ -1,10 +1,17 @@
 const { CognitoIdentityProviderClient, ListUsersCommand, AdminGetUserCommand, AdminDeleteUserCommand } = require('@aws-sdk/client-cognito-identity-provider');
+const { fromSSO } = require('@aws-sdk/credential-provider-sso');
 
 class UserService {
   constructor() {
-    this.cognito = new CognitoIdentityProviderClient({
+    const config = {
       region: process.env.AWS_REGION
-    });
+    };
+    
+    if (process.env.AWS_PROFILE) {
+      config.credentials = fromSSO({ profile: process.env.AWS_PROFILE });
+    }
+
+    this.cognito = new CognitoIdentityProviderClient(config);
     this.userPoolId = process.env.COGNITO_USER_POOL_ID;
   }
 

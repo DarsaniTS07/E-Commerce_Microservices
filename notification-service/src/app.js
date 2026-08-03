@@ -26,7 +26,7 @@ function createApp() {
 
     app.use(requestLogger);
 
-    app.get("/health", (req, res) => {
+    app.get("/api/v1/health", (req, res) => {
         res.json({
             success: true,
             message: "Operation successful",
@@ -36,6 +36,10 @@ function createApp() {
         });
     });
 
+    app.use(
+        "/api/v1/notifications",
+        createNotificationRoutes(notificationService)
+    );
     app.use(
         "/notifications",
         createNotificationRoutes(notificationService)
@@ -49,3 +53,4 @@ function createApp() {
 }
 
 module.exports = { createApp };
+

@@ -1,0 +1,25 @@
+Created C:\Users\darsani.ts\OneDrive - IDP Education Ltd\Documents\E-Commerce_Microservices\inventory-service\cart-service.zip
+Total files: 11525
+handler.js
+package.json
+package-lock.json
+src/app.js
+src/server.js
+src/config/cognito.js
+src/config/dynamodb.js
+src/controllers/inventory.controller.js
+src/middlewares/auth.js
+src/middlewares/errorHandler.js
+src/middlewares/internalAuth.js
+src/middlewares/requestLogger.js
+src/middlewares/validateRequest.js
+src/repositories/inventory.repository.js
+src/routes/inventory.routes.js
+src/services/inventory.service.js
+src/utils/AppError.js
+src/utils/asyncHandler.js
+src/utils/pagination.js
+src/utils/requestContext.js
+src/utils/response.js
+src/utils/time.js
+src/validations/inventory.validation.js

@@ -21,10 +21,11 @@ function createApp() {
   app.use(attachAuthContext);
   app.use(requestLogger);
 
-  app.get('/health', (req, res) => {
+  app.get('/api/v1/health', (req, res) => {
     res.json({ success: true, message: 'Operation successful', data: { status: 'ok' } });
   });
 
+  app.use('/api/v1/cart', createCartRoutes(cartService));
   app.use('/cart', createCartRoutes(cartService));
 
   app.use(notFoundHandler);
@@ -34,3 +35,4 @@ function createApp() {
 }
 
 module.exports = { createApp };
+

@@ -1,0 +1,104 @@
+# ============================================================
+# Reusable Workflow — Build
+# Called by: ci.yml, cd.yml
+# Packages each service into a Lambda-compatible ZIP
+# Uploads build artifacts for downstream jobs
+# ============================================================
+
+name: Reusable — Build
+
+on:
+  workflow_call:
+    inputs:
+      matrix:
+        description: "Matrix definition JSON {service: [...]}"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build — ${{ matrix.service }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      matrix: ${{ fromJson(inputs.matrix) }}
+      fail-fast: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: ${{ matrix.service }}/package-lock.json
+
+      - name: Install production dependencies only
+        working-directory: ${{ matrix.service }}
+        run: npm ci --omit=dev --prefer-offline
+
+      - name: Validate package structure
+        working-directory: ${{ matrix.service }}
+        run: |
+          echo "Validating ${{ matrix.service }} package structure..."
+
+          # Verify handler entry point exists
+          if [ ! -f "handler.js" ]; then
+            echo "::error::handler.js not found in ${{ matrix.service }}"
+            exit 1
+          fi
+
+          # Verify package.json exists and is valid JSON
+          node -e "JSON.parse(require('fs').readFileSync('package.json','utf8'))" || {
+            echo "::error::package.json is not valid JSON in ${{ matrix.service }}"
+            exit 1
+          }
+
+          echo "✅ Package structure validation passed"
+
+      - name: Make package script executable
+        run: chmod +x scripts/package-lambda.sh
+
+      - name: Package Lambda ZIP
+        id: package
+        run: |
+          mkdir -p build
+          bash scripts/package-lambda.sh "${{ matrix.service }}" "build"
+          echo "zip_path=build/${{ matrix.service }}.zip" >> "$GITHUB_OUTPUT"
+          echo "zip_size=$(du -sh build/${{ matrix.service }}.zip | cut -f1)" >> "$GITHUB_OUTPUT"
+
+      - name: Verify ZIP integrity
+        run: |
+          ZIP="build/${{ matrix.service }}.zip"
+          if [ ! -f "$ZIP" ]; then
+            echo "::error::ZIP file not created: $ZIP"
+            exit 1
+          fi
+
+          # Verify ZIP contains handler.js at root
+          if ! unzip -l "$ZIP" | grep -q "handler.js"; then
+            echo "::error::handler.js not found in ZIP archive"
+            exit 1
+          fi
+
+          SIZE=$(stat -c%s "$ZIP")
+          echo "✅ ZIP verified — size: ${SIZE} bytes ($(du -sh $ZIP | cut -f1))"
+
+          echo "### 📦 Build — ${{ matrix.service }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Field | Value |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|-------|-------|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| ZIP | \`${{ matrix.service }}.zip\` |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Size | $(du -sh $ZIP | cut -f1) |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| SHA256 | $(sha256sum $ZIP | awk '{print $1}') |" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload Lambda package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lambda-package-${{ matrix.service }}
+          path: build/${{ matrix.service }}.zip
+          retention-days: 7
+          if-no-files-found: error

@@ -2,7 +2,9 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { getStoredToken, removeStoredToken } from "../utils/auth";
 
-const API_BASE_URL = import.meta.env.DEV ? "/api" : "https://4bsnhdrhji.execute-api.ap-southeast-1.amazonaws.com";
+// In local dev: leave empty so Vite proxy handles routing (avoids CORS).
+// In production: set VITE_API_URL to your API Gateway base URL.
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,

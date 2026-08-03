@@ -1,0 +1,166 @@
+# ============================================================
+# CI Pipeline — Pull Request Gate
+# Runs on every PR targeting main.
+# Orchestrates: security scanning → test → build → report
+# ============================================================
+
+name: CI — Pull Request Gate
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+# Prevent concurrent runs on the same PR to avoid race conditions
+concurrency:
+  group: ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+  id-token: write
+  checks: write
+
+env:
+  NODE_VERSION: "20"
+  COVERAGE_THRESHOLD: 80
+
+jobs:
+  # ── 1. Detect which services changed ────────────────────────────────────────
+  detect-changes:
+    name: Detect Changed Services
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      services: ${{ steps.detect.outputs.services }}
+      has_changes: ${{ steps.detect.outputs.has_changes }}
+      matrix: ${{ steps.detect.outputs.matrix }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Make detect-changes script executable
+        run: chmod +x scripts/detect-changes.sh
+
+      - name: Detect changed services
+        id: detect
+        run: |
+          CHANGED=$(bash scripts/detect-changes.sh "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}")
+          echo "services=$CHANGED" >> "$GITHUB_OUTPUT"
+
+          if [ -z "$CHANGED" ] || [ "$CHANGED" = "[]" ]; then
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+            echo "matrix={\"service\":[]}" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+            MATRIX=$(echo "$CHANGED" | jq -c '{service: .}')
+            echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
+          fi
+
+          echo "### 🔍 Changed Services" >> "$GITHUB_STEP_SUMMARY"
+          echo "\`\`\`json" >> "$GITHUB_STEP_SUMMARY"
+          echo "$CHANGED" >> "$GITHUB_STEP_SUMMARY"
+          echo "\`\`\`" >> "$GITHUB_STEP_SUMMARY"
+
+  # ── 2. Secret scanning (GitLeaks) ───────────────────────────────────────────
+  secret-scan:
+    name: Secret Scanning (GitLeaks)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: detect-changes
+    if: needs.detect-changes.outputs.has_changes == 'true'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run GitLeaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: true
+          GITLEAKS_ENABLE_SUMMARY: true
+
+      - name: Upload GitLeaks report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitleaks-report
+          path: results.sarif
+          retention-days: 30
+
+  # ── 3. Security scanning (Snyk) ─────────────────────────────────────────────
+  security-scan:
+    name: Security Scan (Snyk)
+    needs: [detect-changes, secret-scan]
+    if: needs.detect-changes.outputs.has_changes == 'true'
+    uses: ./.github/workflows/reusable-security.yml
+    with:
+      services: ${{ needs.detect-changes.outputs.services }}
+      matrix: ${{ needs.detect-changes.outputs.matrix }}
+    secrets:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  # ── 4. Test all changed services (parallel matrix) ──────────────────────────
+  test:
+    name: Test
+    needs: [detect-changes, security-scan]
+    if: needs.detect-changes.outputs.has_changes == 'true'
+    uses: ./.github/workflows/reusable-test.yml
+    with:
+      matrix: ${{ needs.detect-changes.outputs.matrix }}
+      coverage_threshold: 80
+
+  # ── 5. Build all changed services (parallel matrix) ─────────────────────────
+  build:
+    name: Build
+    needs: [detect-changes, test]
+    if: needs.detect-changes.outputs.has_changes == 'true'
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      matrix: ${{ needs.detect-changes.outputs.matrix }}
+
+  # ── 6. Final CI summary ──────────────────────────────────────────────────────
+  ci-summary:
+    name: CI Summary
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [detect-changes, secret-scan, security-scan, test, build]
+    if: always()
+    steps:
+      - name: Download all reports
+        uses: actions/download-artifact@v4
+        with:
+          path: reports/
+        continue-on-error: true
+
+      - name: Generate CI Summary
+        run: |
+          echo "# 📋 CI Pipeline Summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Step | Status |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|------|--------|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| 🔍 Changed Services | ${{ needs.detect-changes.result }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| 🔒 GitLeaks Secret Scan | ${{ needs.secret-scan.result }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| 🛡️ Snyk Security Scan | ${{ needs.security-scan.result }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| 🧪 Unit Tests + Coverage | ${{ needs.test.result }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| 📦 Build + Package | ${{ needs.build.result }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "**PR:** #${{ github.event.pull_request.number }} — ${{ github.event.pull_request.title }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Branch:** \`${{ github.head_ref }}\` → \`${{ github.base_ref }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Commit:** \`${{ github.sha }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Run:** [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Fail if any critical step failed
+        if: |
+          needs.secret-scan.result == 'failure' ||
+          needs.security-scan.result == 'failure' ||
+          needs.test.result == 'failure' ||
+          needs.build.result == 'failure'
+        run: |
+          echo "::error::One or more CI steps failed. Review the summary above."
+          exit 1

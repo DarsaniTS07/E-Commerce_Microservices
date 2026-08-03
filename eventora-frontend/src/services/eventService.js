@@ -15,7 +15,7 @@ export const eventService = {
     if (trending !== undefined) params.trending = trending;
 
     try {
-      const response = await apiClient.get("/events", { params, skipToast: true });
+      const response = await apiClient.get("/events/list", { params, skipToast: true });
       const apiData = response.data;
       
       if (apiData && apiData.success && apiData.data) {

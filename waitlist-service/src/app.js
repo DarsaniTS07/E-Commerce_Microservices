@@ -43,7 +43,7 @@ function createApp() {
     app.use(attachAuthContext);
     app.use(requestLogger);
 
-    app.get("/health", (req, res) => {
+    app.get("/api/v1/health", (req, res) => {
         res.json({
             success: true,
             message: "Operation successful",
@@ -53,6 +53,7 @@ function createApp() {
         });
     });
 
+    app.use("/api/v1/waitlist", createWaitlistRoutes(waitlistService));
     app.use("/waitlist", createWaitlistRoutes(waitlistService));
 
     app.use(notFoundHandler);
@@ -62,3 +63,4 @@ function createApp() {
 }
 
 module.exports = { createApp };
+

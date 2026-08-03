@@ -35,9 +35,11 @@ export const AuthProvider = ({ children }) => {
     try {
       const data = await authService.login(email, password);
       // Backend Cognito integrations might return tokens as IdToken, AccessToken or raw token
-      const token = data.token || data.IdToken || data.AccessToken;
-      setStoredToken(token);
-      const userData = getUserFromToken(token);
+      const idToken = data.token || data.IdToken;
+      const accessToken = data.accessToken || data.AccessToken;
+      setStoredToken(idToken);                                          // "eventora_jwt" = IdToken (for user profile decoding)
+      if (accessToken) localStorage.setItem("eventora_access_token", accessToken); // AccessToken for API calls
+      const userData = getUserFromToken(idToken);
       setUser(userData);
       toast.success(`Welcome back, ${userData?.name || "User"}!`);
       return userData;

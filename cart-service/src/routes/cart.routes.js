@@ -51,14 +51,28 @@ module.exports = function createCartRoutes(cartService) {
   );
 
   // Internal APIs
+
   router.get(
     "/internal/carts/:cartId",
     controller.getCartItem
   );
 
+  // Called by order-service via API Gateway route: POST /cart/internal/carts/{cartId}/checkout
   router.post(
     "/internal/carts/:cartId/checkout",
     [
+      body("orderId").isString().notEmpty(),
+    ],
+    validateRequest,
+    controller.checkoutCart
+  );
+
+  // API Gateway alias: POST /cart/internal/checkout
+  // The API Gateway has this path (without cartId in URL), so cartId comes from body
+  router.post(
+    "/internal/checkout",
+    [
+      body("cartId").isString().notEmpty(),
       body("orderId").isString().notEmpty(),
     ],
     validateRequest,

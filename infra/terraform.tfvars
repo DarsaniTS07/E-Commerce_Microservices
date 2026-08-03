@@ -1,0 +1,7 @@
+aws_region           = "ap-southeast-1"
+aws_profile          = "Darsani"
+cognito_user_pool_id = "ap-southeast-1_zHUE3mvtH"
+cognito_client_id    = "1mguaa0i4kroahbop469djdddm"
+internal_api_key     = "event-booking-internal-secret-2026"
+sns_topic_arn        = "arn:aws:sns:ap-southeast-1:726101441380:darsani_event_booking"
+account_id           = "726101441380"

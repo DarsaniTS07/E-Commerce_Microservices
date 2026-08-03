@@ -1,32 +1,33 @@
 {
-  "name": "@ticketing/order-service",
-  "version": "1.0.0",
-  "description": "Production-style modular backend for a ticket booking platform",
-  "main": "handler.js",
-  "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
-    "start:lambda": "node -e \"require('./handler')\""
-  },
-  "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.893.0",
-    "@aws-sdk/client-sns": "^3.1084.0",
-    "@aws-sdk/lib-dynamodb": "^3.893.0",
-    "aws-jwt-verify": "^5.2.1",
-    "cors": "^2.8.6",
-    "dotenv": "^16.6.1",
-    "express": "^4.22.2",
-    "express-validator": "^7.2.0",
-    "serverless-http": "^3.2.0",
-    "swagger-jsdoc": "^6.3.0",
-    "swagger-ui-express": "^5.0.1",
-    "uuid": "^10.0.0"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.4"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs"
+    "name": "@ticketing/order-service",
+    "version": "1.0.0",
+    "description": "Production-style modular backend for a ticket booking platform",
+    "main": "handler.js",
+    "scripts": {
+        "start": "node src/server.js",
+        "dev": "nodemon src/server.js",
+        "start:lambda": "node -e \"require('./handler')\"",
+        "test": "jest"
+    },
+    "dependencies": {
+        "@aws-sdk/client-dynamodb": "^3.893.0",
+        "@aws-sdk/client-sns": "^3.1084.0",
+        "@aws-sdk/lib-dynamodb": "^3.893.0",
+        "aws-jwt-verify": "^5.2.1",
+        "dotenv": "^16.6.1",
+        "express": "^4.22.2",
+        "express-validator": "^7.2.0",
+        "serverless-http": "^3.2.0",
+        "uuid": "^10.0.0"
+    },
+    "devDependencies": {
+        "aws-sdk-client-mock": "^4.1.0",
+        "jest": "^30.4.2",
+        "nodemon": "^3.1.4",
+        "supertest": "^7.2.2"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs"
 }

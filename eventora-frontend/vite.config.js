@@ -6,35 +6,51 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api/users': {
-        target: 'http://127.0.0.1:3008',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
-      '/api/orders': {
-        target: 'http://127.0.0.1:3004',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
-      '/api/waitlist': {
-        target: 'http://127.0.0.1:3006',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
-      '/api/events': {
-        target: 'http://127.0.0.1:3001',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
-      '/api/payments': {
-        target: 'http://127.0.0.1:3005',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
-      '/api': {
+      // Forward all API calls to AWS API Gateway — avoids CORS in local dev
+      '/events': {
         target: 'https://4bsnhdrhji.execute-api.ap-southeast-1.amazonaws.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        secure: true,
+      },
+      '/cart': {
+        target: 'https://4bsnhdrhji.execute-api.ap-southeast-1.amazonaws.com',
+        changeOrigin: true,
+        secure: true,
+      },
+      '/carts': {
+        target: 'https://4bsnhdrhji.execute-api.ap-southeast-1.amazonaws.com',
+        changeOrigin: true,
+        secure: true,
+      },
+      '/orders': {
+        target: 'https://4bsnhdrhji.execute-api.ap-southeast-1.amazonaws.com',
+        changeOrigin: true,
+        secure: true,
+      },
+      '/payments': {
+        target: 'https://4bsnhdrhji.execute-api.ap-southeast-1.amazonaws.com',
+        changeOrigin: true,
+        secure: true,
+      },
+      '/notifications': {
+        target: 'https://4bsnhdrhji.execute-api.ap-southeast-1.amazonaws.com',
+        changeOrigin: true,
+        secure: true,
+      },
+      '/inventory': {
+        target: 'https://4bsnhdrhji.execute-api.ap-southeast-1.amazonaws.com',
+        changeOrigin: true,
+        secure: true,
+      },
+      '/waitlist': {
+        target: 'https://4bsnhdrhji.execute-api.ap-southeast-1.amazonaws.com',
+        changeOrigin: true,
+        secure: true,
+      },
+      '/users': {
+        target: 'https://4bsnhdrhji.execute-api.ap-southeast-1.amazonaws.com',
+        changeOrigin: true,
+        secure: true,
       },
     },
   },
