@@ -102,8 +102,7 @@ jobs:
     with:
       services: ${{ needs.detect-changes.outputs.services }}
       matrix: ${{ needs.detect-changes.outputs.matrix }}
-    secrets:
-      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    secrets: inherit
 
   # ── 4. Test all changed services (parallel matrix) ──────────────────────────
   test:

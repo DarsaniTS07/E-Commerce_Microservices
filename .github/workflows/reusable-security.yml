@@ -17,10 +17,7 @@ on:
         description: "Matrix definition JSON"
         required: true
         type: string
-    secrets:
-      SNYK_TOKEN:
-        description: "Snyk authentication token"
-        required: true
+
 
 permissions:
   contents: read
@@ -39,7 +36,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js ${{ env.NODE_VERSION }}
+      - name: Setup Node.js LTS
         uses: actions/setup-node@v4
         with:
           node-version: "20"
