@@ -42,12 +42,27 @@ export const PaymentPage = () => {
       setIsProcessing(true);
       toast.loading("Initiating payment...", { id: "payment" });
       
-      await paymentService.initiatePayment(orderId);
+      const response = await paymentService.initiatePayment(orderId);
       
       toast.loading("Processing transaction...", { id: "payment" });
       await new Promise(resolve => setTimeout(resolve, 1500)); 
       
-      await paymentService.simulateCallback(orderId, "SUCCESS");
+      let success = false;
+      let retries = 3;
+      while (retries > 0 && !success) {
+        try {
+          await paymentService.simulateCallback(response.paymentId, orderId, "SUCCESS");
+          success = true;
+        } catch (err) {
+          if (err.response && err.response.status === 404 && retries > 1) {
+            console.log("Payment record not yet replicated, retrying in 2 seconds...");
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            retries--;
+          } else {
+            throw err;
+          }
+        }
+      }
       
       toast.success("Payment Successful!", { id: "payment" });
       navigate("/bookings"); 

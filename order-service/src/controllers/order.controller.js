@@ -32,12 +32,14 @@ class OrderController {
   });
 
   cancelOrder = asyncHandler(async (req, res) => {
-    const data = await this.orderService.cancelOrder(req.params.orderId, req.body.reason);
+    const orderId = req.params.orderId || req.body.orderId;
+    const data = await this.orderService.cancelOrder(orderId, req.body.reason);
     res.json({ success: true, message: 'Operation successful', data });
   });
 
   confirmOrder = asyncHandler(async (req, res) => {
-    const data = await this.orderService.confirmOrder(req.params.orderId);
+    const orderId = req.params.orderId || req.body.orderId;
+    const data = await this.orderService.confirmOrder(orderId);
     res.json({ success: true, message: 'Operation successful', data });
   });
 

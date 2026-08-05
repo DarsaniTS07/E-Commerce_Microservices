@@ -39,6 +39,7 @@ class PaymentRepository {
       new GetCommand({
         TableName: tableName(),
         Key: { paymentId },
+        ConsistentRead: true,
       })
     );
 

@@ -30,9 +30,9 @@ async getOrder(orderId) {
 }
 
   async confirmOrder(orderId) {
-    // API GW route: POST /orders/confirm (orderId in body, not URL)
+    // Reverted back to internal API route because /orders/confirm is missing on API GW
     const response = await fetch(
-      `${this.baseUrl}/orders/confirm`,
+      `${this.baseUrl}/orders/internal/orders/${orderId}/confirm`,
       {
         method: "POST",
         headers: {
@@ -57,9 +57,8 @@ async getOrder(orderId) {
   }
 
   async cancelOrder(orderId, reason) {
-    // API GW route: POST /orders/cancel (orderId in body, not URL)
     const response = await fetch(
-      `${this.baseUrl}/orders/cancel`,
+      `${this.baseUrl}/orders/internal/orders/${orderId}/cancel`,
       {
         method: "POST",
         headers: {

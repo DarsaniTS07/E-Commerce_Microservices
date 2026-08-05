@@ -11,10 +11,10 @@ export const paymentService = {
     }
   },
 
-  simulateCallback: async (orderId, status = "SUCCESS") => {
+  simulateCallback: async (paymentId, orderId, status = "SUCCESS") => {
     try {
       // For testing/simulation, we hit the callback endpoint with status
-      const response = await apiClient.post("/payments/callback", { orderId, status });
+      const response = await apiClient.post("/payments/callback", { paymentId, orderId, status }, { skipToast: true });
       return response.data?.data;
     } catch (error) {
       console.error("Failed to simulate payment callback:", error);
