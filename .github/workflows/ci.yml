@@ -123,12 +123,50 @@ jobs:
     with:
       matrix: ${{ needs.detect-changes.outputs.matrix }}
 
+  # ── 5.5. SonarCloud Scan ──────────────────────────────────────────────────
+  sonarcloud:
+    name: SonarCloud Scan
+    runs-on: ubuntu-latest
+    needs: [test]
+    if: always() && needs.test.result != 'failure'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download test results
+        uses: actions/download-artifact@v4
+        with:
+          path: test-artifacts
+          pattern: test-results-*
+          merge-multiple: false
+        continue-on-error: true
+
+      - name: Move test coverage to service directories
+        run: |
+          if [ -d "test-artifacts" ]; then
+            for dir in test-artifacts/test-results-*/; do
+              if [ -d "$dir" ]; then
+                service_name=$(basename "$dir" | sed 's/test-results-//')
+                echo "Moving coverage for $service_name"
+                cp -r "$dir/"* "$service_name/" 2>/dev/null || true
+              fi
+            done
+          fi
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
   # ── 6. Final CI summary ──────────────────────────────────────────────────────
   ci-summary:
     name: CI Summary
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    needs: [detect-changes, secret-scan, security-scan, test, build]
+    needs: [detect-changes, secret-scan, security-scan, test, build, sonarcloud]
     if: always()
     steps:
       - name: Download all reports
@@ -148,6 +186,7 @@ jobs:
           echo "| 🛡️ Snyk Security Scan | ${{ needs.security-scan.result }} |" >> "$GITHUB_STEP_SUMMARY"
           echo "| 🧪 Unit Tests + Coverage | ${{ needs.test.result }} |" >> "$GITHUB_STEP_SUMMARY"
           echo "| 📦 Build + Package | ${{ needs.build.result }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| 📊 SonarCloud Scan | ${{ needs.sonarcloud.result }} |" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "**PR:** #${{ github.event.pull_request.number }} — ${{ github.event.pull_request.title }}" >> "$GITHUB_STEP_SUMMARY"
           echo "**Branch:** \`${{ github.head_ref }}\` → \`${{ github.base_ref }}\`" >> "$GITHUB_STEP_SUMMARY"
@@ -159,7 +198,8 @@ jobs:
           needs.secret-scan.result == 'failure' ||
           needs.security-scan.result == 'failure' ||
           needs.test.result == 'failure' ||
-          needs.build.result == 'failure'
+          needs.build.result == 'failure' ||
+          needs.sonarcloud.result == 'failure'
         run: |
           echo "::error::One or more CI steps failed. Review the summary above."
           exit 1
