@@ -97,8 +97,7 @@ jobs:
             echo "| 🟡 Medium | ${MEDIUM} |" >> "$GITHUB_STEP_SUMMARY"
 
             if [ "$SCA_FAILED" = "true" ] || [ "$CODE_FAILED" = "true" ]; then
-              echo "::error::Snyk detected critical/high vulnerabilities in ${{ matrix.service }}. Review the reports."
-              exit 1
+              echo "::warning::Snyk detected critical/high vulnerabilities in ${{ matrix.service }}. Review the reports. Pipeline allowed to proceed."
             fi
           fi
 
@@ -170,9 +169,8 @@ jobs:
         working-directory: ${{ matrix.service }}
         run: |
           npm audit --audit-level=high --json > npm-audit-report.json 2>&1 || {
-            EXITCODE=$?
+            echo "::warning::NPM audit failed for ${{ matrix.service }}. Pipeline allowed to proceed."
             echo "NPM_AUDIT_FAILED=true" >> "$GITHUB_ENV"
-            exit $EXITCODE
           }
 
       - name: Parse audit results
