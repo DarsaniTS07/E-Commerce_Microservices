@@ -155,7 +155,7 @@ jobs:
           bash scripts/smoke-test.sh "${{ matrix.service }}" "${{ env.AWS_REGION }}"
         env:
           AWS_REGION: ${{ env.AWS_REGION }}
-          API_BASE_URL: ${{ vars.API_GATEWAY_URL }}
+          API_BASE_URL: ${{ secrets.API_GATEWAY_URL }}
 
       - name: Rollback on failure
         if: failure()
