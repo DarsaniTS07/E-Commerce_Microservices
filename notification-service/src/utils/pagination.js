@@ -1,6 +1,6 @@
 function parsePagination(query = {}) {
-  const page = Math.max(Number.Number.parseInt(query.page, 10) || 1, 1);
-  const limit = Math.min(Math.max(Number.Number.parseInt(query.limit, 10) || 10, 1), 100);
+  const page = Math.max(Number.parseInt(query.page, 10) || 1, 1);
+  const limit = Math.min(Math.max(Number.parseInt(query.limit, 10) || 10, 1), 100);
   const sortBy = query.sortBy || 'createdAt';
   const sortOrder = String(query.sortOrder || 'desc').toLowerCase() === 'asc' ? 1 : -1;
 
