@@ -7,7 +7,7 @@ class EventClient {
 
   async getEventById(eventId) {
     const response = await fetch(
-      `${this.baseUrl}/events/internal/events/${eventId}`,
+      `${this.baseUrl}/events/internal/events/${encodeURIComponent(eventId)}`,
       {
         method: "GET",
         headers: {

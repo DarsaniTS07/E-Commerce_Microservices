@@ -6,7 +6,7 @@ class CartClient {
   }
 
   async getCartById(cartId) {
-    const response = await fetch(`${this.baseUrl}/cart/internal/carts/${cartId}`, {
+    const response = await fetch(`${this.baseUrl}/cart/internal/carts/${encodeURIComponent(cartId)}`, {
       method: 'GET',
       headers: {
         'x-internal-api-key': process.env.INTERNAL_API_KEY
@@ -26,7 +26,7 @@ class CartClient {
   }
 
   async checkoutCart(cartId, orderId) {
-    const response = await fetch(`${this.baseUrl}/cart/internal/carts/${cartId}/checkout`, {
+    const response = await fetch(`${this.baseUrl}/cart/internal/carts/${encodeURIComponent(cartId)}/checkout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

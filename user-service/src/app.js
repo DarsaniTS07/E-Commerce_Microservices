@@ -19,12 +19,19 @@ function createApp() {
   app.use('/users', createUserRoutes(userService));
 
   const fs = require('fs');
+  const os = require('os');
+  const path = require('path');
+  let tempDir = null;
+
   app.use((err, req, res, next) => {
     console.error(err.stack);
     try {
       // In Lambda, writing to the root directory is not allowed. 
-      // We use /tmp/ or console.error directly.
-      fs.appendFileSync('/tmp/error.log', new Date().toISOString() + '\n' + (err.stack || err.toString()) + '\n\n');
+      // We safely create a unique temp dir inside the OS tmp directory to avoid SonarQube S5443.
+      if (!tempDir) {
+        tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'app-errors-'));
+      }
+      fs.appendFileSync(path.join(tempDir, 'error.log'), new Date().toISOString() + '\n' + (err.stack || err.toString()) + '\n\n');
     } catch(e) {}
     res.status(err.statusCode || 500).json({
       success: false,
