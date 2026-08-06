@@ -40,6 +40,8 @@ jobs:
 
       - name: Build frontend
         run: npm run build
+        env:
+          VITE_API_URL: https://4bsnhdrhji.execute-api.ap-southeast-1.amazonaws.com
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
