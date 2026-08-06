@@ -17,6 +17,11 @@ function createApp() {
   const waitlistClient = new WaitlistClient(process.env.WAITLIST_SERVICE_BASE_URL);
   const cartService = new CartService(cartRepository, inventoryClient, waitlistClient);
 
+  const cors = require('cors');
+  app.use(cors({
+    origin: ['https://d344y4gvwqaswv.cloudfront.net', 'http://localhost:5173'],
+    credentials: true
+  }));
   app.use(express.json());
   app.use(attachAuthContext);
   app.use(requestLogger);
@@ -35,4 +40,5 @@ function createApp() {
 }
 
 module.exports = { createApp };
+
 

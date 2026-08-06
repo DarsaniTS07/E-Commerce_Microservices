@@ -30,6 +30,11 @@ function createApp() {
   snsClient
 );
 
+  const cors = require('cors');
+  app.use(cors({
+    origin: ['https://d344y4gvwqaswv.cloudfront.net', 'http://localhost:5173'],
+    credentials: true
+  }));
   app.use(express.json());
   app.use(attachAuthContext);
   app.use(requestLogger);
@@ -48,4 +53,5 @@ function createApp() {
 }
 
 module.exports = { createApp };
+
 

@@ -9,6 +9,11 @@ const { attachAuthContext } = require('./middlewares/auth');
 
 function createApp() {
   const app = express();
+  const cors = require('cors');
+  app.use(cors({
+    origin: ['https://d344y4gvwqaswv.cloudfront.net', 'http://localhost:5173'],
+    credentials: true
+  }));
   app.use(express.json());
 
   app.use(attachAuthContext);
@@ -43,4 +48,5 @@ function createApp() {
 }
 
 module.exports = { createApp };
+
 
