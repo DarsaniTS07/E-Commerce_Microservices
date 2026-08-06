@@ -50,7 +50,12 @@ jobs:
       - name: Detect changed services
         id: detect
         run: |
-          CHANGED=$(bash scripts/detect-changes.sh "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}")
+          BASE_SHA="${{ github.event.pull_request.base.sha || github.event.before }}"
+          # In case of a new branch, event.before might be 0000000000000000000000000000000000000000
+          if [ "$BASE_SHA" = "0000000000000000000000000000000000000000" ] || [ -z "$BASE_SHA" ]; then
+            BASE_SHA=$(git rev-parse HEAD~1 2>/dev/null || git rev-parse HEAD)
+          fi
+          CHANGED=$(bash scripts/detect-changes.sh "$BASE_SHA" "${{ github.sha }}")
           echo "services=$CHANGED" >> "$GITHUB_OUTPUT"
 
           if [ -z "$CHANGED" ] || [ "$CHANGED" = "[]" ]; then
