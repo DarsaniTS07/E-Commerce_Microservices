@@ -81,7 +81,7 @@ jobs:
         working-directory: ${{ matrix.service }}
         run: |
           SCA_FAILED="${SNYK_SCA_FAILED:-false}"
-          CODE_FAILED="false"
+          CODE_FAILED="${SNYK_CODE_FAILED:-false}"
 
           echo "### 🛡️ Snyk Results — ${{ matrix.service }}" >> "$GITHUB_STEP_SUMMARY"
 
@@ -139,7 +139,8 @@ jobs:
           name: snyk-reports-${{ matrix.service }}
           path: |
             ${{ matrix.service }}/snyk-sca-report.json
-                        ${{ matrix.service }}/security-report.html
+            ${{ matrix.service }}/snyk-code-report.json
+            ${{ matrix.service }}/security-report.html
           retention-days: 30
 
   # ── npm audit per service ────────────────────────────────────────────────────
