@@ -38,7 +38,7 @@ export const FavoritesPage = () => {
       const results = await Promise.all(eventPromises);
       
       // Filter out any failed requests or nulls
-      setFavoriteEvents(results.filter(e => e && e.eventId));
+      setFavoriteEvents(results.filter(e => e?.eventId));
     } catch (error) {
       console.error("Failed to load favorites", error);
       toast.error("Could not load your favorite events.");
@@ -51,7 +51,7 @@ export const FavoritesPage = () => {
     const toastId = toast.loading(`Adding ${event.title} to cart...`);
     try {
       const result = await cartService.addToCart(event.eventId || event.id, 1);
-      if (result && result.alreadyInCart) {
+      if (result?.alreadyInCart) {
         toast.success("Event is already in your cart!", { id: toastId });
       } else {
         toast.success("Added to cart successfully!", { id: toastId });

@@ -34,7 +34,7 @@ async function attachAuthContext(req, res, next) {
 }
 
 function requireAuth(req, res, next) {
-  if (!req.user || !req.user.id) {
+  if (!req.user?.id) {
     return next(new AppError("Authentication required", 401));
   }
 
@@ -43,7 +43,7 @@ function requireAuth(req, res, next) {
 
 function requireRole(allowedRoles) {
   return function roleGuard(req, res, next) {
-    if (!req.user || !req.user.role) {
+    if (!req.user?.role) {
       return next(new AppError("Authentication required", 401));
     }
 

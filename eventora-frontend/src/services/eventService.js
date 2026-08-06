@@ -18,7 +18,7 @@ export const eventService = {
       const response = await apiClient.get("/events/list", { params, skipToast: true });
       const apiData = response.data;
       
-      if (apiData && apiData.success && apiData.data) {
+      if (apiData?.success && apiData.data) {
         const events = (apiData.data.items || []).map(item => ({
           ...item,
           id: item.eventId,
@@ -46,7 +46,7 @@ export const eventService = {
       const response = await apiClient.get(`/events/${eventId}`);
       const apiData = response.data;
       
-      if (apiData && apiData.success && apiData.data) {
+      if (apiData?.success && apiData.data) {
         const item = apiData.data;
         return {
           ...item,

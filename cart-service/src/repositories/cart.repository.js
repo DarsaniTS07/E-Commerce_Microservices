@@ -63,7 +63,7 @@ class CartRepository {
     );
 
     const item = result.Item || null;
-    if (item && item.eventId === eventId && item.status === 'ACTIVE') {
+    if (item?.eventId === eventId && item.status === 'ACTIVE') {
       return item;
     }
     return null;

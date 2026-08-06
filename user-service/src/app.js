@@ -32,7 +32,7 @@ function createApp() {
         tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'app-errors-'));
       }
       fs.appendFileSync(path.join(tempDir, 'error.log'), new Date().toISOString() + '\n' + (err.stack || err.toString()) + '\n\n');
-    } catch(e) {}
+    } catch (e) { console.error(e); }
     res.status(err.statusCode || 500).json({
       success: false,
       message: err.message || 'Internal Server Error'

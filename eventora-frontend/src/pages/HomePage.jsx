@@ -21,7 +21,7 @@ export const HomePage = () => {
   const navigate = useNavigate();
   
   // Local states for page management
-  const page = parseInt(searchParams.get("page") || "1", 10);
+  const page = Number.parseInt(searchParams.get("page") || "1", 10);
   const search = searchParams.get("search") || "";
   const city = searchParams.get("city") || "";
   const category = searchParams.get("category") || "";
@@ -86,7 +86,7 @@ export const HomePage = () => {
     try {
       const result = await cartService.addToCart(event.eventId || event.id, 1);
       
-      if (result && result.alreadyInCart) {
+      if (result?.alreadyInCart) {
         toast.success("Event is already in your cart!", { id: toastId });
       } else {
         toast.success("Added to cart successfully!", { id: toastId });

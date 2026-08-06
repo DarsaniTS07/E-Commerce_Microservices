@@ -97,7 +97,7 @@ class WaitlistRepository {
     );
 
     const item = result.Item || null;
-    if (item && item.status === 'WAITING') {
+    if (item?.status === 'WAITING') {
       return item;
     }
     return null;

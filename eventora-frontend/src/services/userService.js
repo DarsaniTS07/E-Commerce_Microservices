@@ -6,7 +6,7 @@ export const userService = {
       const response = await apiClient.get("/users");
       const apiData = response.data;
       
-      if (apiData && apiData.success && apiData.data) {
+      if (apiData?.success && apiData.data) {
         return apiData.data;
       }
       return [];
@@ -21,7 +21,7 @@ export const userService = {
       const response = await apiClient.get(`/users/${userId}`);
       const apiData = response.data;
       
-      if (apiData && apiData.success && apiData.data) {
+      if (apiData?.success && apiData.data) {
         return apiData.data;
       }
       return null;
