@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
 import SearchBar from "../components/SearchBar";
-import FilterBar from "../components/FilterBar";
+
 import CategoryCarousel from "../components/CategoryCarousel";
 import EventCard from "../components/EventCard";
 import SectionHeader from "../components/SectionHeader";
@@ -124,12 +124,7 @@ export const HomePage = () => {
         <CategoryCarousel activeCategory={category} onSelectCategory={handleCategorySelect} />
       </div>
 
-      {/* Sticky Filters Header */}
-      <FilterBar
-        filters={filters}
-        onFilterChange={handleFilterChange}
-        onClearFilters={handleClearFilters}
-      />
+
 
       {/* Main Events Grids */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-8">
