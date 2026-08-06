@@ -53,7 +53,7 @@ class EventService {
       inventory = await this.inventoryClient.getAvailability(eventId);
     } catch (error) {
       console.warn(
-        `Inventory service unavailable for event ${eventId}`
+        `Inventory service unavailable for event ${String(eventId).replace(/[\r\n]/g, '')}`
       );
     }
     return { ...event, inventory };

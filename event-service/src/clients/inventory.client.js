@@ -9,7 +9,7 @@ class InventoryClient {
     }
 
     const response = await fetch(
-      `${this.baseUrl}/inventory/internal/inventory/${eventId}`,
+      `${this.baseUrl}/inventory/internal/inventory/${encodeURIComponent(eventId)}`,
       {
         method: "GET",
         headers: {
@@ -65,7 +65,7 @@ class InventoryClient {
     }
 
     const response = await fetch(
-      `${this.baseUrl}/inventory/internal/inventory/${eventId}`,
+      `${this.baseUrl}/inventory/internal/inventory/${encodeURIComponent(eventId)}`,
       {
         method: "PUT",
         headers: {
