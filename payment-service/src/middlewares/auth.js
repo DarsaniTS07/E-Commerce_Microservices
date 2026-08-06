@@ -3,11 +3,8 @@ const { verifier } = require("../config/cognito");
 
 async function attachAuthContext(req, res, next) {
   console.log("=================================");
-  console.log("HEADERS:", req.headers);
 
   const authHeader = req.header("Authorization");
-
-  console.log("AUTH HEADER:", authHeader);
 
   try {
     if (!authHeader) {

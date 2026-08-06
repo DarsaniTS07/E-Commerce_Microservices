@@ -80,7 +80,7 @@ class EventService {
         availableTickets,
       });
     } catch (err) {
-    console.error("Failed to create inventory:", err.message);
+    console.error('Failed to create inventory:', String(err.message).replace(/[\r\n]/g, ''));
   }
 
   return event;

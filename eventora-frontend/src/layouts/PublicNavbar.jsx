@@ -139,7 +139,7 @@ export const PublicNavbar = () => {
                         <div className="divide-y divide-neutral-muted">
                           {notifications.map((n) => (
                             <div 
-                              key={n.notificationId || n.id || Math.random()}
+                              key={n.notificationId || n.id || crypto.randomUUID()}
                               onClick={() => handleNotificationClick(n)}
                               className={cn(
                                 "p-4 transition-colors cursor-pointer hover:bg-neutral-light",
