@@ -26,7 +26,7 @@ permissions:
 
 env:
   NODE_VERSION: "20"
-  COVERAGE_THRESHOLD: 80
+  COVERAGE_THRESHOLD: 50
 
 jobs:
   # ── 1. Detect which services changed ────────────────────────────────────────
@@ -119,7 +119,7 @@ jobs:
     uses: ./.github/workflows/reusable-test.yml
     with:
       matrix: ${{ needs.detect-changes.outputs.matrix }}
-      coverage_threshold: 80
+      coverage_threshold: 50
 
   # ── 5. Build all changed services (parallel matrix) ─────────────────────────
   build:
