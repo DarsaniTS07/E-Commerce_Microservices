@@ -18,9 +18,9 @@ function createApp() {
   app.use('/api/v1/users', createUserRoutes(userService));
   app.use('/users', createUserRoutes(userService));
 
-  const fs = require('fs');
-  const os = require('os');
-  const path = require('path');
+  const fs = require('node:fs');
+  const os = require('node:os');
+  const path = require('node:path');
   let tempDir = null;
 
   app.use((err, req, res, next) => {
