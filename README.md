@@ -169,38 +169,6 @@ And the following Variable is recommended:
 
 ---
 
-Create an IAM User in AWS with programmatic access (Access Key and Secret Access Key). Attach the following inline policy to the IAM User to allow Lambda deployments:
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "lambda:UpdateFunctionCode",
-        "lambda:UpdateFunctionConfiguration",
-        "lambda:GetFunction",
-        "lambda:ListVersionsByFunction",
-        "lambda:GetAlias",
-        "lambda:CreateAlias",
-        "lambda:UpdateAlias"
-      ],
-      "Resource": "arn:aws:lambda:ap-southeast-1:ACCOUNT_ID:function:darsani_*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "apigateway:GET"
-      ],
-      "Resource": "*"
-    }
-  ]
-}
-```
-Store the IAM User's access keys as GitHub Secrets `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
-
----
-
 ## ➕ Onboarding a New Microservice
 
 To add a new service to the DevSecOps CI/CD pipeline:
