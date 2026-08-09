@@ -130,6 +130,15 @@ The pipeline integrates multiple automated security scanners.
 
 ---
 
+## 📊 Observability
+
+A centralized **AWS CloudWatch Dashboard** (provisioned via `infra/dashboard.tf`) provides real-time monitoring across the platform:
+- **Frontend & API**: Request counts and error rates for CloudFront and API Gateway.
+- **Backend Services**: Execution duration, errors, and throttles for all Lambda microservices.
+- **Data & Auth**: Read/Write capacity for DynamoDB tables, SNS message deliveries, and Cognito sign-ins.
+
+---
+
 ## 🚀 Rollback and Deployment Process
 
 ### Backend Deployment (`deploy.sh`)
