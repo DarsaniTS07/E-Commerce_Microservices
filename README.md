@@ -169,8 +169,6 @@ And the following Variable is recommended:
 
 ---
 
-## 🔑 AWS IAM Setup
-
 Create an IAM User in AWS with programmatic access (Access Key and Secret Access Key). Attach the following inline policy to the IAM User to allow Lambda deployments:
 ```json
 {
