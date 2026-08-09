@@ -8,14 +8,14 @@ The platform is designed using a microservices architecture, with independent se
 
 ### Core Microservices
 
-- **`event-service`** (Port 3001): Manages the creation, retrieval, and updating of events. Acts as the core catalog.
-- **`cart-service`** (Port 3002): Handles user shopping carts and temporarily reserves tickets in the inventory service to prevent double-booking.
-- **`order-service`** (Port 3003): Processes checkouts, creates final orders, and confirms ticket reservations.
-- **`payment-service`** (Port 3004): Handles payment processing (mocked/integrated) and updates order statuses.
-- **`notification-service`** (Port 3005): Responsible for sending emails, SMS, or push notifications to users.
-- **`inventory-service`** (Port 3006): Manages ticket availability, reservations, and total capacity.
-- **`waitlist-service`** (Port 3007): Manages users waiting for tickets to sold-out events.
-- **`user-service`** (Port 3008): Handles user authentication, authorization, and profile management using AWS Cognito.
+- **`event-service`**: Manages the creation, retrieval, and updating of events. Acts as the core catalog.
+- **`cart-service`**: Handles user shopping carts and temporarily reserves tickets in the inventory service to prevent double-booking.
+- **`order-service`**: Processes checkouts, creates final orders, and confirms ticket reservations.
+- **`payment-service`**: Handles payment processing (mocked/integrated) and updates order statuses.
+- **`notification-service`**: Responsible for sending emails, SMS, or push notifications to users.
+- **`inventory-service`**: Manages ticket availability, reservations, and total capacity.
+- **`waitlist-service`**: Manages users waiting for tickets to sold-out events.
+- **`user-service`**: Handles user authentication, authorization, and profile management using AWS Cognito.
 
 ## Technology Stack
 
@@ -72,7 +72,7 @@ graph TD
   K[Push to main / Dispatch] --> L[CD Workflow]
   L --> M[Security Gate]
   M --> N[Build & Package]
-  N --> O[Deploy to AWS Lambda via OIDC]
+  N --> O[Deploy to AWS Lambda via IAM Credentials]
   O --> P[Smoke Test Endpoint]
   P -- Success --> Q[Deployment Complete]
   P -- Failure --> R[Trigger Rollback to Previous Version]
@@ -83,10 +83,11 @@ graph TD
 All GitHub Actions configurations are stored inside `.github/workflows/`:
 1. [**`ci.yml`**](file:///.github/workflows/ci.yml): Main CI pipeline triggered on pull requests. Runs linting, testing, and security scanning on changed services.
 2. [**`cd.yml`**](file:///.github/workflows/cd.yml): CD pipeline triggered on pushes to the `main` branch or manual dispatch. Deploys changed services to production.
-3. [**`reusable-security.yml`**](file:///.github/workflows/reusable-security.yml): Runs Snyk (SCA + Code scan) and `npm audit` for changed services.
-4. [**`reusable-test.yml`**](file:///.github/workflows/reusable-test.yml): Runs ESLint and Jest unit tests, checking that coverage is at least 80%.
-5. [**`reusable-build.yml`**](file:///.github/workflows/reusable-build.yml): Validates service package structure and packages them into ZIP files.
-6. [**`reusable-deploy.yml`**](file:///.github/workflows/reusable-deploy.yml): Deploys the service package to AWS Lambda, validates via smoke tests, and triggers rollbacks if necessary.
+3. [**`frontend-deploy.yml`**](file:///.github/workflows/frontend-deploy.yml): Deploys the React frontend to AWS S3 and invalidates the CloudFront cache when changes occur in `eventora-frontend/`.
+4. [**`reusable-security.yml`**](file:///.github/workflows/reusable-security.yml): Runs Snyk (SCA + Code scan) and `npm audit` for changed services.
+5. [**`reusable-test.yml`**](file:///.github/workflows/reusable-test.yml): Runs ESLint and Jest unit tests, checking that coverage is at least 80%.
+6. [**`reusable-build.yml`**](file:///.github/workflows/reusable-build.yml): Validates service package structure and packages them into ZIP files.
+7. [**`reusable-deploy.yml`**](file:///.github/workflows/reusable-deploy.yml): Deploys the service package to AWS Lambda, validates via smoke tests, and triggers rollbacks if necessary.
 
 ---
 
@@ -114,7 +115,12 @@ The pipeline integrates multiple automated security scanners.
 - **Fail Action**: Fails the build if any **High** or **Critical** vulnerabilities exist.
 - **Reports**: Combined HTML security reports are generated and uploaded.
 
-### 3. Dependency Auditing (`npm audit`)
+### 3. SonarQube / SonarCloud
+- **Scope**: Analyzes codebase for bugs, code smells, vulnerabilities, and calculates test coverage.
+- **Integration**: Configured via `sonar-project.properties` and integrated into the `ci.yml` pipeline.
+- **Fail Action**: Quality gate failure will block the pipeline.
+
+### 4. Dependency Auditing (`npm audit`)
 - **Scope**: Runs `npm audit --audit-level=high` on changed services.
 - **Reports**: Uploads an audit JSON report.
 
@@ -122,20 +128,26 @@ The pipeline integrates multiple automated security scanners.
 
 ## 🚀 Rollback and Deployment Process
 
-### Deployment (`deploy.sh`)
+### Backend Deployment (`deploy.sh`)
 - Deploys the service ZIP to AWS Lambda.
 - Publishes a new version of the function.
 - Reads the previous version the `production` alias was pointing to and writes it to a file.
 - Updates the `production` alias to point to the new version.
 
-### Smoke Testing (`smoke-test.sh`)
+### Backend Smoke Testing (`smoke-test.sh`)
 - Pings API Gateway endpoints (e.g., `/{service}/api/v1/health`).
 - Validates that the response status code is `< 500` (e.g., `200` or auth `401/403` status).
 - If the endpoint times out or returns a `5xx` error, the smoke test fails and triggers a rollback.
 
-### Rollback (`rollback.sh`)
+### Backend Rollback (`rollback.sh`)
 - If the smoke test or deploy step fails, the CD pipeline automatically triggers the rollback script.
 - Reverts the `production` alias to point back to the previous stable version recorded during the deployment.
+
+### Frontend Deployment
+- Uses the `frontend-deploy.yml` workflow when changes occur in `eventora-frontend/`.
+- Builds the React + Vite application.
+- Syncs the generated `dist/` directory directly to an AWS S3 bucket.
+- Triggers an AWS CloudFront cache invalidation (`/*`) to ensure edge locations serve the latest version.
 
 ---
 
@@ -145,8 +157,11 @@ Ensure the following secrets are configured in your GitHub Repository Settings u
 
 | Secret Name | Description | Example Value |
 |-------------|-------------|---------------|
-| `AWS_ROLE_ARN` | IAM Role ARN assumed via GitHub OIDC | `arn:aws:iam::123456789012:role/github-actions-cd-role` |
+| `AWS_ACCESS_KEY_ID` | AWS IAM Access Key ID for deployment | `AKIAIOSFODNN7EXAMPLE` |
+| `AWS_SECRET_ACCESS_KEY` | AWS IAM Secret Access Key | `wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY` |
+| `AWS_SESSION_TOKEN` | (Optional) AWS Session Token if using temporary credentials | `...` |
 | `SNYK_TOKEN` | Token retrieved from your Snyk Account | `snyk-api-token-xxxx-xxxx-xxxx` |
+| `SONAR_TOKEN` | Token for SonarCloud/SonarQube analysis | `8402...` |
 
 And the following Variable is recommended:
 - `AWS_REGION` (Default: `ap-southeast-1`)
@@ -154,41 +169,9 @@ And the following Variable is recommended:
 
 ---
 
-## 🔑 AWS OIDC & IAM Role Setup
+## 🔑 AWS IAM Setup
 
-To avoid static credentials, configure a GitHub OIDC provider in IAM.
-
-### 1. Identity Provider Config
-- **Provider URL**: `https://token.actions.githubusercontent.com`
-- **Audience**: `sts.amazonaws.com`
-
-### 2. Least Privilege IAM Trust Policy
-Configure your IAM Role to only allow your repository to assume it:
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Federated": "arn:aws:iam::ACCOUNT_ID:oidc-provider/token.actions.githubusercontent.com"
-      },
-      "Action": "sts:AssumeRoleWithWebIdentity",
-      "Condition": {
-        "StringEquals": {
-          "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
-        },
-        "StringLike": {
-          "token.actions.githubusercontent.com:sub": "repo:YOUR_ORG/E-Commerce_Microservices:*"
-        }
-      }
-    }
-  ]
-}
-```
-
-### 3. Pipeline Minimum Permissions (IAM Policy)
-Attach this inline policy to the OIDC IAM Role to allow Lambda deployments:
+Create an IAM User in AWS with programmatic access (Access Key and Secret Access Key). Attach the following inline policy to the IAM User to allow Lambda deployments:
 ```json
 {
   "Version": "2012-10-17",
@@ -216,6 +199,7 @@ Attach this inline policy to the OIDC IAM Role to allow Lambda deployments:
   ]
 }
 ```
+Store the IAM User's access keys as GitHub Secrets `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
 
 ---
 
