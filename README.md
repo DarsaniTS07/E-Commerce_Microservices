@@ -4,7 +4,7 @@ Eventora is a modern, highly scalable event ticketing and management platform bu
 
 ## Architecture Overview
 
-![Eventora Architecture](./Architecture%20of%20EventBooking.png)
+![Eventora Architecture](./e-commerce_architecture.png)
 
 The platform is designed using a microservices architecture, with independent services communicating securely via internal APIs. The frontend is built with React and Vite.
 
