@@ -4,6 +4,8 @@ Eventora is a modern, highly scalable event ticketing and management platform bu
 
 ## Architecture Overview
 
+![Eventora Architecture](./Architecture%20of%20EventBooking.png)
+
 The platform is designed using a microservices architecture, with independent services communicating securely via internal APIs. The frontend is built with React and Vite.
 
 ### Core Microservices
@@ -23,12 +25,14 @@ The platform is designed using a microservices architecture, with independent se
 - **Backend**: Node.js, Express.js.
 - **Database**: AWS DynamoDB (NoSQL) for all microservices.
 - **Authentication**: AWS Cognito.
+- **Infrastructure as Code (IaC)**: Terraform (manages API Gateway, AWS Lambda functions, IAM, and dashboards).
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js (v18+)
+- Terraform (v1.0+)
 - AWS Account (DynamoDB and Cognito configured)
 - `.env` files populated for each service with appropriate AWS credentials and internal API keys.
 
